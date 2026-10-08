@@ -70,7 +70,7 @@ Nos textos de `content/pages/*.json` dá para usar Markdown simples: parágrafos
 
 Por enquanto as imagens apontam para `https://www.mga.com.br/storage/...` (sem download em massa).
 - Sem imagem (`null`), o site mostra um desenho técnico neutro no lugar.
-- No deploy (Vercel/Netlify), `OPTIMIZE_REMOTE_IMAGES=1` faz o Astro converter imagens remotas para AVIF/WebP com `srcset`.
+- Com `OPTIMIZE_REMOTE_IMAGES=1` (variável de ambiente no painel da Vercel/Netlify), o Astro converte imagens remotas para AVIF/WebP com `srcset`. Deixe em `0` até as URLs das fotos estarem confirmadas: imagem inexistente faz o build falhar.
 - Imagens locais em `src/assets/` são sempre otimizadas.
 
 ### Cores da marca
