@@ -1,0 +1,39 @@
+---
+import type { Lang } from '../i18n/routes';
+import { tr, useT } from '../i18n/ui';
+import { productUrl, productTag, vocabLabel, type Product } from '../lib/content';
+import Img from './Img.astro';
+interface Props { product: Product; lang: Lang; headingLevel?: 'h2' | 'h3' }
+const { product: p, lang, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+const t = useT(lang);
+const img = p.images[0];
+const sizes = p.attributes.sizes;
+---
+<article class="pcard">
+  <div class="pcard__media">
+    <Img src={img?.src} width={img?.width ?? 600} height={img?.height ?? 450} alt={img ? tr(img.alt, lang) : ''} sizes="(min-width: 1000px) 25vw, (min-width: 600px) 45vw, 100vw" />
+  </div>
+  <div class="pcard__body">
+    <p class="label">{productTag(p, lang)}</p>
+    <H class="pcard__title"><a href={productUrl(p, lang)}>{tr(p.name, lang)}</a></H>
+    <dl class="pcard__meta">
+      {sizes.length > 0 && <div><dt class="sr-only">{t('product.sizes')}</dt><dd class="num">{sizes[0]}{sizes.length > 1 && ` – ${sizes[sizes.length - 1]}`}</dd></div>}
+      {p.attributes.material.length > 0 && <div><dt class="sr-only">{t('catalog.material')}</dt><dd>{p.attributes.material.slice(0, 2).map((m) => vocabLabel('material', m, lang)).join(' / ')}</dd></div>}
+    </dl>
+  </div>
+</article>
+<style>
+  .pcard { position: relative; display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--color-line); border-radius: var(--radius-sm); height: 100%; transition: border-color 0.15s; }
+  .pcard:hover, .pcard:focus-within { border-color: var(--steel-600); }
+  .pcard__media { border-bottom: 1px solid var(--color-line); aspect-ratio: 4 / 3; overflow: hidden; background: var(--white); }
+  .pcard__media :global(img) { width: 100%; height: 100%; object-fit: contain; }
+  .pcard__body { padding: var(--space-4); display: grid; gap: var(--space-2); }
+  .pcard__title { font-size: 1.3rem; margin: 0; line-height: 1.12; }
+  .pcard__title a { color: var(--ink); text-decoration: none; }
+  .pcard__title a::after { content: ''; position: absolute; inset: 0; }
+  .pcard__title a:focus-visible { outline: none; }
+  .pcard:has(a:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .pcard__meta { margin: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-size: var(--fs-sm); color: var(--steel-600); }
+  .pcard__meta dd { margin: 0; }
+</style>

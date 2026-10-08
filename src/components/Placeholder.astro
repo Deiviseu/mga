@@ -1,0 +1,40 @@
+---
+// Desenho técnico neutro exibido enquanto um produto/marco não tem foto real.
+// Não é ilustração decorativa: é um corte esquemático de válvula esfera.
+interface Props { label?: string; class?: string; dark?: boolean }
+const { label, class: cls = '', dark = false } = Astro.props;
+---
+<div class:list={['ph', cls, { 'ph--dark': dark }]} role="img" aria-label={label ?? ''}>
+  <svg viewBox="0 0 240 160" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round">
+      <path d="M10 70h40v20H10z M190 70h40v20h-40z" />
+      <path d="M50 62h30v36H50z M160 62h30v36h-30z" />
+      <path d="M80 50h80v60H80z" />
+      <circle cx="120" cy="80" r="24" />
+      <path d="M96 74h48v12H96z" stroke-dasharray="3 3" />
+      <path d="M112 50V30h16v20 M104 30h32v-8h-32z" />
+      <path d="M136 26h70" />
+      <path d="M2 80h236" stroke-dasharray="10 3 2 3" stroke-width="0.6" />
+      <path d="M120 10v140" stroke-dasharray="10 3 2 3" stroke-width="0.6" />
+    </g>
+  </svg>
+</div>
+<style>
+  .ph {
+    display: grid; place-items: center; width: 100%; height: 100%;
+    aspect-ratio: var(--ph-ratio, 4 / 3);
+    color: var(--steel-300);
+    background:
+      linear-gradient(var(--steel-100) 1px, transparent 1px) 0 0 / 16px 16px,
+      linear-gradient(90deg, var(--steel-100) 1px, transparent 1px) 0 0 / 16px 16px,
+      var(--white);
+  }
+  .ph svg { width: 62%; max-width: 320px; }
+  .ph--dark {
+    color: var(--steel-600);
+    background:
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px) 0 0 / 24px 24px,
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px) 0 0 / 24px 24px,
+      var(--steel-900);
+  }
+</style>

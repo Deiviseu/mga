@@ -1,0 +1,19 @@
+---
+// Marca tipográfica provisória. TODO: substituir pelo SVG oficial da logo MGA
+// (salvar em public/brand/logo-mga.svg e trocar este componente por <img>).
+interface Props { inverse?: boolean }
+const { inverse = false } = Astro.props;
+---
+<span class:list={['logo', { 'logo--inverse': inverse }]}>
+  <span class="logo__mark">MGA</span>
+  <span class="logo__text"><span>Válvulas</span><span>Golden Art's · KITZ</span></span>
+</span>
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 0.6rem; color: var(--ink); }
+  .logo__mark { font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; letter-spacing: 0.02em; line-height: 1; padding: 0.1em 0.3em 0.05em; background: var(--color-primary); color: var(--white); border-radius: var(--radius-sm); }
+  .logo__text { display: grid; line-height: 1.1; }
+  .logo__text span:first-child { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  .logo__text span:last-child { font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--steel-600); }
+  .logo--inverse { color: var(--white); }
+  .logo--inverse .logo__text span:last-child { color: var(--steel-300); }
+</style>

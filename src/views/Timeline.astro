@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Img from '../components/Img.astro';
+import { path } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { TIMELINE, isTodo } from '../lib/content';
+import { fullTitle } from '../lib/seo';
+import type { PageEntry } from '../lib/pages';
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('nav.company'), href: path('about', lang) }, { name: t('timeline.title'), href: page.path }];
+const isDev = import.meta.env.DEV;
+// Em produção, eventos ainda marcados como TODO não aparecem (ficam visíveis no `npm run dev`).
+const milestones = TIMELINE.milestones
+  .map((m: any) => ({ ...m, events: m.events.filter((e: any) => isDev || !(isTodo(e.title.pt) || isTodo(e.text.pt))) }))
+  .filter((m: any) => m.events.length);
+---
+<Base lang={lang} title={fullTitle(t('timeline.title'), lang)} description={t('timeline.description')} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs}>
+  <PageHead label="1991 — 2026" title={t('timeline.title')} lead={t('timeline.lead')}>
+    <div class="tl-nav">
+      <button type="button" class="tl-btn" data-tl-prev aria-label={t('timeline.prev')}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" /></svg></button>
+      <button type="button" class="tl-btn" data-tl-next aria-label={t('timeline.next')}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" /></svg></button>
+    </div>
+  </PageHead>
+  <section class="tl" aria-label={t('timeline.title')}>
+    <ol class="tl__track" role="list" data-tl tabindex="0" aria-label={t('timeline.lead')}>
+      {milestones.map((m: any) => (
+        <li class="tl__item">
+          <p class="tl__year num">{m.year}</p>
+          <div class="tl__media"><Img src={m.image} width={640} height={420} alt={tr(m.events[0].title, lang)} sizes="(min-width: 900px) 380px, 100vw" /></div>
+          {m.events.map((e: any) => (
+            <div class="tl__event">
+              <h2>{tr(e.title, lang)}</h2>
+              <p>{tr(e.text, lang)}</p>
+            </div>
+          ))}
+          {m.todo && isDev && <p class="todo-flag">TODO: {m.todo}</p>}
+        </li>
+      ))}
+    </ol>
+  </section>
+</Base>
+<script>
+  const track = document.querySelector<HTMLElement>('[data-tl]')!;
+  const desktop = window.matchMedia('(min-width: 900px)');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const step = () => (track.querySelector<HTMLElement>('.tl__item')?.offsetWidth ?? 360) + 1;
+  document.querySelector('[data-tl-prev]')!.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' }));
+  document.querySelector('[data-tl-next]')!.addEventListener('click', () => track.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' }));
+  // Arrastar com o mouse (toque já rola nativamente)
+  let down = false, startX = 0, startLeft = 0, moved = false;
+  track.addEventListener('pointerdown', (e) => {
+    if (!desktop.matches || e.pointerType !== 'mouse') return;
+    down = true; moved = false; startX = e.clientX; startLeft = track.scrollLeft;
+    track.classList.add('is-dragging');
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    track.scrollLeft = startLeft - dx;
+  });
+  window.addEventListener('pointerup', () => { down = false; track.classList.remove('is-dragging'); });
+  track.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+  track.addEventListener('dragstart', (e) => e.preventDefault());
+</script>
+<style>
+  .tl-nav { display: none; gap: var(--space-1); justify-self: end; }
+  @media (min-width: 900px) { .tl-nav { display: flex; } }
+  .tl-btn { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--color-line-strong); background: var(--white); border-radius: var(--radius); cursor: pointer; }
+  .tl-btn svg { width: 16px; }
+  .tl { padding-block: var(--space-7) var(--space-8); }
+  .tl__track { list-style: none; margin: 0 auto; padding: 0 var(--gutter); max-width: var(--container); display: grid; gap: 0; }
+  .tl__item { position: relative; padding: 0 0 var(--space-7) var(--space-6); border-left: 1px solid var(--color-line-strong); }
+  .tl__item::before { content: ''; position: absolute; left: -6px; top: 0.55rem; width: 11px; height: 11px; background: var(--color-primary); }
+  .tl__year { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-2xl); line-height: 1; margin-bottom: var(--space-4); }
+  .tl__media { border: 1px solid var(--color-line); margin-bottom: var(--space-4); max-width: 520px; }
+  .tl__media :global(img), .tl__media :global(.ph) { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+  .tl__event + .tl__event { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--color-line); }
+  .tl__event h2 { font-size: var(--fs-lg); margin-bottom: var(--space-2); }
+  .tl__event p { color: var(--steel-700); font-size: var(--fs-sm); margin: 0; }
+  .tl__item .todo-flag { margin-top: var(--space-3); }
+  @media (min-width: 900px) {
+    .tl__track { display: flex; max-width: none; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: var(--space-5); cursor: grab; scrollbar-width: thin; border-top: 1px solid var(--color-line-strong); padding-left: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); }
+    .tl__track.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+    .tl__item { flex: 0 0 380px; border-left: 0; border-right: 1px solid var(--color-line); padding: var(--space-6) var(--space-5) var(--space-5); scroll-snap-align: start; }
+    .tl__item::before { left: var(--space-5); top: -6px; }
+  }
+</style>

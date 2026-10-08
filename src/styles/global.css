@@ -1,0 +1,227 @@
+/* ==========================================================================
+   MGA Válvulas — design tokens
+   --------------------------------------------------------------------------
+   PALETA PROVISÓRIA: o site atual (mga.com.br) não estava acessível a partir
+   do ambiente de desenvolvimento, então as cores da marca ainda não foram
+   extraídas do CSS/logo originais. Rode `npm run palette` com acesso ao site
+   e substitua APENAS os três valores --brand-* abaixo; todo o resto deriva
+   deles ou é neutro. Ver TODO-EMPRESA.md.
+   ========================================================================== */
+:root {
+  --brand-primary: #0f4c81;        /* TODO: cor primária real da marca */
+  --brand-primary-strong: #0a3a63; /* tom derivado mais escuro (hover, texto sobre claro) */
+  --brand-primary-soft: #e8eef5;   /* tom derivado claro (fundos de destaque) */
+
+  --color-primary: var(--brand-primary);
+  --color-primary-strong: var(--brand-primary-strong);
+  --color-primary-soft: var(--brand-primary-soft);
+
+  /* Neutros (aço) */
+  --ink: #15181b;
+  --steel-900: #1d2226;
+  --steel-800: #2a3036;
+  --steel-700: #3b4249;
+  --steel-600: #545c64;
+  --steel-500: #5f676f; /* menor cinza permitido para texto sobre branco (AA) */
+  --steel-300: #c4c9ce;
+  --steel-200: #dfe2e5;
+  --steel-100: #eff1f2;
+  --paper: #fafaf8;
+  --white: #ffffff;
+
+  /* Semânticas (compatibilidade, validação) */
+  --ok: #2b6e2f;
+  --ok-bg: #e5f1e5;
+  --warn: #8a5300;
+  --warn-bg: #fbefd9;
+  --bad: #a3231b;
+  --bad-bg: #f8e3e1;
+
+  --color-bg: var(--paper);
+  --color-surface: var(--white);
+  --color-text: var(--ink);
+  --color-muted: var(--steel-500);
+  --color-line: var(--steel-200);
+  --color-line-strong: var(--steel-300);
+  --focus: var(--color-primary);
+
+  /* Tipografia */
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-xl: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  --fs-2xl: clamp(2.25rem, 1.6rem + 2.8vw, 4rem);
+  --fs-3xl: clamp(2.75rem, 1.8rem + 4.2vw, 5.5rem);
+
+  /* Espaço, forma */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
+  --radius: 3px;
+  --radius-sm: 2px;
+  --container: 1320px;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --header-h: 72px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- Reset enxuto ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h) + 1rem); }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg, video { display: block; max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: var(--color-primary); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--color-primary-strong); }
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  margin: 0 0 var(--space-4);
+  text-wrap: balance;
+}
+h1 { font-size: var(--fs-2xl); }
+h2 { font-size: var(--fs-xl); }
+h3 { font-size: var(--fs-lg); }
+p { margin: 0 0 var(--space-4); text-wrap: pretty; }
+table { border-collapse: collapse; width: 100%; }
+hr { border: 0; border-top: 1px solid var(--color-line); margin: var(--space-7) 0; }
+
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.skip-link {
+  position: absolute; left: var(--space-4); top: -100px; z-index: 1000;
+  background: var(--ink); color: var(--white); padding: var(--space-3) var(--space-4);
+}
+.skip-link:focus { top: var(--space-4); color: var(--white); }
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Layout ---------- */
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: var(--space-8); }
+.section--tight { padding-block: var(--space-7); }
+.section--dark { background: var(--steel-900); color: var(--steel-100); }
+.section--dark .label { color: var(--steel-300); }
+.section--line { border-top: 1px solid var(--color-line); }
+.stack > * + * { margin-top: var(--space-4); }
+
+/* Cabeçalho de seção assimétrico: rótulo à esquerda, título e texto à direita */
+.section-head {
+  display: grid; gap: var(--space-4); margin-bottom: var(--space-7);
+  border-top: 1px solid var(--color-line-strong); padding-top: var(--space-4);
+}
+.section--dark .section-head { border-color: var(--steel-700); }
+.section-head h2 { margin: 0; max-width: 20ch; }
+.section-head p { color: var(--color-muted); max-width: 56ch; margin: 0; }
+.section--dark .section-head p { color: var(--steel-300); }
+@media (min-width: 900px) {
+  .section-head { grid-template-columns: 3fr 9fr; align-items: start; }
+  .section-head > .label { padding-top: 0.6em; }
+}
+
+/* ---------- Rótulo técnico (catálogo de engenharia) ---------- */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+.label--accent { color: var(--color-primary); }
+.num, .tabular { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; }
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-height: 44px; padding: 0.65rem 1.25rem;
+  border: 1px solid transparent; border-radius: var(--radius);
+  font-weight: 500; font-size: var(--fs-sm); letter-spacing: 0.01em;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn--primary { background: var(--color-primary); color: var(--white); }
+.btn--primary:hover { background: var(--color-primary-strong); color: var(--white); }
+.btn--ghost { border-color: var(--color-line-strong); color: var(--color-text); background: transparent; }
+.btn--ghost:hover { border-color: var(--color-text); color: var(--color-text); }
+.btn--light { border-color: rgba(255, 255, 255, 0.5); color: var(--white); background: transparent; }
+.btn--light:hover { background: var(--white); color: var(--ink); }
+.btn[disabled], .btn[aria-disabled='true'] { opacity: 0.55; cursor: not-allowed; }
+.btn svg { width: 1.1em; height: 1.1em; flex: none; }
+
+.link-arrow { font-weight: 500; text-decoration: none; display: inline-flex; gap: 0.4em; align-items: center; }
+.link-arrow::after { content: '→'; transition: transform 0.15s; }
+.link-arrow:hover::after { transform: translateX(3px); }
+
+/* ---------- Formulários ---------- */
+.field { display: grid; gap: var(--space-1); }
+.field label, .field legend { font-size: var(--fs-sm); font-weight: 500; }
+.field .hint { font-size: var(--fs-xs); color: var(--color-muted); }
+.input, .select, .textarea {
+  width: 100%; min-height: 44px; padding: 0.6rem 0.75rem;
+  border: 1px solid var(--color-line-strong); border-radius: var(--radius-sm);
+  background: var(--white);
+}
+.textarea { min-height: 140px; resize: vertical; }
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 0; border-color: var(--focus); }
+.field[data-invalid] .input, .field[data-invalid] .select, .field[data-invalid] .textarea { border-color: var(--bad); }
+.field .error { color: var(--bad); font-size: var(--fs-sm); }
+.field .error:empty { display: none; }
+
+/* ---------- Tabelas técnicas ---------- */
+.spec-table { font-size: var(--fs-sm); }
+.spec-table th, .spec-table td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--color-line); vertical-align: top; }
+.spec-table thead th { font-family: var(--font-mono); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-muted); font-weight: 500; border-bottom-color: var(--color-line-strong); }
+.spec-table tbody th { font-weight: 500; width: 38%; color: var(--steel-700); }
+.spec-table td { font-variant-numeric: tabular-nums; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* ---------- Texto corrido ---------- */
+.prose { max-width: 68ch; }
+.prose h2 { font-size: var(--fs-lg); margin-top: var(--space-6); }
+.prose ul, .prose ol { padding-left: 1.2em; margin: 0 0 var(--space-4); }
+.prose li + li { margin-top: var(--space-1); }
+.prose blockquote { margin: 0 0 var(--space-5); padding: var(--space-3) var(--space-4); border-left: 3px solid var(--color-primary); background: var(--color-primary-soft); }
+.prose blockquote p { margin: 0; }
+.prose table { margin: 0 0 var(--space-5); font-size: var(--fs-sm); }
+.prose th, .prose td { border-bottom: 1px solid var(--color-line); padding: 0.5rem 0.6rem; text-align: left; }
+.lead { font-size: var(--fs-md); color: var(--steel-700); max-width: 60ch; }
+
+/* ---------- Cabeçalho de página interna ---------- */
+.page-head { padding-block: var(--space-6) var(--space-7); border-bottom: 1px solid var(--color-line); background: var(--white); }
+.page-head h1 { margin-top: var(--space-4); max-width: 22ch; }
+
+.todo-flag {
+  display: inline-block; font-family: var(--font-mono); font-size: var(--fs-xs);
+  background: var(--warn-bg); color: var(--warn); padding: 0.1em 0.45em; border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

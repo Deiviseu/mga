@@ -1,0 +1,202 @@
+{
+  "id": "vew-150-wafer",
+  "code": "VEW 150",
+  "category": "vew",
+  "seed": true,
+  "slug": {
+    "pt": "valvula-esfera-wafer-classe-150",
+    "en": "wafer-ball-valve-class-150",
+    "es": "valvula-esfera-wafer-clase-150"
+  },
+  "name": {
+    "pt": "Válvula Esfera Wafer Classe 150",
+    "en": "Wafer Ball Valve Class 150",
+    "es": "Válvula Esfera Wafer Clase 150"
+  },
+  "summary": {
+    "pt": "Válvula Esfera Wafer Classe 150 da linha VEW 150. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Wafer Ball Valve Class 150, VEW 150 series. Illustrative data: check the official datasheet.",
+    "es": "Válvula Esfera Wafer Clase 150 de la línea VEW 150. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/vew-150-wafer",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c150"
+    ],
+    "material": [
+      "cf8m",
+      "wcb"
+    ],
+    "connection": [
+      "wafer"
+    ],
+    "sizes": [
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\"",
+      "2.1/2\"",
+      "3\"",
+      "4\"",
+      "6\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Passagem",
+        "en": "Bore",
+        "es": "Paso"
+      },
+      "value": {
+        "pt": "Reduzida",
+        "en": "Reduced bore",
+        "es": "Paso reducido"
+      }
+    },
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "ASME B16.34",
+    "ASME B16.5",
+    "API 598"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "2.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "6\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": []
+}

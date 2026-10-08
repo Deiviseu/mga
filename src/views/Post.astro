@@ -1,0 +1,37 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { path } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { SITE } from '../lib/content';
+import { fullTitle } from '../lib/seo';
+import type { PageEntry } from '../lib/pages';
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const post = page.post!;
+const t = useT(lang);
+const { Content } = await render(post);
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('blog.title'), href: path('blog', lang) }, { name: post.data.title, href: page.path }];
+const fmt = new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : lang, { dateStyle: 'long' });
+const ld = {
+  '@context': 'https://schema.org', '@type': 'TechArticle', headline: post.data.title, description: post.data.description,
+  datePublished: post.data.date.toISOString(), author: { '@type': 'Organization', name: post.data.author ?? SITE.name },
+  publisher: { '@id': `${SITE.url}/#organization` }, inLanguage: lang, image: post.data.image ?? SITE.defaultOgImage,
+};
+---
+<Base lang={lang} title={fullTitle(post.data.title, lang)} description={post.data.description} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs} noindex={page.noindex} ogType="article" image={post.data.image} jsonLd={[ld]}>
+  <article class="container section article">
+    <header>
+      <p class="label label--accent">{t(`blog.cat.${post.data.category}`)} · <time datetime={post.data.date.toISOString()}>{fmt.format(post.data.date)}</time>{post.data.author && ` · ${post.data.author}`}</p>
+      <h1>{post.data.title}</h1>
+      <p class="lead">{post.data.description}</p>
+    </header>
+    <div class="prose"><Content /></div>
+  </article>
+</Base>
+<style>
+  .article header { max-width: 820px; padding-bottom: var(--space-6); margin-bottom: var(--space-6); border-bottom: 1px solid var(--color-line); }
+  .article h1 { margin-top: var(--space-3); }
+</style>

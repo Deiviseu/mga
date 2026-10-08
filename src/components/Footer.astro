@@ -1,0 +1,83 @@
+---
+import { path, type Lang } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { categories, categoryUrl, SITE, units } from '../lib/content';
+import Logo from './Logo.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const year = new Date().getFullYear();
+const matriz = units[0];
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <Logo inverse />
+        <p>{t('footer.summary')}</p>
+      </div>
+      <div class="footer__cols">
+        <div>
+          <p class="label">{t('nav.products')}</p>
+          <ul role="list">
+            {categories.map((c) => <li><a href={categoryUrl(c, lang)}>{tr(c.name, lang)}</a></li>)}
+          </ul>
+        </div>
+        <div>
+          <p class="label">{t('footer.institutional')}</p>
+          <ul role="list">
+            <li><a href={path('about', lang)}>{t('nav.about')}</a></li>
+            <li><a href={path('principles', lang)}>{t('nav.principles')}</a></li>
+            <li><a href={path('certificates', lang)}>{t('nav.certificates')}</a></li>
+            <li><a href={path('timeline', lang)}>{t('nav.timeline')}</a></li>
+            <li><a href={path('environment', lang)}>{t('nav.environment')}</a></li>
+            <li><a href={path('social', lang)}>{t('nav.social')}</a></li>
+            <li><a href={path('blog', lang)}>{t('nav.blog')}</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="label">{t('footer.support')}</p>
+          <ul role="list">
+            <li><a href={`tel:${SITE.phone}`} class="num">{SITE.phoneDisplay}</a></li>
+            <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+            <li><a href={path('contact', lang)}>{t('nav.contact')}</a></li>
+            <li><a href={path('quote', lang)}>{t('nav.quote')}</a></li>
+            <li><a href={path('units', lang)}>{t('nav.units')}</a></li>
+            <li><a href={path('downloads', lang)}>{t('nav.downloads')}</a></li>
+            <li><a href={path('whistleblower', lang)}>{t('nav.whistleblower')}</a></li>
+          </ul>
+          <address>
+            {matriz.street}<br />{matriz.city} – {matriz.state} · {matriz.postalCode}
+          </address>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© {year} {SITE.legalName} {t('footer.rights')}</p>
+      <ul role="list">
+        <li><a href={path('privacy', lang)}>{t('nav.privacy')}</a></li>
+        <li><a href={path('terms', lang)}>{t('nav.terms')}</a></li>
+        <li><button type="button" class="linklike" data-cookie-open>{t('nav.cookies')}</button></li>
+        {SITE.social.instagram.startsWith('https') && <li><a href={SITE.social.instagram} rel="noopener">Instagram</a></li>}
+      </ul>
+    </div>
+  </div>
+</footer>
+<style>
+  .footer { background: var(--steel-900); color: var(--steel-300); font-size: var(--fs-sm); padding-top: var(--space-8); }
+  .footer a, .footer .linklike { color: var(--steel-100); text-decoration: none; }
+  .footer a:hover, .footer .linklike:hover { color: var(--white); text-decoration: underline; }
+  .footer .label { color: var(--steel-300); margin-bottom: var(--space-3); padding-bottom: var(--space-2); border-bottom: 1px solid var(--steel-700); }
+  .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+  .footer__top { display: grid; gap: var(--space-7); padding-bottom: var(--space-7); }
+  .footer__brand p { margin-top: var(--space-4); max-width: 36ch; }
+  .footer__cols { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .footer__cols > div:first-child ul { columns: 2; column-gap: var(--space-4); display: block; }
+  .footer__cols > div:first-child li { margin-bottom: 0.35rem; break-inside: avoid; }
+  @media (min-width: 1000px) { .footer__top { grid-template-columns: 4fr 8fr; } .footer__cols { grid-template-columns: 1.6fr 1fr 1fr; } }
+  address { font-style: normal; margin-top: var(--space-4); color: var(--steel-300); }
+  .footer__bottom { border-top: 1px solid var(--steel-700); padding-block: var(--space-5); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4); }
+  .footer__bottom p { margin: 0; }
+  .footer__bottom ul { display: flex; flex-wrap: wrap; gap: var(--space-5); }
+  .linklike { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; }
+</style>

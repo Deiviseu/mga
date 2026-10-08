@@ -1,0 +1,45 @@
+{
+  "id": "atuador-pneumatico",
+  "code": "ATU-P",
+  "category": "atuadores",
+  "seed": true,
+  "slug": {
+    "pt": "atuador-pneumatico-pinhao-cremalheira",
+    "en": "rack-and-pinion-pneumatic-actuator",
+    "es": "actuador-neumatico-pinon-cremallera"
+  },
+  "name": {
+    "pt": "Atuador Pneumático Pinhão-Cremalheira",
+    "en": "Rack and Pinion Pneumatic Actuator",
+    "es": "Actuador Neumático Piñón-Cremallera"
+  },
+  "summary": {
+    "pt": "Atuador Pneumático Pinhão-Cremalheira da linha ATU-P. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Rack and Pinion Pneumatic Actuator, ATU-P series. Illustrative data: check the official datasheet.",
+    "es": "Actuador Neumático Piñón-Cremallera de la línea ATU-P. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/atuador-pneumatico",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [],
+    "material": [],
+    "connection": [],
+    "sizes": []
+  },
+  "specs": [],
+  "norms": [
+    "ISO 5211",
+    "VDI/VDE 3845"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [],
+  "related": [
+    "atuador-eletrico"
+  ]
+}

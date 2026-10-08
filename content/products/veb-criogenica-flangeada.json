@@ -1,0 +1,198 @@
+{
+  "id": "veb-criogenica-flangeada",
+  "code": "VEB CRIO 300",
+  "category": "criogenicas",
+  "seed": true,
+  "slug": {
+    "pt": "valvula-esfera-bipartida-criogenica-classe-300-flangeada",
+    "en": "two-piece-cryogenic-ball-valve-class-300-flanged",
+    "es": "valvula-esfera-bipartida-criogenica-clase-300-bridada"
+  },
+  "name": {
+    "pt": "Válvula Esfera Bipartida Criogênica Classe 300 Flangeada",
+    "en": "Two-Piece Cryogenic Ball Valve Class 300 Flanged",
+    "es": "Válvula Esfera Bipartida Criogénica Clase 300 Bridada"
+  },
+  "summary": {
+    "pt": "Válvula Esfera Bipartida Criogênica Classe 300 Flangeada da linha VEB CRIO 300. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Two-Piece Cryogenic Ball Valve Class 300 Flanged, VEB CRIO 300 series. Illustrative data: check the official datasheet.",
+    "es": "Válvula Esfera Bipartida Criogénica Clase 300 Bridada de la línea VEB CRIO 300. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/veb-criogenica-flangeada",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c300"
+    ],
+    "material": [
+      "cf8m"
+    ],
+    "connection": [
+      "rf"
+    ],
+    "sizes": [
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\"",
+      "2.1/2\"",
+      "3\"",
+      "4\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Passagem",
+        "en": "Bore",
+        "es": "Paso"
+      },
+      "value": {
+        "pt": "Plena",
+        "en": "Full bore",
+        "es": "Paso total"
+      }
+    },
+    {
+      "label": {
+        "pt": "Castelo",
+        "en": "Bonnet",
+        "es": "Bonete"
+      },
+      "value": {
+        "pt": "Estendido para serviço criogênico",
+        "en": "Extended for cryogenic service",
+        "es": "Extendido para servicio criogénico"
+      }
+    },
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "ASME B16.34",
+    "ASME B16.5",
+    "BS 6364",
+    "API 598"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "2.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": [
+    "vet-criogenica"
+  ]
+}

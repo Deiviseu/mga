@@ -1,0 +1,45 @@
+{
+  "id": "extensao-de-haste",
+  "code": "ACC-EH",
+  "category": "acessorios",
+  "seed": true,
+  "slug": {
+    "pt": "extensao-de-haste",
+    "en": "stem-extension",
+    "es": "extension-de-vastago"
+  },
+  "name": {
+    "pt": "Extensão de Haste",
+    "en": "Stem Extension",
+    "es": "Extensión de Vástago"
+  },
+  "summary": {
+    "pt": "Extensão de Haste da linha ACC-EH. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Stem Extension, ACC-EH series. Illustrative data: check the official datasheet.",
+    "es": "Extensión de Vástago de la línea ACC-EH. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/extensao-de-haste",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [],
+    "material": [
+      "cf8m"
+    ],
+    "connection": [],
+    "sizes": []
+  },
+  "specs": [],
+  "norms": [],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [],
+  "related": [
+    "alavanca-com-trava",
+    "kit-de-reparo"
+  ]
+}

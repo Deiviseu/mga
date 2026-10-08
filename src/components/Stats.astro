@@ -1,0 +1,59 @@
+---
+import type { Lang } from '../i18n/routes';
+import { tr } from '../i18n/ui';
+import { SITE } from '../lib/content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const fmt = new Intl.NumberFormat(lang === 'pt' ? 'pt-BR' : lang);
+---
+<dl class="stats" data-stats>
+  {SITE.stats.map((s: any) => (
+    <div class="stat">
+      <dt class="label">{tr(s.label, lang)}</dt>
+      <dd class="stat__value num">
+        <span aria-hidden="true">{s.prefix}<span data-count={s.value}>{fmt.format(s.value)}</span>{tr(s.suffix, lang)}</span>
+        <span class="sr-only">{s.prefix}{fmt.format(s.value)}{tr(s.suffix, lang)}</span>
+      </dd>
+    </div>
+  ))}
+</dl>
+<script>
+  // Conta uma única vez ao entrar na tela; sem animação com prefers-reduced-motion.
+  const root = document.querySelector('[data-stats]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (root && !reduce && 'IntersectionObserver' in window) {
+    const els = [...root.querySelectorAll<HTMLElement>('[data-count]')];
+    const lang = document.documentElement.lang;
+    const fmt = new Intl.NumberFormat(lang);
+    els.forEach((el) => (el.textContent = '0'));
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      const start = performance.now();
+      const dur = 1400;
+      const tick = (now: number) => {
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        els.forEach((el) => (el.textContent = fmt.format(Math.round(Number(el.dataset.count) * eased))));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.4 });
+    io.observe(root);
+  }
+</script>
+<style>
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); margin: 0; border-top: 1px solid var(--steel-700); }
+  .stat { padding: var(--space-5) var(--space-4) var(--space-5) 0; border-bottom: 1px solid var(--steel-700); }
+  .stat:nth-child(odd) { border-right: 1px solid var(--steel-700); }
+  .stat:nth-child(even) { padding-left: var(--space-4); }
+  @media (min-width: 900px) {
+    .stats { grid-template-columns: repeat(4, 1fr); }
+    .stat { border-right: 1px solid var(--steel-700); padding-left: var(--space-5) !important; border-bottom: 0; }
+    .stat:first-child { padding-left: 0 !important; }
+    .stat:last-child { border-right: 0; }
+  }
+  .stat dt { color: var(--steel-300); order: 2; }
+  .stat { display: flex; flex-direction: column-reverse; gap: var(--space-2); }
+  .stat__value { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(2.75rem, 2rem + 3vw, 4.5rem); line-height: 1; color: var(--white); }
+</style>

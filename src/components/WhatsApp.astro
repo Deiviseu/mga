@@ -1,0 +1,23 @@
+---
+import type { Lang } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { whatsappUrl } from '../lib/content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const href = whatsappUrl(lang); // null enquanto o número em content/site.json for TODO
+---
+{href && (
+  <a href={href} class="wa" target="_blank" rel="noopener" aria-label={t('cta.whatsapp')} data-wa>
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.5-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.7 8.7 0 0 1-4.3-3.7c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.6 3.6 0 0 0-1.1 2.7 6.4 6.4 0 0 0 1.3 3.3 14.4 14.4 0 0 0 5.5 4.9c2 .9 2.8 1 3.9.8.6-.1 1.9-.8 2.2-1.5s.3-1.4.2-1.5-.3-.2-.6-.4z"/></svg>
+    <span>{t('cta.whatsapp')}</span>
+  </a>
+)}
+<style>
+  .wa { position: fixed; right: var(--space-4); bottom: var(--space-4); z-index: 90; display: inline-flex; align-items: center; gap: var(--space-2); min-height: 52px; padding: 0 1rem 0 0.85rem; border-radius: 26px; background: #1d7a46; color: var(--white); text-decoration: none; font-size: var(--fs-sm); font-weight: 500; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+  .wa:hover { background: #166238; color: var(--white); }
+  .wa svg { width: 26px; height: 26px; }
+  .wa span { display: none; }
+  @media (min-width: 900px) { .wa span { display: inline; } }
+  :global(body.has-sticky-cta) .wa { bottom: calc(var(--space-4) + 72px); }
+</style>

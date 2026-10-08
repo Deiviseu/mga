@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ContactForm from '../components/ContactForm.astro';
+import UnitCard from '../components/UnitCard.astro';
+import { path } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { SITE, units } from '../lib/content';
+import { fullTitle, localBusinessLd } from '../lib/seo';
+import type { PageEntry } from '../lib/pages';
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('contact.title'), href: page.path }];
+---
+<Base lang={lang} title={fullTitle(t('contact.title'), lang)} description={t('contact.description')} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs} jsonLd={localBusinessLd(lang)}>
+  <PageHead label={t('footer.support').toUpperCase()} title={t('contact.title')} lead={t('contact.lead')} />
+  <div class="container section contact">
+    <div class="contact__form"><ContactForm lang={lang} /></div>
+    <aside class="contact__side">
+      <dl class="direct">
+        <div><dt class="label">{t('contact.phone')}</dt><dd><a href={`tel:${SITE.phone}`} class="num">{SITE.phoneDisplay}</a></dd></div>
+        <div><dt class="label">{t('contact.email')}</dt><dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd></div>
+      </dl>
+      <h2 class="contact__h">{t('contact.units')}</h2>
+      {units.map((u, i) => <UnitCard unit={u} lang={lang} index={i} />)}
+      <p><a href={path('whistleblower', lang)} class="link-arrow">{t('nav.whistleblower')}</a></p>
+    </aside>
+  </div>
+</Base>
+<style>
+  .contact { display: grid; gap: var(--space-7); }
+  @media (min-width: 1000px) { .contact { grid-template-columns: 7fr 4fr; gap: var(--space-8); } }
+  .direct { margin: 0 0 var(--space-6); display: grid; gap: var(--space-4); }
+  .direct dd { margin: var(--space-1) 0 0; font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 600; }
+  .direct a { color: var(--ink); text-decoration: none; }
+  .direct a:hover { color: var(--color-primary); }
+  .contact__h { font-size: var(--fs-lg); }
+</style>

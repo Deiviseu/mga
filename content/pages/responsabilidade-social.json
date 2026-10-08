@@ -1,0 +1,44 @@
+{
+  "_comment": "Texto reconstruído a partir de trechos do site atual (corrigidos: \"um árvore\" → \"uma árvore\", \"nosso colaboradores\" → \"nossos colaboradores\", título \"NÃO DE TAMPAS À SOLIDARIEDADE\" → \"Das tampinhas à solidariedade\"). Validar fatos com a MGA.",
+  "title": {
+    "pt": "Responsabilidade social",
+    "en": "Social responsibility",
+    "es": "Responsabilidad social"
+  },
+  "seoDescription": {
+    "pt": "Ações sociais da MGA em Veranópolis: campanhas solidárias, plantio de árvores e programas com colaboradores.",
+    "en": "MGA's community initiatives in Veranópolis: charity campaigns, tree planting and employee programs.",
+    "es": "Acciones sociales de MGA en Veranópolis: campañas solidarias, plantación de árboles y programas con colaboradores."
+  },
+  "lead": {
+    "pt": "Fazemos parte de Veranópolis há 35 anos. Boa parte do que fazemos pela comunidade nasce da iniciativa dos nossos colaboradores.",
+    "en": "We have been part of Veranópolis for 35 years. Much of what we do for the community starts with our employees' initiative.",
+    "es": "Formamos parte de Veranópolis hace 35 años. Gran parte de lo que hacemos por la comunidad nace de la iniciativa de nuestros colaboradores."
+  },
+  "sections": [
+    {
+      "heading": {
+        "pt": "Das tampinhas à solidariedade",
+        "en": "From bottle caps to solidarity",
+        "es": "De las tapitas a la solidaridad"
+      },
+      "body": {
+        "pt": "Tampinhas plásticas recolhidas por nossos colaboradores e suas famílias são vendidas para reciclagem, e o valor arrecadado é revertido a entidades assistenciais da região.",
+        "en": "Plastic bottle caps collected by our employees and their families are sold for recycling, and the proceeds go to local charities.",
+        "es": "Las tapitas plásticas recogidas por nuestros colaboradores y sus familias se venden para reciclaje, y lo recaudado se destina a entidades asistenciales de la región."
+      }
+    },
+    {
+      "heading": {
+        "pt": "Um colaborador, uma árvore",
+        "en": "One employee, one tree",
+        "es": "Un colaborador, un árbol"
+      },
+      "body": {
+        "pt": "A cada novo colaborador contratado, uma árvore nativa é plantada em área de recomposição.",
+        "en": "For every new employee hired, a native tree is planted in a restoration area.",
+        "es": "Por cada nuevo colaborador contratado, se planta un árbol nativo en un área de recomposición."
+      }
+    }
+  ]
+}

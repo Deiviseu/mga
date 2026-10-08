@@ -1,0 +1,16 @@
+# GERADO por scripts/build-redirects.mjs a partir de content/redirects.json. Não editar à mão.
+/timeline  /linha-do-tempo  301
+/produtos/clase-1500-flotante  /produtos/valvula-esfera-bipartida-classe-1500-flutuante  301
+/produtos/visores-de-flujo  /produtos/categoria/visores-de-fluxo  301
+/produtos/cryogenics  /produtos/categoria/valvulas-criogenicas  301
+/informacion-ambiental  /downloads?cat=institucional  301
+/boletin-ambiental  /downloads?cat=institucional  301
+/downloads/informacion-ambiental  /downloads?cat=institucional  301
+/downloads/boletin-ambiental  /downloads?cat=institucional  301
+/produtos/matrizes  /produtos/categoria/matrizes  301
+/produtos/pecas-em-ptfe  /produtos/categoria/pecas-em-ptfe  301
+/produtos/vf-visor-de-fluxo  /produtos/visor-de-fluxo-vf  301
+/canal-denuncia  /canal-de-denuncia  301
+/termos-gdpr  /politica-de-privacidade  301
+/politica-privacidade  /politica-de-privacidade  301
+/produtos/politicas-mga.pdf  /politicas-mga.pdf  301

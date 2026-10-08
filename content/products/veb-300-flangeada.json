@@ -1,0 +1,208 @@
+{
+  "id": "veb-300-flangeada",
+  "code": "VEB 300",
+  "category": "veb",
+  "seed": true,
+  "slug": {
+    "pt": "valvula-esfera-bipartida-classe-300-flangeada",
+    "en": "two-piece-ball-valve-class-300-flanged",
+    "es": "valvula-esfera-bipartida-clase-300-bridada"
+  },
+  "name": {
+    "pt": "Válvula Esfera Bipartida Classe 300 Flangeada",
+    "en": "Two-Piece Ball Valve Class 300 Flanged",
+    "es": "Válvula Esfera Bipartida Clase 300 Bridada"
+  },
+  "summary": {
+    "pt": "Válvula Esfera Bipartida Classe 300 Flangeada da linha VEB 300. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Two-Piece Ball Valve Class 300 Flanged, VEB 300 series. Illustrative data: check the official datasheet.",
+    "es": "Válvula Esfera Bipartida Clase 300 Bridada de la línea VEB 300. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/veb-300-flangeada",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c300"
+    ],
+    "material": [
+      "wcb",
+      "cf8m"
+    ],
+    "connection": [
+      "rf"
+    ],
+    "sizes": [
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\"",
+      "2.1/2\"",
+      "3\"",
+      "4\"",
+      "6\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Passagem",
+        "en": "Bore",
+        "es": "Paso"
+      },
+      "value": {
+        "pt": "Plena",
+        "en": "Full bore",
+        "es": "Paso total"
+      }
+    },
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "ASME B16.34",
+    "ASME B16.5",
+    "ASME B16.10",
+    "API 598",
+    "API 607"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "2.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "6\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": [
+    "veb-150-flangeada",
+    "veb-800-rosca",
+    "classe-1500-flutuante"
+  ]
+}

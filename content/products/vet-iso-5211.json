@@ -1,0 +1,208 @@
+{
+  "id": "vet-iso-5211",
+  "code": "VET 800 ISO",
+  "category": "vet",
+  "seed": true,
+  "slug": {
+    "pt": "valvula-esfera-tripartida-com-plataforma-iso-5211",
+    "en": "three-piece-ball-valve-with-iso-5211-mounting-pad",
+    "es": "valvula-esfera-tripartida-con-plataforma-iso-5211"
+  },
+  "name": {
+    "pt": "Válvula Esfera Tripartida com Plataforma ISO 5211",
+    "en": "Three-Piece Ball Valve with ISO 5211 Mounting Pad",
+    "es": "Válvula Esfera Tripartida con Plataforma ISO 5211"
+  },
+  "summary": {
+    "pt": "Válvula Esfera Tripartida com Plataforma ISO 5211 da linha VET 800 ISO. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Three-Piece Ball Valve with ISO 5211 Mounting Pad, VET 800 ISO series. Illustrative data: check the official datasheet.",
+    "es": "Válvula Esfera Tripartida con Plataforma ISO 5211 de la línea VET 800 ISO. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/vet-iso-5211",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c800"
+    ],
+    "material": [
+      "cf8m"
+    ],
+    "connection": [
+      "npt",
+      "sw",
+      "bw"
+    ],
+    "sizes": [
+      "1/4\"",
+      "3/8\"",
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\"",
+      "2.1/2\"",
+      "3\"",
+      "4\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Passagem",
+        "en": "Bore",
+        "es": "Paso"
+      },
+      "value": {
+        "pt": "Plena",
+        "en": "Full bore",
+        "es": "Paso total"
+      }
+    },
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "ASME B16.34",
+    "ISO 5211",
+    "API 598"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "1/4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "2.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": [
+    "vet-800",
+    "vet-300",
+    "vet-sanitaria"
+  ]
+}

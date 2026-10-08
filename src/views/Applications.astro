@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { path } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { APPLICATIONS } from '../lib/content';
+import { fullTitle } from '../lib/seo';
+import type { PageEntry } from '../lib/pages';
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('apps.title'), href: page.path }];
+const A = APPLICATIONS as any;
+const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const fluids = [...A.fluids].sort((a: any, b: any) => tr(a.name, lang).localeCompare(tr(b.name, lang), lang));
+const cls: Record<string, string> = { A: 'ok', B: 'warn', C: 'bad', '-': 'na' };
+---
+<Base lang={lang} title={fullTitle(t('apps.title'), lang)} description={t('apps.description')} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs}>
+  <PageHead label={t('home.toolsLabel')} title={t('apps.title')} lead={t('apps.lead')} />
+  <div class="container section apps" data-apps>
+    {A.sample && <p class="sample" role="note">{t('apps.sample')}</p>}
+    <div class="apps__search">
+      <label for="fluid" class="label">{t('apps.search')}</label>
+      <div class="combo">
+        <input id="fluid" class="input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false"
+          aria-controls="fluid-list" autocomplete="off" placeholder={t('apps.searchPlaceholder')} data-combo />
+        <ul id="fluid-list" role="listbox" class="combo__list" hidden data-listbox aria-label={t('apps.fluid')}></ul>
+      </div>
+      <p class="apps__count num" aria-live="polite" data-count data-label={t('apps.showing')}>{fluids.length} {t('apps.showing')}</p>
+    </div>
+
+    <div class="legend" aria-label={t('apps.legend')} role="group">
+      <span class="label">{t('apps.legend')}</span>
+      {Object.entries(A.ratings).map(([k, v]: any) => <span class={`chip chip--${cls[k]}`}><b>{k}</b> {tr(v.label, lang)}</span>)}
+    </div>
+
+    <div class="table-scroll">
+      <table class="spec-table atable">
+        <caption class="sr-only">{t('apps.title')}</caption>
+        <thead>
+          <tr><th scope="col">{t('apps.fluid')}</th>{A.materials.map((m: any) => <th scope="col">{tr(m.name, lang)}</th>)}</tr>
+        </thead>
+        <tbody data-rows>
+          {fluids.map((f: any) => (
+            <tr data-id={f.id} data-name={tr(f.name, lang)} data-key={norm([f.name.pt, f.name.en, f.name.es].join(' '))}>
+              <th scope="row">{tr(f.name, lang)}</th>
+              {f.ratings.map((r: string, i: number) => (
+                <td><span class={`chip chip--${cls[r]}`} title={tr(A.ratings[r].label, lang)}><b>{r}</b><span class="sr-only"> – {tr(A.ratings[r].label, lang)} ({tr(A.materials[i].name, lang)})</span></span></td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="empty" data-empty hidden>{t('apps.noResults')} <a href={path('contact', lang)}>{t('nav.contact')}</a></p>
+    <p class="disclaimer">{t('apps.disclaimer')}</p>
+  </div>
+</Base>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-apps]')!;
+  const input = root.querySelector<HTMLInputElement>('[data-combo]')!;
+  const list = root.querySelector<HTMLUListElement>('[data-listbox]')!;
+  const rows = [...root.querySelectorAll<HTMLTableRowElement>('[data-rows] tr')];
+  const count = root.querySelector<HTMLElement>('[data-count]')!;
+  const empty = root.querySelector<HTMLElement>('[data-empty]')!;
+  const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+  let active = -1;
+  let matches: HTMLTableRowElement[] = [];
+
+  const filterTable = (q: string, exactId?: string) => {
+    let n = 0;
+    rows.forEach((r) => {
+      const show = exactId ? r.dataset.id === exactId : !q || r.dataset.key!.includes(q);
+      r.hidden = !show;
+      if (show) n++;
+    });
+    count.textContent = `${n} ${count.dataset.label}`;
+    empty.hidden = n > 0;
+  };
+  const close = () => { list.hidden = true; input.setAttribute('aria-expanded', 'false'); input.removeAttribute('aria-activedescendant'); active = -1; };
+  const renderList = () => {
+    const q = norm(input.value);
+    matches = q ? rows.filter((r) => r.dataset.key!.includes(q)).slice(0, 8) : [];
+    list.innerHTML = '';
+    matches.forEach((r, i) => {
+      const li = document.createElement('li');
+      li.id = `opt-${r.dataset.id}`;
+      li.setAttribute('role', 'option');
+      li.textContent = r.dataset.name!;
+      li.addEventListener('mousedown', (e) => { e.preventDefault(); choose(i); });
+      list.appendChild(li);
+    });
+    const open = matches.length > 0;
+    list.hidden = !open;
+    input.setAttribute('aria-expanded', String(open));
+    filterTable(q);
+  };
+  const highlight = (i: number) => {
+    const opts = [...list.children] as HTMLElement[];
+    opts.forEach((o, k) => o.setAttribute('aria-selected', String(k === i)));
+    active = i;
+    if (opts[i]) input.setAttribute('aria-activedescendant', opts[i].id);
+  };
+  const choose = (i: number) => {
+    const r = matches[i];
+    if (!r) return;
+    input.value = r.dataset.name!;
+    close();
+    filterTable('', r.dataset.id);
+  };
+  input.addEventListener('input', renderList);
+  input.addEventListener('keydown', (e) => {
+    const n = matches.length;
+    if (e.key === 'ArrowDown' && n) { e.preventDefault(); if (list.hidden) renderList(); highlight((active + 1) % n); }
+    else if (e.key === 'ArrowUp' && n) { e.preventDefault(); highlight((active - 1 + n) % n); }
+    else if (e.key === 'Enter' && active >= 0) { e.preventDefault(); choose(active); }
+    else if (e.key === 'Escape') { if (!list.hidden) close(); else { input.value = ''; filterTable(''); } }
+  });
+  input.addEventListener('blur', () => setTimeout(close, 100));
+  const q = new URLSearchParams(location.search).get('fluido');
+  if (q) { input.value = q; filterTable(norm(q)); }
+</script>
+<style>
+  .sample { background: var(--warn-bg); color: var(--warn); padding: var(--space-3) var(--space-4); border-left: 3px solid var(--warn); font-size: var(--fs-sm); }
+  .apps__search { display: grid; gap: var(--space-2); max-width: 560px; margin-bottom: var(--space-5); }
+  .combo { position: relative; }
+  .combo .input { font-size: var(--fs-md); min-height: 52px; }
+  .combo__list { position: absolute; z-index: 5; left: 0; right: 0; top: 100%; margin: 2px 0 0; padding: 0; list-style: none; background: var(--white); border: 1px solid var(--ink); max-height: 320px; overflow: auto; box-shadow: 0 10px 24px rgba(20,24,28,.1); }
+  .combo__list :global(li) { padding: 0.6rem 0.8rem; cursor: pointer; }
+  .combo__list :global(li[aria-selected='true']), .combo__list :global(li:hover) { background: var(--color-primary-soft); }
+  .apps__count { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--color-muted); margin: 0; }
+  .legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); align-items: center; padding: var(--space-3) 0; margin-bottom: var(--space-3); border-top: 1px solid var(--color-line-strong); border-bottom: 1px solid var(--color-line); font-size: var(--fs-sm); }
+  .chip { display: inline-flex; align-items: center; gap: 0.4em; padding: 0.15rem 0.5rem; border-radius: var(--radius-sm); font-size: var(--fs-sm); }
+  .chip b { font-family: var(--font-mono); }
+  .chip--ok { background: var(--ok-bg); color: var(--ok); }
+  .chip--warn { background: var(--warn-bg); color: var(--warn); }
+  .chip--bad { background: var(--bad-bg); color: var(--bad); }
+  .chip--na { background: var(--steel-100); color: var(--steel-600); }
+  .atable td { text-align: center; }
+  .atable thead th:not(:first-child) { text-align: center; }
+  .atable tbody th { width: 34%; }
+  .atable tr[hidden] { display: none; }
+  .empty { padding: var(--space-5); border: 1px dashed var(--color-line-strong); }
+  .disclaimer { font-size: var(--fs-sm); color: var(--color-muted); margin-top: var(--space-5); max-width: 70ch; }
+</style>

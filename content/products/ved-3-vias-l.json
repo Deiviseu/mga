@@ -1,0 +1,184 @@
+{
+  "id": "ved-3-vias-l",
+  "code": "VED L",
+  "category": "ved",
+  "seed": true,
+  "slug": {
+    "pt": "valvula-esfera-3-vias-passagem-l",
+    "en": "three-way-ball-valve-l-port",
+    "es": "valvula-esfera-3-vias-paso-l"
+  },
+  "name": {
+    "pt": "Válvula Esfera 3 Vias Passagem L",
+    "en": "Three-Way Ball Valve L-Port",
+    "es": "Válvula Esfera 3 Vías Paso L"
+  },
+  "summary": {
+    "pt": "Válvula Esfera 3 Vias Passagem L da linha VED L. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Three-Way Ball Valve L-Port, VED L series. Illustrative data: check the official datasheet.",
+    "es": "Válvula Esfera 3 Vías Paso L de la línea VED L. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/ved-3-vias-l",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c800"
+    ],
+    "material": [
+      "cf8m"
+    ],
+    "connection": [
+      "npt",
+      "sw"
+    ],
+    "sizes": [
+      "1/4\"",
+      "3/8\"",
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Passagem",
+        "en": "Bore",
+        "es": "Paso"
+      },
+      "value": {
+        "pt": "Reduzida",
+        "en": "Reduced bore",
+        "es": "Paso reducido"
+      }
+    },
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "ASME B16.34",
+    "API 598"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "1/4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": [
+    "ved-3-vias-t"
+  ]
+}

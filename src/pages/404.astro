@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { path, LANGS } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { fullTitle } from '../lib/seo';
+const lang = 'pt';
+const t = useT(lang);
+const alternates = Object.fromEntries(LANGS.map((l) => [l, path('home', l)]));
+---
+<Base lang={lang} title={fullTitle(t('notFound.title'), lang)} description={t('notFound.text')} path="/404" alternates={alternates} noindex>
+  <section class="container section nf">
+    <p class="label label--accent">ERRO 404 · ERROR 404</p>
+    <h1>{t('notFound.title')}</h1>
+    <p class="lead">{t('notFound.text')}</p>
+    <form action={path('products', lang)} method="get" class="nf__search" role="search">
+      <label for="nf-q" class="sr-only">{t('catalog.search')}</label>
+      <input id="nf-q" name="q" class="input" placeholder={t('catalog.searchPlaceholder')} />
+      <button class="btn btn--primary">{t('cta.seeProducts')}</button>
+    </form>
+    <p><a href={path('contact', lang)} class="link-arrow">{t('nav.contact')}</a> · <a href="/en" hreflang="en">English</a> · <a href="/es" hreflang="es">Español</a></p>
+  </section>
+</Base>
+<style>
+  .nf { min-height: 50vh; }
+  .nf__search { display: flex; gap: var(--space-2); max-width: 560px; margin: var(--space-5) 0; }
+</style>

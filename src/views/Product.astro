@@ -1,0 +1,325 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { path } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { categoryById, categoryUrl, productById, productDescription, productTag, vocabLabel, SITE } from '../lib/content';
+import { fullTitle, productLd } from '../lib/seo';
+import type { PageEntry } from '../lib/pages';
+
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const p = page.product!;
+const t = useT(lang);
+const cat = categoryById(p.category)!;
+const name = tr(p.name, lang);
+const desc = productDescription(p, lang);
+const url = new URL(page.path, SITE.url).href;
+const related = p.related.map(productById).filter(Boolean) as NonNullable<ReturnType<typeof productById>>[];
+const a = p.attributes;
+const sizes = a.sizes;
+const contactHref = `${path('contact', lang)}?produto=${encodeURIComponent(`${p.code} – ${name}`)}`;
+const crumbs = [
+  { name: t('nav.home'), href: path('home', lang) },
+  { name: t('nav.products'), href: path('products', lang) },
+  { name: tr(cat.name, lang), href: categoryUrl(cat, lang) },
+  { name, href: page.path },
+];
+const rows: [string, string][] = [
+  [t('product.code'), p.code],
+  [t('product.family'), `${cat.code} · ${tr(cat.name, lang)}`],
+  ...(a.pressureClass.length ? [[t('catalog.pressureClass'), a.pressureClass.map((c) => vocabLabel('pressureClass', c, lang)).join(', ')] as [string, string]] : []),
+  ...(sizes.length ? [[t('product.sizes'), sizes.length > 1 ? `${sizes[0]} – ${sizes[sizes.length - 1]}` : sizes[0]] as [string, string]] : []),
+  ...(a.material.length ? [[t('catalog.material'), a.material.map((m) => vocabLabel('material', m, lang)).join(', ')] as [string, string]] : []),
+  ...(a.connection.length ? [[t('catalog.connection'), a.connection.map((c) => vocabLabel('connection', c, lang)).join(', ')] as [string, string]] : []),
+  ...p.specs.map((s) => [tr(s.label, lang), tr(s.value, lang)] as [string, string]),
+  ...(p.norms.length ? [[t('product.norms'), p.norms.join(' · ')] as [string, string]] : []),
+];
+const ogImage = p.images[0]?.src;
+---
+<Base lang={lang} title={fullTitle(name, lang)} description={`${name} (${p.code}). ${desc}`.slice(0, 158)}
+  path={page.path} alternates={page.alternates} breadcrumbs={crumbs} image={ogImage} ogType="product"
+  jsonLd={[productLd(p, lang, url)]}>
+  <div class="container pd">
+    <section class="gallery" aria-label={t('product.gallery')} data-gallery>
+      <div class="gallery__main">
+        {p.images.length ? (
+          <button type="button" class="gallery__zoom" data-zoom aria-label={t('product.zoom')} aria-haspopup="dialog">
+            <Img src={p.images[0].src} width={p.images[0].width} height={p.images[0].height} alt={tr(p.images[0].alt, lang)} eager sizes="(min-width: 1000px) 50vw, 100vw" class="gallery__img" />
+          </button>
+        ) : (
+          <Img src={null} alt={name} />
+        )}
+      </div>
+      {p.images.length > 1 && (
+        <ul class="gallery__thumbs" role="list">
+          {p.images.map((im, i) => (
+            <li><button type="button" data-thumb={im.src} data-w={im.width} data-h={im.height} data-alt={tr(im.alt, lang)} aria-current={i === 0 ? 'true' : undefined} aria-label={tr(im.alt, lang)}>
+              <img src={im.src} alt="" width="80" height="60" loading="lazy" />
+            </button></li>
+          ))}
+        </ul>
+      )}
+      <dialog class="lightbox" data-lightbox aria-label={t('product.gallery')}>
+        <button type="button" class="lightbox__close" data-close>{t('nav.close')}</button>
+        <div class="lightbox__stage" data-stage><img alt="" data-lb-img /></div>
+      </dialog>
+    </section>
+
+    <div class="pd__info">
+      <p class="label label--accent">{productTag(p, lang)}</p>
+      <h1>{name}</h1>
+      <p class="pd__desc">{desc}</p>
+      {p.seed && <p class="todo-flag">{t('product.seedNotice')}</p>}
+
+      <dl class="pd__facts">
+        {rows.slice(2, 6).map(([k, v]) => <div><dt class="label">{k}</dt><dd>{v}</dd></div>)}
+      </dl>
+
+      <form class="addq" data-addq data-id={p.id} data-code={p.code} data-name={name} data-url={page.path} data-added={t('cta.added')}>
+        {sizes.length > 0 && (
+          <div class="field">
+            <label for="addq-size">{t('product.size')}</label>
+            <select id="addq-size" name="size" class="select">
+              {sizes.map((s) => <option value={s}>{s}</option>)}
+            </select>
+          </div>
+        )}
+        <div class="field addq__qty">
+          <label for="addq-qty">{t('product.qty')}</label>
+          <input id="addq-qty" name="qty" type="number" min="1" step="1" value="1" inputmode="numeric" class="input num" />
+        </div>
+        <button type="submit" class="btn btn--primary addq__btn">{t('cta.addQuote')}</button>
+        <p class="addq__ok" role="status" data-status></p>
+      </form>
+      <div class="pd__ctas">
+        <a href={contactHref} class="btn btn--ghost">{t('cta.quote')}</a>
+        {p.datasheet && <a href={p.datasheet} class="btn btn--ghost" target="_blank" rel="noopener">{t('product.datasheet')}</a>}
+      </div>
+    </div>
+  </div>
+
+  <section class="container section pd__tabs" data-tabs>
+    <div role="tablist" aria-label={name} class="tabs">
+      <button role="tab" id="tab-specs" aria-controls="panel-specs" aria-selected="true">{t('product.specs')}</button>
+      <button role="tab" id="tab-manual" aria-controls="panel-manual" aria-selected="false" tabindex="-1">{t('product.manual')}</button>
+      <button role="tab" id="tab-models" aria-controls="panel-models" aria-selected="false" tabindex="-1">{t('product.models')}</button>
+    </div>
+    <div role="tabpanel" id="panel-specs" aria-labelledby="tab-specs" tabindex="0" class="panel">
+      <div class="panel__grid">
+        <table class="spec-table">
+          <caption class="sr-only">{t('product.specs')}</caption>
+          <tbody>
+            {rows.map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}
+          </tbody>
+        </table>
+        {p.dimensions && (
+          <div>
+            <h2 class="panel__h">{t('product.dimensions')} <span class="label">({p.dimensions.unit})</span></h2>
+            <div class="table-scroll">
+              <table class="spec-table dims">
+                <thead><tr>{p.dimensions.columns.map((c) => <th scope="col">{c}</th>)}</tr></thead>
+                <tbody>{p.dimensions.rows.map((r) => <tr>{r.map((c, i) => (i === 0 ? <th scope="row">{c}</th> : <td>{c}</td>))}</tr>)}</tbody>
+              </table>
+            </div>
+            {p.dimensions.illustrative && <p class="todo-flag">{t('product.illustrative')}</p>}
+          </div>
+        )}
+      </div>
+    </div>
+    <div role="tabpanel" id="panel-manual" aria-labelledby="tab-manual" tabindex="0" class="panel" hidden>
+      {p.manual ? (
+        <a href={p.manual} class="btn btn--ghost" target="_blank" rel="noopener">{t('cta.download')} · {t('product.manual')} (PDF)</a>
+      ) : (
+        <p>{t('product.noManual')} <a href={contactHref}>{t('cta.requestFile')}</a></p>
+      )}
+    </div>
+    <div role="tabpanel" id="panel-models" aria-labelledby="tab-models" tabindex="0" class="panel" hidden>
+      {p.models3d.length ? (
+        <div class="models" data-models>
+          <div class="field models__pick">
+            <label for="model-size">{t('product.chooseSize')}</label>
+            <select id="model-size" class="select" data-model-select>
+              {p.models3d.map((m, i) => <option value={String(i)}>{m.size}</option>)}
+            </select>
+          </div>
+          {p.models3d.map((m, i) => (
+            <ul class="models__files" role="list" data-model={i} hidden={i !== 0}>
+              {m.files.map((f) => (
+                <li>
+                  <span class="label">{f.format}</span>
+                  <span class="num">{name} · {m.size}</span>
+                  {f.url ? <a href={f.url} class="link-arrow" download>{t('cta.download')}</a>
+                    : <a href={`${contactHref}${encodeURIComponent(` · ${f.format} ${m.size}`)}`} class="link-arrow">{t('cta.requestFile')}</a>}
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      ) : (
+        <p>{t('product.noModels')} <a href={contactHref}>{t('cta.requestFile')}</a></p>
+      )}
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="section section--line" aria-labelledby="rel-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="label">{cat.code}</p>
+          <h2 id="rel-title">{t('product.related')}</h2>
+        </div>
+        <ul class="related" role="list">
+          {related.map((r) => <li><ProductCard product={r} lang={lang} /></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <div class="sticky-cta" data-sticky hidden>
+    <div class="container sticky-cta__inner">
+      <p><span class="label">{p.code}</span> <span class="sticky-cta__name">{name}</span></p>
+      <div class="sticky-cta__btns">
+        <a href={contactHref} class="btn btn--ghost sticky-cta__quote">{t('cta.quote')}</a>
+        <button type="button" class="btn btn--primary" data-sticky-add>{t('cta.addQuote')}</button>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { addToQuote } from '../scripts/quote';
+
+  // ---- Lista de orçamento
+  const form = document.querySelector<HTMLFormElement>('[data-addq]')!;
+  const status = form.querySelector<HTMLElement>('[data-status]')!;
+  const add = () => {
+    const fd = new FormData(form);
+    const qty = Math.max(1, parseInt(String(fd.get('qty') || '1'), 10) || 1);
+    const size = String(fd.get('size') || '');
+    addToQuote({ id: form.dataset.id!, code: form.dataset.code!, name: form.dataset.name!, url: form.dataset.url!, size, qty });
+    status.textContent = `✓ ${form.dataset.added}: ${qty} × ${form.dataset.code}${size ? ' ' + size : ''}`;
+  };
+  form.addEventListener('submit', (e) => { e.preventDefault(); add(); });
+
+  // ---- Botão fixo: aparece quando o formulário sai da tela
+  const sticky = document.querySelector<HTMLElement>('[data-sticky]')!;
+  sticky.hidden = false;
+  document.body.classList.add('has-sticky-cta');
+  const io = new IntersectionObserver(([e]) => sticky.classList.toggle('is-visible', !e.isIntersecting && e.boundingClientRect.top < 0));
+  io.observe(form);
+  sticky.querySelector('[data-sticky-add]')!.addEventListener('click', () => {
+    add();
+    form.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+  });
+
+  // ---- Abas (padrão WAI-ARIA, setas/Home/End)
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-tabs] [role="tab"]')];
+  const select = (tab: HTMLButtonElement, focus = true) => {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')!)!.hidden = !on;
+    });
+    if (focus) tab.focus();
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', (e) => {
+      const map: Record<string, number> = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
+      if (!(e.key in map)) return;
+      e.preventDefault();
+      select(tabs[(map[e.key] + tabs.length) % tabs.length]);
+    });
+  });
+
+  // ---- Modelos 3D por bitola
+  const msel = document.querySelector<HTMLSelectElement>('[data-model-select]');
+  msel?.addEventListener('change', () => {
+    document.querySelectorAll<HTMLElement>('[data-model]').forEach((ul) => (ul.hidden = ul.dataset.model !== msel.value));
+  });
+
+  // ---- Galeria + zoom
+  const g = document.querySelector<HTMLElement>('[data-gallery]')!;
+  const mainImg = g.querySelector<HTMLImageElement>('.gallery__img');
+  g.querySelectorAll<HTMLButtonElement>('[data-thumb]').forEach((b) => b.addEventListener('click', () => {
+    if (!mainImg) return;
+    mainImg.src = b.dataset.thumb!; mainImg.alt = b.dataset.alt!;
+    mainImg.removeAttribute('srcset');
+    g.querySelectorAll('[data-thumb]').forEach((x) => x.removeAttribute('aria-current'));
+    b.setAttribute('aria-current', 'true');
+  }));
+  const dlg = g.querySelector<HTMLDialogElement>('[data-lightbox]')!;
+  const lbImg = dlg.querySelector<HTMLImageElement>('[data-lb-img]')!;
+  const stage = dlg.querySelector<HTMLElement>('[data-stage]')!;
+  g.querySelector('[data-zoom]')?.addEventListener('click', () => {
+    lbImg.src = mainImg!.currentSrc || mainImg!.src; lbImg.alt = mainImg!.alt;
+    stage.classList.remove('is-zoomed');
+    dlg.showModal();
+  });
+  dlg.querySelector('[data-close]')!.addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  stage.addEventListener('click', () => stage.classList.toggle('is-zoomed'));
+  stage.addEventListener('pointermove', (e) => {
+    if (!stage.classList.contains('is-zoomed')) return;
+    const r = stage.getBoundingClientRect();
+    lbImg.style.transformOrigin = `${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`;
+  });
+</script>
+
+<style>
+  .pd { display: grid; gap: var(--space-6); padding-block: var(--space-6) var(--space-7); }
+  @media (min-width: 1000px) { .pd { grid-template-columns: 6fr 5fr; gap: var(--space-8); align-items: start; } }
+  .gallery__main { border: 1px solid var(--color-line); background: var(--white); aspect-ratio: 4 / 3; overflow: hidden; }
+  .gallery__main :global(img), .gallery__main :global(.ph) { width: 100%; height: 100%; object-fit: contain; }
+  .gallery__zoom { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+  .gallery__thumbs { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: flex; gap: var(--space-2); }
+  .gallery__thumbs button { padding: 0; border: 1px solid var(--color-line); background: var(--white); cursor: pointer; }
+  .gallery__thumbs button[aria-current] { border-color: var(--ink); }
+  .lightbox { width: min(1200px, 96vw); height: min(900px, 92vh); padding: 0; border: 0; background: var(--white); }
+  .lightbox::backdrop { background: rgba(14, 17, 20, 0.85); }
+  .lightbox__close { position: absolute; top: var(--space-3); right: var(--space-3); z-index: 2; min-height: 40px; padding: 0 1rem; border: 1px solid var(--color-line-strong); background: var(--white); border-radius: var(--radius); cursor: pointer; }
+  .lightbox__stage { width: 100%; height: 100%; overflow: hidden; display: grid; place-items: center; cursor: zoom-in; }
+  .lightbox__stage img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.2s var(--ease); }
+  .lightbox__stage.is-zoomed { cursor: zoom-out; }
+  .lightbox__stage.is-zoomed img { transform: scale(2.2); }
+
+  .pd__info h1 { font-size: var(--fs-2xl); margin-top: var(--space-3); }
+  .pd__desc { color: var(--steel-700); font-size: var(--fs-md); }
+  .pd__facts { display: grid; grid-template-columns: 1fr 1fr; margin: var(--space-5) 0; border-top: 1px solid var(--color-line-strong); }
+  .pd__facts div { padding: var(--space-3) var(--space-3) var(--space-3) 0; border-bottom: 1px solid var(--color-line); }
+  .pd__facts dd { margin: var(--space-1) 0 0; font-size: var(--fs-sm); font-variant-numeric: tabular-nums; }
+  .addq { display: grid; grid-template-columns: 1fr 110px; gap: var(--space-3); align-items: end; padding: var(--space-4); background: var(--white); border: 1px solid var(--color-line); }
+  .addq__btn { grid-column: 1 / -1; }
+  .addq:not(:has(select)) .addq__qty { grid-column: 1 / -1; }
+  .addq__ok { grid-column: 1 / -1; margin: 0; font-size: var(--fs-sm); color: var(--ok); }
+  .addq__ok:empty { display: none; }
+  .pd__ctas { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--color-line-strong); overflow-x: auto; }
+  .tabs [role='tab'] { background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 0.75rem 1.1rem; min-height: 48px; font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; color: var(--steel-600); cursor: pointer; white-space: nowrap; }
+  .tabs [role='tab'][aria-selected='true'] { color: var(--ink); border-bottom-color: var(--color-primary); }
+  .panel { padding-top: var(--space-6); }
+  .panel__grid { display: grid; gap: var(--space-7); }
+  .panel__grid > * { min-width: 0; }
+  .panel__grid td { overflow-wrap: anywhere; }
+  @media (min-width: 1000px) { .panel__grid { grid-template-columns: 1fr 1fr; } }
+  .panel__h { font-size: var(--fs-lg); }
+  .dims th, .dims td { text-align: right; }
+  .dims th:first-child { text-align: left; }
+  .models { display: grid; gap: var(--space-5); max-width: 720px; }
+  .models__pick { max-width: 260px; }
+  .models__files { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line-strong); }
+  .models__files li { display: grid; grid-template-columns: 90px 1fr auto; gap: var(--space-3); align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-line); font-size: var(--fs-sm); }
+  .related { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+  .sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 80; background: var(--white); border-top: 1px solid var(--color-line-strong); box-shadow: 0 -6px 18px rgba(20,24,28,.06); transform: translateY(100%); transition: transform 0.2s var(--ease); }
+  .sticky-cta.is-visible { transform: none; }
+  .sticky-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); min-height: 68px; padding-block: var(--space-2); }
+  .sticky-cta p { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sticky-cta__btns { display: flex; gap: var(--space-2); flex: none; }
+  @media (max-width: 699px) { .sticky-cta p, .sticky-cta__quote { display: none; } .sticky-cta__btns, .sticky-cta__btns .btn { width: 100%; } }
+</style>

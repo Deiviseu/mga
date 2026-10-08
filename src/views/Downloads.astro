@@ -1,0 +1,122 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { path } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { DOWNLOADS } from '../lib/content';
+import { fullTitle } from '../lib/seo';
+import type { PageEntry } from '../lib/pages';
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('downloads.title'), href: page.path }];
+const D = DOWNLOADS as any;
+const fmtSize = (b: number | null) => {
+  if (!b) return t('downloads.unknownSize');
+  const u = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.min(u.length - 1, Math.floor(Math.log(b) / Math.log(1024)));
+  return `${(b / 1024 ** i).toLocaleString(lang === 'pt' ? 'pt-BR' : lang, { maximumFractionDigits: 1 })} ${u[i]}`;
+};
+const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const req = (title: string) => `${path('contact', lang)}?produto=${encodeURIComponent(`${t('downloads.title')}: ${title}`)}`;
+---
+<Base lang={lang} title={fullTitle(t('downloads.title'), lang)} description={t('downloads.description')} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs}>
+  <PageHead label="PDF · STEP · DWG" title={t('downloads.title')} lead={t('downloads.description')} />
+  <div class="container section dl" data-dl>
+    <div class="dl__tools">
+      <div class="dl__cats" role="group" aria-label={t('catalog.filters')}>
+        <button type="button" data-cat="" aria-pressed="true">{t('downloads.all')}</button>
+        {D.categories.map((c: any) => <button type="button" data-cat={c.id} aria-pressed="false">{tr(c.name, lang)}</button>)}
+      </div>
+      <div class="field dl__search">
+        <label for="dl-q" class="sr-only">{t('downloads.search')}</label>
+        <input id="dl-q" type="search" class="input" placeholder={t('downloads.search')} data-q />
+      </div>
+    </div>
+    <p class="sr-only" aria-live="polite" data-live></p>
+    {D.categories.map((c: any) => (
+      <section class="dl__group" data-group={c.id}>
+        <h2 class="label">{tr(c.name, lang)}</h2>
+        <ul role="list" class="dl__list">
+          {D.items.filter((i: any) => i.category === c.id).map((i: any) => (
+            <li class="dl__item" data-item data-key={norm(`${tr(i.title, lang)} ${tr(c.name, lang)} ${i.type}`)}>
+              <span class="dl__type label" aria-label={t('downloads.type')}>{i.type}</span>
+              <span class="dl__title">{tr(i.title, lang)}</span>
+              {i.versions ? (
+                <span class="dl__versions">
+                  <span class="label">{t('downloads.versions')}:</span>
+                  {i.versions.map((v: any) => v.url
+                    ? <a href={v.url} target="_blank" rel="noopener">{tr(v.label, lang)}</a>
+                    : <span>{tr(v.label, lang)}</span>)}
+                </span>
+              ) : (
+                <span class="dl__size num"><span class="sr-only">{t('downloads.size')}: </span>{fmtSize(i.size)}</span>
+              )}
+              {i.url
+                ? <a class="btn btn--ghost dl__btn" href={i.url} target="_blank" rel="noopener">{t('cta.download')}<span class="sr-only"> {tr(i.title, lang)} ({i.type})</span></a>
+                : <a class="btn btn--ghost dl__btn" href={req(tr(i.title, lang))}>{t('downloads.onRequest')}</a>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <p class="dl__none" data-none hidden>{t('downloads.none')}</p>
+  </div>
+</Base>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-dl]')!;
+  const btns = [...root.querySelectorAll<HTMLButtonElement>('[data-cat]')];
+  const q = root.querySelector<HTMLInputElement>('[data-q]')!;
+  const groups = [...root.querySelectorAll<HTMLElement>('[data-group]')];
+  const none = root.querySelector<HTMLElement>('[data-none]')!;
+  const live = root.querySelector<HTMLElement>('[data-live]')!;
+  const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+  let cat = new URLSearchParams(location.search).get('cat') || '';
+  const apply = () => {
+    const term = norm(q.value);
+    let total = 0;
+    groups.forEach((g) => {
+      let n = 0;
+      g.querySelectorAll<HTMLElement>('[data-item]').forEach((it) => {
+        const show = (!cat || g.dataset.group === cat) && (!term || it.dataset.key!.includes(term));
+        it.hidden = !show;
+        if (show) n++;
+      });
+      g.hidden = n === 0;
+      total += n;
+    });
+    none.hidden = total > 0;
+    live.textContent = String(total);
+    btns.forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.cat || '') === cat)));
+    const url = new URL(location.href);
+    cat ? url.searchParams.set('cat', cat) : url.searchParams.delete('cat');
+    history.replaceState(null, '', url);
+  };
+  btns.forEach((b) => b.addEventListener('click', () => { cat = b.dataset.cat || ''; apply(); }));
+  q.addEventListener('input', apply);
+  apply();
+</script>
+<style>
+  .dl__tools { display: grid; gap: var(--space-4); margin-bottom: var(--space-6); }
+  @media (min-width: 1000px) { .dl__tools { grid-template-columns: 1fr 320px; align-items: center; } }
+  .dl__cats { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .dl__cats button { min-height: 40px; padding: 0 0.9rem; border: 1px solid var(--color-line-strong); background: var(--white); border-radius: var(--radius-sm); cursor: pointer; font-size: var(--fs-sm); }
+  .dl__cats button[aria-pressed='true'] { background: var(--ink); color: var(--white); border-color: var(--ink); }
+  .dl__group { margin-bottom: var(--space-6); }
+  .dl__group[hidden] { display: none; }
+  .dl__group h2 { border-bottom: 1px solid var(--color-line-strong); padding-bottom: var(--space-2); margin-bottom: 0; }
+  .dl__list { list-style: none; margin: 0; padding: 0; }
+  .dl__item { display: grid; grid-template-columns: 52px 1fr auto; gap: var(--space-2) var(--space-4); align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-line); }
+  .dl__item[hidden] { display: none; }
+  .dl__type { border: 1px solid var(--color-line-strong); text-align: center; padding: 0.25rem 0; color: var(--steel-700); }
+  .dl__title { font-weight: 500; }
+  .dl__size { font-size: var(--fs-sm); color: var(--color-muted); text-align: right; }
+  .dl__versions { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); font-size: var(--fs-sm); color: var(--steel-700); }
+  .dl__btn { grid-column: 3; grid-row: 1; }
+  .dl__item:has(.dl__size) .dl__btn { grid-column: auto; grid-row: auto; }
+  @media (min-width: 800px) { .dl__item { grid-template-columns: 52px 1fr 120px 150px; } .dl__item:has(.dl__versions) .dl__versions { grid-column: 3; grid-row: 1; } .dl__item:has(.dl__versions) .dl__btn { grid-column: 4; } }
+  @media (max-width: 799px) { .dl__size { grid-column: 2; text-align: left; } .dl__item:has(.dl__size) .dl__btn { grid-column: 3; grid-row: 1 / span 2; } }
+  .dl__none { padding: var(--space-5); border: 1px dashed var(--color-line-strong); }
+</style>

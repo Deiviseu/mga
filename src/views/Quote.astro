@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { path } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { fullTitle } from '../lib/seo';
+import type { PageEntry } from '../lib/pages';
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('quote.title'), href: page.path }];
+---
+<Base lang={lang} title={fullTitle(t('quote.title'), lang)} description={t('quote.description')} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs} noindex>
+  <PageHead label={t('cta.quote').toUpperCase()} title={t('quote.title')} lead={t('quote.description')} />
+  <div class="container section quote" data-quote-page data-remove={t('quote.remove')} data-size={t('product.size')} data-qty={t('product.qty')}>
+    <section aria-labelledby="ql-title">
+      <h2 id="ql-title" class="sr-only">{t('quote.title')}</h2>
+      <div class="table-scroll">
+        <table class="spec-table qtable" data-qtable hidden>
+          <thead><tr><th scope="col">{t('form.product')}</th><th scope="col">{t('product.size')}</th><th scope="col">{t('product.qty')}</th><th scope="col"><span class="sr-only">{t('quote.remove')}</span></th></tr></thead>
+          <tbody data-qbody></tbody>
+        </table>
+      </div>
+      <p class="qempty" data-qempty>{t('quote.empty')} <a href={path('products', lang)}>{t('cta.seeProducts')}</a></p>
+      <p class="hint">{t('quote.saved')} <a href={path('products', lang)} class="link-arrow">{t('quote.continue')}</a></p>
+    </section>
+    <section class="quote__form" aria-label={t('quote.send')} data-qform hidden>
+      <ContactForm lang={lang} mode="quote" />
+    </section>
+  </div>
+</Base>
+<script>
+  import { getQuote, onQuoteChange, removeFromQuote, updateQuote, type QuoteItem } from '../scripts/quote';
+  const root = document.querySelector<HTMLElement>('[data-quote-page]')!;
+  const table = root.querySelector<HTMLTableElement>('[data-qtable]')!;
+  const body = root.querySelector<HTMLElement>('[data-qbody]')!;
+  const empty = root.querySelector<HTMLElement>('[data-qempty]')!;
+  const formBox = root.querySelector<HTMLElement>('[data-qform]')!;
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const render = (items: QuoteItem[]) => {
+    table.hidden = items.length === 0;
+    formBox.hidden = items.length === 0;
+    empty.hidden = items.length > 0;
+    body.innerHTML = items.map((i, k) => `
+      <tr>
+        <th scope="row"><span class="label">${esc(i.code)}</span><br><a href="${esc(i.url)}">${esc(i.name)}</a></th>
+        <td><label class="sr-only" for="qs-${k}">${root.dataset.size}</label><input id="qs-${k}" class="input" data-k="${k}" data-f="size" value="${esc(i.size)}"></td>
+        <td><label class="sr-only" for="qq-${k}">${root.dataset.qty}</label><input id="qq-${k}" class="input num" type="number" min="1" data-k="${k}" data-f="qty" value="${i.qty}"></td>
+        <td><button type="button" class="btn btn--ghost" data-del="${k}">${root.dataset.remove}</button></td>
+      </tr>`).join('');
+  };
+  body.addEventListener('change', (e) => {
+    const el = e.target as HTMLInputElement;
+    if (!el.dataset.f) return;
+    const k = Number(el.dataset.k);
+    updateQuote(k, el.dataset.f === 'qty' ? { qty: Math.max(1, parseInt(el.value, 10) || 1) } : { size: el.value });
+  });
+  body.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-del]');
+    if (b) removeFromQuote(Number(b.dataset.del));
+  });
+  render(getQuote());
+  onQuoteChange(render);
+</script>
+<style>
+  .quote { display: grid; gap: var(--space-7); }
+  @media (min-width: 1100px) { .quote { grid-template-columns: 6fr 5fr; gap: var(--space-8); align-items: start; } }
+  .qtable :global(td), .qtable :global(th) { vertical-align: middle; }
+  .qtable :global(input) { max-width: 120px; }
+  .qtable :global(tbody th) { width: auto; }
+  .qempty { padding: var(--space-6); border: 1px dashed var(--color-line-strong); }
+  .hint { font-size: var(--fs-sm); color: var(--color-muted); margin-top: var(--space-4); }
+  .quote__form { background: var(--white); border: 1px solid var(--color-line); padding: var(--space-5); }
+</style>

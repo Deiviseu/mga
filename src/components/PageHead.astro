@@ -1,0 +1,19 @@
+---
+interface Props { label?: string; title: string; lead?: string }
+const { label, title, lead } = Astro.props;
+---
+<header class="page-head">
+  <div class="container page-head__grid">
+    <div>
+      {label && <p class="label label--accent">{label}</p>}
+      <h1>{title}</h1>
+    </div>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</header>
+<style>
+  .page-head__grid { display: grid; gap: var(--space-4); }
+  .page-head__grid .lead { margin: 0; }
+  @media (min-width: 1000px) { .page-head__grid { grid-template-columns: 7fr 5fr; align-items: end; } }
+</style>

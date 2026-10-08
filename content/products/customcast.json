@@ -1,0 +1,48 @@
+{
+  "id": "customcast",
+  "code": "CUSTOMCAST",
+  "category": "microfusao",
+  "seed": true,
+  "slug": {
+    "pt": "customcast-pecas-microfundidas-sob-desenho",
+    "en": "customcast-investment-castings-to-drawing",
+    "es": "customcast-piezas-microfundidas-segun-plano"
+  },
+  "name": {
+    "pt": "CustomCast: Peças Microfundidas Sob Desenho",
+    "en": "CustomCast: Investment Castings to Drawing",
+    "es": "CustomCast: Piezas Microfundidas Según Plano"
+  },
+  "summary": {
+    "pt": "CustomCast: Peças Microfundidas Sob Desenho da linha CUSTOMCAST. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "CustomCast: Investment Castings to Drawing, CUSTOMCAST series. Illustrative data: check the official datasheet.",
+    "es": "CustomCast: Piezas Microfundidas Según Plano de la línea CUSTOMCAST. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/customcast",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [],
+    "material": [
+      "cf8m",
+      "cf8",
+      "wcb"
+    ],
+    "connection": [],
+    "sizes": []
+  },
+  "specs": [],
+  "norms": [
+    "ASTM A351",
+    "ASTM A216",
+    "ASTM A743"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [],
+  "related": []
+}

@@ -1,0 +1,34 @@
+---
+// Imagem com width/height obrigatórios, lazy loading e alt.
+// - src local (import) → <Picture> AVIF/WebP gerado pelo Astro.
+// - src remoto (mga.com.br/storage) → otimizado só se OPTIMIZE_REMOTE_IMAGES=1
+//   (exige rede no build); senão <img> direto, sem quebrar o build offline.
+// - src null → Placeholder técnico.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Placeholder from './Placeholder.astro';
+
+interface Props {
+  src: string | ImageMetadata | null | undefined;
+  alt: string;
+  width?: number;
+  height?: number;
+  sizes?: string;
+  eager?: boolean;
+  class?: string;
+  dark?: boolean;
+}
+const { src, alt, width = 800, height = 600, sizes = '100vw', eager = false, class: cls, dark } = Astro.props;
+const optimizeRemote = import.meta.env.OPTIMIZE_REMOTE_IMAGES === '1' || process.env.OPTIMIZE_REMOTE_IMAGES === '1';
+const loading = eager ? 'eager' : 'lazy';
+const fetchpriority = eager ? 'high' : undefined;
+---
+{!src ? (
+  <Placeholder label={alt} class={cls} dark={dark} />
+) : typeof src !== 'string' || optimizeRemote ? (
+  <Picture src={src as any} alt={alt} width={width} height={height} formats={['avif', 'webp']} sizes={sizes}
+    widths={[480, 800, 1200, 1600].filter((w) => w <= width * 1.01)} loading={loading} fetchpriority={fetchpriority}
+    decoding="async" class={cls} />
+) : (
+  <img src={src} alt={alt} width={width} height={height} loading={loading} fetchpriority={fetchpriority} decoding="async" class={cls} />
+)}

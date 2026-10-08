@@ -1,0 +1,42 @@
+{
+  "id": "sedes-e-vedacoes-ptfe",
+  "code": "SULFLON",
+  "category": "ptfe",
+  "seed": true,
+  "slug": {
+    "pt": "sedes-e-vedacoes-em-ptfe-sulflon",
+    "en": "sulflon-ptfe-seats-and-seals",
+    "es": "asientos-y-sellos-de-ptfe-sulflon"
+  },
+  "name": {
+    "pt": "Sedes e Vedações em PTFE Sulflon",
+    "en": "Sulflon PTFE Seats and Seals",
+    "es": "Asientos y Sellos de PTFE Sulflon"
+  },
+  "summary": {
+    "pt": "Sedes e Vedações em PTFE Sulflon da linha SULFLON. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Sulflon PTFE Seats and Seals, SULFLON series. Illustrative data: check the official datasheet.",
+    "es": "Asientos y Sellos de PTFE Sulflon de la línea SULFLON. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/sedes-e-vedacoes-ptfe",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [],
+    "material": [
+      "ptfe"
+    ],
+    "connection": [],
+    "sizes": []
+  },
+  "specs": [],
+  "norms": [],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [],
+  "related": []
+}

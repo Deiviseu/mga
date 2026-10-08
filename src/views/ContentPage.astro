@@ -1,0 +1,71 @@
+---
+// Páginas institucionais em texto (Sobre, Fundamentos, Meio ambiente,
+// Responsabilidade social, Privacidade, Termos). Conteúdo em content/pages/*.json.
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Img from '../components/Img.astro';
+import { path } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { getPage, md } from '../lib/content';
+import { fullTitle } from '../lib/seo';
+import type { PageEntry } from '../lib/pages';
+
+interface Props { page: PageEntry; contentId: string }
+const { page, contentId } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const c = getPage(contentId);
+const title = tr(c.title, lang);
+const isCompany = ['about', 'principles', 'environment', 'social'].includes(page.key);
+const crumbs = [
+  { name: t('nav.home'), href: path('home', lang) },
+  ...(isCompany && page.key !== 'about' ? [{ name: t('nav.company'), href: path('about', lang) }] : []),
+  { name: title, href: page.path },
+];
+const companyNav = [['about', 'nav.about'], ['principles', 'nav.principles'], ['certificates', 'nav.certificates'], ['timeline', 'nav.timeline'], ['environment', 'nav.environment'], ['social', 'nav.social'], ['units', 'nav.units']] as const;
+---
+<Base lang={lang} title={fullTitle(title, lang)} description={tr(c.seoDescription, lang)} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs} image={c.image?.src}>
+  <PageHead label={isCompany ? t('nav.company').toUpperCase() : undefined} title={title} lead={tr(c.lead, lang)} />
+  <div class="container section cp">
+    {isCompany && (
+      <nav class="cp__side" aria-label={t('nav.company')}>
+        <ul role="list">
+          {companyNav.map(([k, label]) => <li><a href={path(k, lang)} aria-current={k === page.key ? 'page' : undefined}>{t(label)}</a></li>)}
+        </ul>
+      </nav>
+    )}
+    <div class="cp__main">
+      {c.image && (
+        <figure class="cp__figure">
+          <Img src={c.image.src} width={c.image.width} height={c.image.height} alt={tr(c.image.alt, lang)} sizes="(min-width: 1000px) 60vw, 100vw" eager />
+        </figure>
+      )}
+      <div class="cp__sections">
+        {c.sections.map((s: any, i: number) => (
+          <section class="cp__section" id={s.id}>
+            <p class="label num">{String(i + 1).padStart(2, '0')}</p>
+            <div>
+              <h2>{tr(s.heading, lang)}</h2>
+              <div class="prose" set:html={md(tr(s.body, lang))} />
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>
+<style>
+  .cp { display: grid; gap: var(--space-6); }
+  @media (min-width: 1000px) { .cp { grid-template-columns: 3fr 9fr; } }
+  .cp__side ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line-strong); position: sticky; top: calc(var(--header-h) + var(--space-5)); }
+  .cp__side a { display: block; padding: 0.6rem 0; border-bottom: 1px solid var(--color-line); color: var(--steel-700); text-decoration: none; font-size: var(--fs-sm); }
+  .cp__side a[aria-current] { color: var(--color-primary); font-weight: 600; box-shadow: inset 2px 0 0 var(--color-primary); padding-left: var(--space-3); }
+  @media (max-width: 999px) { .cp__side ul { position: static; display: flex; flex-wrap: wrap; gap: 0 var(--space-4); border: 0; } .cp__side a { border: 0; } }
+  .cp__figure { margin: 0 0 var(--space-7); border: 1px solid var(--color-line); }
+  .cp__figure :global(img), .cp__figure :global(.ph) { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  .cp__section { display: grid; gap: var(--space-3); padding-block: var(--space-6); border-top: 1px solid var(--color-line); }
+  .cp__section:first-child { border-top: 0; padding-top: 0; }
+  @media (min-width: 700px) { .cp__section { grid-template-columns: 4rem 1fr; } }
+  .cp__section .label { color: var(--color-primary); padding-top: 0.5em; }
+</style>

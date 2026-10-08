@@ -1,0 +1,118 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "_comment": "GERADO por scripts/build-redirects.mjs. Edite content/redirects.json e rode npm run build.",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "build": {
+    "env": {
+      "OPTIMIZE_REMOTE_IMAGES": "1"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/timeline",
+      "destination": "/linha-do-tempo",
+      "permanent": true
+    },
+    {
+      "source": "/produtos/clase-1500-flotante",
+      "destination": "/produtos/valvula-esfera-bipartida-classe-1500-flutuante",
+      "permanent": true
+    },
+    {
+      "source": "/produtos/visores-de-flujo",
+      "destination": "/produtos/categoria/visores-de-fluxo",
+      "permanent": true
+    },
+    {
+      "source": "/produtos/cryogenics",
+      "destination": "/produtos/categoria/valvulas-criogenicas",
+      "permanent": true
+    },
+    {
+      "source": "/informacion-ambiental",
+      "destination": "/downloads?cat=institucional",
+      "permanent": true
+    },
+    {
+      "source": "/boletin-ambiental",
+      "destination": "/downloads?cat=institucional",
+      "permanent": true
+    },
+    {
+      "source": "/downloads/informacion-ambiental",
+      "destination": "/downloads?cat=institucional",
+      "permanent": true
+    },
+    {
+      "source": "/downloads/boletin-ambiental",
+      "destination": "/downloads?cat=institucional",
+      "permanent": true
+    },
+    {
+      "source": "/produtos/matrizes",
+      "destination": "/produtos/categoria/matrizes",
+      "permanent": true
+    },
+    {
+      "source": "/produtos/pecas-em-ptfe",
+      "destination": "/produtos/categoria/pecas-em-ptfe",
+      "permanent": true
+    },
+    {
+      "source": "/produtos/vf-visor-de-fluxo",
+      "destination": "/produtos/visor-de-fluxo-vf",
+      "permanent": true
+    },
+    {
+      "source": "/canal-denuncia",
+      "destination": "/canal-de-denuncia",
+      "permanent": true
+    },
+    {
+      "source": "/termos-gdpr",
+      "destination": "/politica-de-privacidade",
+      "permanent": true
+    },
+    {
+      "source": "/politica-privacidade",
+      "destination": "/politica-de-privacidade",
+      "permanent": true
+    },
+    {
+      "source": "/produtos/politicas-mga.pdf",
+      "destination": "/politicas-mga.pdf",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/_astro/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
+  ]
+}

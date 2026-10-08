@@ -1,0 +1,30 @@
+{
+  "_comment": "type = extensão exibida; size em bytes (null = desconhecido; rode `npm run import:content -- --sizes` para preencher via HEAD). Relatórios de transparência foram unificados em um item com 'versions'.",
+  "categories": [
+    { "id": "catalogos", "name": { "pt": "Catálogos", "en": "Catalogs", "es": "Catálogos" } },
+    { "id": "tecnico", "name": { "pt": "Técnico", "en": "Technical", "es": "Técnico" } },
+    { "id": "institucional", "name": { "pt": "Institucional", "en": "Corporate", "es": "Institucional" } },
+    { "id": "compliance", "name": { "pt": "LGPD / Compliance", "en": "Privacy / Compliance", "es": "Privacidad / Compliance" } },
+    { "id": "customcast", "name": { "pt": "CustomCast", "en": "CustomCast", "es": "CustomCast" } }
+  ],
+  "items": [
+    { "id": "catalogo-geral", "category": "catalogos", "title": { "pt": "Catálogo geral de válvulas", "en": "General valve catalog", "es": "Catálogo general de válvulas" }, "type": "PDF", "size": null, "url": null, "lang": "pt" },
+    { "id": "catalogo-criogenicas", "category": "catalogos", "title": { "pt": "Catálogo de válvulas criogênicas", "en": "Cryogenic valves catalog", "es": "Catálogo de válvulas criogénicas" }, "type": "PDF", "size": null, "url": null, "lang": "pt" },
+    { "id": "catalogo-sulflon", "category": "catalogos", "title": { "pt": "Catálogo Sulflon (PTFE)", "en": "Sulflon (PTFE) catalog", "es": "Catálogo Sulflon (PTFE)" }, "type": "PDF", "size": null, "url": null, "lang": "pt" },
+    { "id": "tabela-pressao-temperatura", "category": "tecnico", "title": { "pt": "Tabela pressão × temperatura", "en": "Pressure × temperature chart", "es": "Tabla presión × temperatura" }, "type": "PDF", "size": null, "url": null, "lang": "pt" },
+    { "id": "manual-instalacao", "category": "tecnico", "title": { "pt": "Manual de instalação, operação e manutenção", "en": "Installation, operation and maintenance manual", "es": "Manual de instalación, operación y mantenimiento" }, "type": "PDF", "size": null, "url": null, "lang": "pt" },
+    { "id": "apresentacao-institucional", "category": "institucional", "title": { "pt": "Apresentação institucional", "en": "Corporate presentation", "es": "Presentación institucional" }, "type": "PDF", "size": null, "url": null, "lang": "pt" },
+    { "id": "informacao-ambiental", "category": "institucional", "title": { "pt": "Informação ambiental", "en": "Environmental information", "es": "Información ambiental" }, "type": "PDF", "size": null, "url": null, "lang": "pt" },
+    { "id": "boletim-ambiental", "category": "institucional", "title": { "pt": "Boletim ambiental", "en": "Environmental bulletin", "es": "Boletín ambiental" }, "type": "PDF", "size": null, "url": null, "lang": "pt" },
+    { "id": "politicas-mga", "category": "compliance", "title": { "pt": "Políticas MGA", "en": "MGA policies", "es": "Políticas MGA" }, "type": "PDF", "size": null, "url": null, "urlWhenAvailable": "/politicas-mga.pdf", "todo": "Copiar o PDF para public/politicas-mga.pdf e trocar url por \"/politicas-mga.pdf\" (antes era um link relativo quebrado em /produtos/politicas-mga.pdf)", "lang": "pt" },
+    { "id": "codigo-de-conduta", "category": "compliance", "title": { "pt": "Código de conduta", "en": "Code of conduct", "es": "Código de conducta" }, "type": "PDF", "size": null, "url": null, "lang": "pt" },
+    { "id": "relatorio-transparencia-salarial", "category": "compliance", "title": { "pt": "Relatório de transparência salarial", "en": "Pay transparency report", "es": "Informe de transparencia salarial" }, "type": "PDF", "size": null, "lang": "pt",
+      "versions": [
+        { "label": { "pt": "2º semestre 2025", "en": "2nd half 2025", "es": "2º semestre 2025" }, "url": null },
+        { "label": { "pt": "1º semestre 2025", "en": "1st half 2025", "es": "1er semestre 2025" }, "url": null },
+        { "label": { "pt": "2º semestre 2024", "en": "2nd half 2024", "es": "2º semestre 2024" }, "url": null }
+      ]
+    },
+    { "id": "customcast-guia", "category": "customcast", "title": { "pt": "Guia CustomCast: do desenho à peça", "en": "CustomCast guide: from drawing to part", "es": "Guía CustomCast: del plano a la pieza" }, "type": "PDF", "size": null, "url": null, "lang": "pt" }
+  ]
+}

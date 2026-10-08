@@ -1,0 +1,84 @@
+{
+  "_comment": "Um marco por ano (eventos do mesmo ano agrupados). Campo 'todo' = precisa de confirmação da MGA. 'image' null = usa placeholder até receber foto.",
+  "milestones": [
+    {
+      "year": 1991,
+      "todo": "O título original deste marco era 'Primeira válvula atuada', mas o texto fala da fundação. Confirmar com a MGA qual é o fato correto de 1991.",
+      "image": null,
+      "events": [
+        {
+          "title": { "pt": "Fundação da Metalúrgica Golden Art's", "en": "Metalúrgica Golden Art's is founded", "es": "Fundación de Metalúrgica Golden Art's" },
+          "text": { "pt": "A empresa nasce em Veranópolis/RS, dando início à fabricação de válvulas industriais.", "en": "The company is founded in Veranópolis, RS, starting the manufacture of industrial valves.", "es": "La empresa nace en Veranópolis/RS, dando inicio a la fabricación de válvulas industriales." }
+        }
+      ]
+    },
+    {
+      "year": 2000,
+      "todo": "Ano estimado. Confirmar quando a microfusão própria entrou em operação.",
+      "image": null,
+      "events": [
+        {
+          "title": { "pt": "Domínio da microfusão", "en": "Mastering investment casting", "es": "Dominio de la microfusión" },
+          "text": { "pt": "Com fundição de precisão própria, a MGA passa a ter domínio de todo o processo, do molde em cera à peça acabada.", "en": "With its own precision foundry, MGA gains control of the entire process, from wax pattern to finished part.", "es": "Con fundición de precisión propia, MGA pasa a dominar todo el proceso, desde el molde de cera hasta la pieza terminada." }
+        }
+      ]
+    },
+    {
+      "year": 2015,
+      "image": null,
+      "events": [
+        {
+          "title": { "pt": "MGA passa a integrar o Grupo KITZ", "en": "MGA joins the KITZ Group", "es": "MGA pasa a integrar el Grupo KITZ" },
+          "text": { "pt": "A japonesa KITZ Corporation adquire 100% da MGA, unindo tecnologias de produção para atender o Brasil e a América do Sul.", "en": "Japan's KITZ Corporation acquires 100% of MGA, combining production technologies to serve Brazil and South America.", "es": "La japonesa KITZ Corporation adquiere el 100% de MGA, uniendo tecnologías de producción para atender a Brasil y Sudamérica." }
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "todo": "Marco a definir pela MGA (texto e foto).",
+      "image": null,
+      "events": [
+        {
+          "title": { "pt": "TODO: marco de 2021", "en": "TODO: 2021 milestone", "es": "TODO: hito de 2021" },
+          "text": { "pt": "Conteúdo a ser enviado pela MGA.", "en": "Content to be provided by MGA.", "es": "Contenido a ser enviado por MGA." }
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "image": null,
+      "events": [
+        {
+          "title": { "pt": "Conquista do Prêmio KITZ de Meio Ambiente", "en": "KITZ Environmental Award", "es": "Conquista del Premio KITZ de Medio Ambiente" },
+          "text": { "pt": "Primeiro de uma sequência de reconhecimentos do Grupo KITZ (2022–2026) pelas práticas ambientais da MGA.", "en": "The first in a series of KITZ Group recognitions (2022–2026) for MGA's environmental practices.", "es": "El primero de una serie de reconocimientos del Grupo KITZ (2022–2026) por las prácticas ambientales de MGA." }
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "todo": "Confirmar o ano de inauguração da nova planta.",
+      "image": null,
+      "events": [
+        {
+          "title": { "pt": "Inauguração da nova planta", "en": "New plant inaugurated", "es": "Inauguración de la nueva planta" },
+          "text": { "pt": "Novo prédio de 6.189 m² em área total de 28.000 m², ampliando em cerca de 30% a capacidade de produção de válvulas esfera.", "en": "A new 6,189 m² building on a 28,000 m² site increases ball valve production capacity by about 30%.", "es": "Nuevo edificio de 6.189 m² en un área total de 28.000 m², ampliando en cerca del 30% la capacidad de producción de válvulas esfera." }
+        }
+      ]
+    },
+    {
+      "year": 2026,
+      "todo": "Marco dos 35 anos: texto e foto a definir pela MGA.",
+      "image": null,
+      "events": [
+        {
+          "title": { "pt": "35 anos de MGA", "en": "35 years of MGA", "es": "35 años de MGA" },
+          "text": { "pt": "TODO: texto comemorativo dos 35 anos.", "en": "TODO: 35th anniversary text.", "es": "TODO: texto conmemorativo de los 35 años." }
+        },
+        {
+          "title": { "pt": "Troféu Expressão de Ecologia", "en": "Expressão de Ecologia Award", "es": "Trofeo Expressão de Ecologia" },
+          "text": { "pt": "Reconhecimento no Prêmio Expressão de Ecologia, uma das principais premiações ambientais do Sul do Brasil.", "en": "Recognition at the Expressão de Ecologia Award, one of southern Brazil's leading environmental awards.", "es": "Reconocimiento en el Premio Expressão de Ecologia, uno de los principales premios ambientales del sur de Brasil." }
+        }
+      ]
+    }
+  ]
+}

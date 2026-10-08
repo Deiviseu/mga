@@ -1,0 +1,91 @@
+---
+import '@fontsource/barlow-condensed/500.css';
+import '@fontsource/barlow-condensed/600.css';
+import '@fontsource/barlow-condensed/700.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import { LANGS, LOCALE, OG_LOCALE, DEFAULT_LANG, type Lang } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { SITE } from '../lib/content';
+import { organizationLd, breadcrumbLd } from '../lib/seo';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import WhatsApp from '../components/WhatsApp.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+
+interface Props {
+  lang: Lang;
+  title: string;          // <title> completo, já único por página
+  description: string;    // meta description única
+  path: string;           // caminho canônico desta página
+  alternates: Partial<Record<Lang, string>>;
+  image?: string | null;  // og:image
+  noindex?: boolean;
+  jsonLd?: object[];
+  breadcrumbs?: { name: string; href: string }[];
+  ogType?: string;
+}
+const { lang, title, description, path: pagePath, alternates, image, noindex = false, jsonLd = [], breadcrumbs, ogType = 'website' } = Astro.props;
+const t = useT(lang);
+const abs = (p: string) => new URL(p, SITE.url).href;
+const canonical = abs(pagePath);
+const ogImage = image || SITE.defaultOgImage;
+const ld = [organizationLd(lang), ...jsonLd];
+if (breadcrumbs?.length) ld.push(breadcrumbLd(breadcrumbs.map((b) => ({ name: b.name, url: abs(b.href) }))));
+---
+<!doctype html>
+<html lang={LOCALE[lang]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {LANGS.filter((l) => alternates[l]).map((l) => <link rel="alternate" hreflang={LOCALE[l]} href={abs(alternates[l]!)} />)}
+    {alternates[DEFAULT_LANG] && <link rel="alternate" hreflang="x-default" href={abs(alternates[DEFAULT_LANG]!)} />}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="theme-color" content="#1d2226" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    {ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+  </head>
+  <body>
+    <a href="#main" class="skip-link">{t('nav.skip')}</a>
+    <Header lang={lang} alternates={alternates} />
+    <main id="main" tabindex="-1">
+      {breadcrumbs && breadcrumbs.length > 1 && (
+        <div class="crumb-bar"><div class="container"><Breadcrumbs lang={lang} items={breadcrumbs} /></div></div>
+      )}
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <WhatsApp lang={lang} />
+    <CookieConsent lang={lang} />
+    <script>
+      import { getQuote, onQuoteChange } from '../scripts/quote';
+      const badge = document.querySelector<HTMLElement>('[data-quote-count]');
+      const render = (n: number) => { if (!badge) return; badge.textContent = String(n); badge.hidden = n === 0; };
+      render(getQuote().length);
+      onQuoteChange((items) => render(items.length));
+    </script>
+  </body>
+</html>
+<style>
+  .crumb-bar { background: var(--white); border-bottom: 1px solid var(--color-line); padding-block: var(--space-3); }
+  main:focus { outline: none; }
+</style>

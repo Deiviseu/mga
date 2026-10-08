@@ -1,0 +1,144 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroCarousel from '../components/HeroCarousel.astro';
+import Stats from '../components/Stats.astro';
+import CertCarousel from '../components/CertCarousel.astro';
+import Img from '../components/Img.astro';
+import { path } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { HOME, categoryById, categoryUrl, productsIn } from '../lib/content';
+import type { PageEntry } from '../lib/pages';
+import { localBusinessLd } from '../lib/seo';
+
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const featured = HOME.featuredCategories.map((id: string) => categoryById(id)!).filter(Boolean);
+const steps = [1, 2, 3, 4] as const;
+---
+<Base lang={lang} title={t('home.title')} description={t('home.description')} path={page.path} alternates={page.alternates}
+  jsonLd={localBusinessLd(lang)}>
+  <HeroCarousel lang={lang} />
+
+  <section class="section section--dark" aria-labelledby="stats-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="label">{t('home.statsLabel')}</p>
+        <h2 id="stats-title">{t('home.statsTitle')}</h2>
+      </div>
+      <Stats lang={lang} />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fam-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="label">{t('home.familiesLabel')}</p>
+        <div>
+          <h2 id="fam-title">{t('home.familiesTitle')}</h2>
+          <p>{t('home.familiesText')}</p>
+        </div>
+      </div>
+      <ul class="families" role="list">
+        {featured.map((c: any, i: number) => (
+          <li class:list={['fam', { 'fam--wide': i === 0 }]}>
+            <a href={categoryUrl(c, lang)}>
+              <div class="fam__media"><Img src={c.image} width={800} height={600} alt="" sizes="(min-width: 1000px) 33vw, 100vw" /></div>
+              <div class="fam__body">
+                <p class="label"><span class="fam__code">{c.code}</span> · {productsIn(c.id).length} {t('catalog.results')}</p>
+                <h3>{tr(c.name, lang)}</h3>
+                <p class="fam__desc">{tr(c.description, lang)}</p>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="families__all"><a href={path('products', lang)} class="btn btn--ghost">{t('nav.allProducts')}</a></p>
+    </div>
+  </section>
+
+  <section class="section section--line" aria-labelledby="proc-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="label">{t('home.processLabel')}</p>
+        <h2 id="proc-title">{t('home.processTitle')}</h2>
+      </div>
+      <ol class="process" role="list">
+        {steps.map((n) => (
+          <li>
+            <span class="process__n num">0{n}</span>
+            <h3>{t(`home.process.${n}`)}</h3>
+            <p>{t(`home.process.${n}t`)}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--line" aria-labelledby="cert-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="label">{t('home.certLabel')}</p>
+        <div class="row-between">
+          <h2 id="cert-title">{t('home.certTitle')}</h2>
+          <a href={path('certificates', lang)} class="link-arrow">{t('nav.certificates')}</a>
+        </div>
+      </div>
+      <CertCarousel lang={lang} />
+    </div>
+  </section>
+
+  <section class="section section--line" aria-labelledby="tools-title">
+    <div class="container tools">
+      <div>
+        <p class="label">{t('home.toolsLabel')}</p>
+        <h2 id="tools-title">{t('home.toolsTitle')}</h2>
+      </div>
+      <ul role="list">
+        <li><a href={path('applications', lang)}><span class="label">01</span>{t('home.tool.apps')}</a></li>
+        <li><a href={path('downloads', lang)}><span class="label">02</span>{t('home.tool.downloads')}</a></li>
+        <li><a href={path('quote', lang)}><span class="label">03</span>{t('home.tool.quote')}</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .families { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .families { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .families { grid-template-columns: repeat(3, 1fr); } .fam--wide { grid-column: span 2; grid-row: span 2; } }
+  .fam { min-width: 0; }
+  .fam a { display: flex; flex-direction: column; height: 100%; border: 1px solid var(--color-line); background: var(--white); color: var(--ink); text-decoration: none; border-radius: var(--radius-sm); }
+  .fam a:hover { border-color: var(--steel-600); }
+  .fam a:hover h3 { color: var(--color-primary); }
+  .fam__media { aspect-ratio: 16 / 10; border-bottom: 1px solid var(--color-line); overflow: hidden; }
+  .fam__media :global(img), .fam__media :global(.ph) { width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto; }
+  .fam--wide .fam__media { flex: 1; min-height: 240px; }
+  .fam__body { padding: var(--space-4) var(--space-5) var(--space-5); }
+  .fam__body h3 { margin: var(--space-2) 0; }
+  .fam--wide h3 { font-size: var(--fs-xl); }
+  .fam__code { color: var(--color-primary); }
+  .fam__desc { color: var(--steel-600); font-size: var(--fs-sm); margin: 0; }
+  .families__all { margin-top: var(--space-6); }
+
+  .process { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; grid-template-columns: 1fr; counter-reset: s; }
+  @media (min-width: 700px) { .process { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1100px) { .process { grid-template-columns: repeat(4, 1fr); } }
+  .process li { padding: var(--space-5) var(--space-5) var(--space-5) 0; border-top: 1px solid var(--color-line-strong); }
+  @media (min-width: 1100px) { .process li + li { padding-left: var(--space-5); border-left: 1px solid var(--color-line); } }
+  .process__n { font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--color-primary); display: block; margin-bottom: var(--space-5); }
+  .process h3 { margin-bottom: var(--space-2); }
+  .process p { color: var(--steel-600); margin: 0; font-size: var(--fs-sm); max-width: 32ch; }
+
+  .row-between { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: space-between; align-items: end; }
+
+  .tools { display: grid; gap: var(--space-6); }
+  @media (min-width: 900px) { .tools { grid-template-columns: 5fr 7fr; align-items: start; } }
+  .tools h2 { margin-top: var(--space-3); }
+  .tools ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line-strong); }
+  .tools li a { display: grid; grid-template-columns: 3rem 1fr auto; align-items: center; padding: var(--space-5) 0; border-bottom: 1px solid var(--color-line); color: var(--ink); text-decoration: none; font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 500; }
+  .tools li a::after { content: '→'; font-family: var(--font-body); color: var(--color-primary); transition: transform .15s; }
+  .tools li a:hover { color: var(--color-primary); }
+  .tools li a:hover::after { transform: translateX(4px); }
+</style>

@@ -1,0 +1,289 @@
+---
+import { path, LANGS, type Lang } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { categories, GROUPS, categoryUrl, SITE } from '../lib/content';
+import Logo from './Logo.astro';
+import Flag from './Flag.astro';
+
+interface Props { lang: Lang; alternates: Partial<Record<Lang, string>> }
+const { lang, alternates } = Astro.props;
+const t = useT(lang);
+const company = [
+  ['about', 'nav.about'], ['principles', 'nav.principles'], ['certificates', 'nav.certificates'],
+  ['timeline', 'nav.timeline'], ['environment', 'nav.environment'], ['social', 'nav.social'], ['units', 'nav.units'],
+] as const;
+const current = Astro.url.pathname;
+const isActive = (href: string) => current === href || (href !== '/' && current.startsWith(href + '/'));
+---
+<header class="site-header" data-header>
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <span class="label topbar__group">{SITE.group.toUpperCase()} · VERANÓPOLIS/RS</span>
+      <div class="topbar__links">
+        <a href={`tel:${SITE.phone}`} class="num">{SITE.phoneDisplay}</a>
+        <a href={path('downloads', lang)}>{t('nav.downloads')}</a>
+        <a href={path('whistleblower', lang)}>{t('nav.whistleblower')}</a>
+        <nav class="langs" aria-label={t('nav.language')}>
+          {LANGS.map((l) => (
+            <a href={alternates[l] ?? path('home', l)} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined}
+              title={t(`lang.${l}`)}>
+              <Flag lang={l} label={t(`flag.${l}`)} />
+              <span>{l.toUpperCase()}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="mainbar">
+    <div class="container mainbar__inner">
+      <a href={path('home', lang)} class="brand" aria-label={`${SITE.name} – ${t('nav.home')}`}><Logo /></a>
+
+      <nav class="nav" aria-label={t('nav.main')}>
+        <ul class="nav__list" role="list">
+          <li class="nav__item nav__item--mega" data-dropdown>
+            <a href={path('products', lang)} class="nav__link" aria-current={isActive(path('products', lang)) ? 'page' : undefined}>{t('nav.products')}</a>
+            <button class="nav__toggle" aria-expanded="false" aria-controls="mega-products" aria-label={`${t('nav.products')}: ${t('nav.menu')}`}>
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+            </button>
+            <div class="mega" id="mega-products" hidden>
+              <div class="container mega__inner">
+                {GROUPS.map((g) => (
+                  <div class="mega__col">
+                    <p class="label">{t(`group.${g}`)}</p>
+                    <ul role="list">
+                      {categories.filter((c) => c.group === g).map((c) => (
+                        <li>
+                          <a href={categoryUrl(c, lang)} class="mega__link">
+                            <span class="mega__thumb" aria-hidden="true">
+                              {c.image ? <img src={c.image} alt="" width="44" height="44" loading="lazy" /> : <span>{c.code}</span>}
+                            </span>
+                            <span>
+                              <span class="mega__name">{tr(c.name, lang)}</span>
+                              <span class="mega__desc">{tr(c.description, lang)}</span>
+                            </span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+                <div class="mega__foot">
+                  <a href={path('products', lang)} class="link-arrow">{t('nav.allProducts')}</a>
+                  <a href={path('applications', lang)} class="link-arrow">{t('home.tool.apps')}</a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav__item" data-dropdown>
+            <a href={path('about', lang)} class="nav__link">{t('nav.company')}</a>
+            <button class="nav__toggle" aria-expanded="false" aria-controls="dd-company" aria-label={`${t('nav.company')}: ${t('nav.menu')}`}>
+              <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+            </button>
+            <ul class="dropdown" id="dd-company" role="list" hidden>
+              {company.map(([k, label]) => <li><a href={path(k, lang)} aria-current={isActive(path(k, lang)) ? 'page' : undefined}>{t(label)}</a></li>)}
+            </ul>
+          </li>
+          <li class="nav__item"><a href={path('applications', lang)} class="nav__link" aria-current={isActive(path('applications', lang)) ? 'page' : undefined}>{t('nav.applications')}</a></li>
+          <li class="nav__item"><a href={path('downloads', lang)} class="nav__link" aria-current={isActive(path('downloads', lang)) ? 'page' : undefined}>{t('nav.downloads')}</a></li>
+          <li class="nav__item"><a href={path('blog', lang)} class="nav__link" aria-current={isActive(path('blog', lang)) ? 'page' : undefined}>{t('nav.blog')}</a></li>
+          <li class="nav__item"><a href={path('contact', lang)} class="nav__link" aria-current={isActive(path('contact', lang)) ? 'page' : undefined}>{t('nav.contact')}</a></li>
+        </ul>
+      </nav>
+
+      <div class="actions">
+        <a href={path('quote', lang)} class="quote-link" aria-label={t('nav.quote')}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z M15 3v4h4 M9 11h7 M9 15h7 M9 19h4" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+          <span class="quote-link__text">{t('nav.quote')}</span>
+          <span class="quote-count num" data-quote-count hidden aria-label={t('quote.badge')}>0</span>
+        </a>
+        <button class="burger" aria-expanded="false" aria-controls="mobile-nav" data-burger>
+          <span class="sr-only">{t('nav.menu')}</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.6" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer" id="mobile-nav" hidden data-drawer>
+    <div class="drawer__head">
+      <span class="label">{t('nav.menu')}</span>
+      <button class="drawer__close" data-drawer-close><span class="sr-only">{t('nav.close')}</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" /></svg>
+      </button>
+    </div>
+    <nav aria-label={t('nav.main')}>
+      <details>
+        <summary>{t('nav.products')}</summary>
+        <a href={path('products', lang)} class="drawer__all">{t('nav.allProducts')}</a>
+        {GROUPS.map((g) => (
+          <div class="drawer__group">
+            <p class="label">{t(`group.${g}`)}</p>
+            {categories.filter((c) => c.group === g).map((c) => <a href={categoryUrl(c, lang)}><span class="label">{c.code}</span> {tr(c.name, lang)}</a>)}
+          </div>
+        ))}
+      </details>
+      <details>
+        <summary>{t('nav.company')}</summary>
+        {company.map(([k, label]) => <a href={path(k, lang)}>{t(label)}</a>)}
+      </details>
+      <a href={path('applications', lang)}>{t('nav.applications')}</a>
+      <a href={path('downloads', lang)}>{t('nav.downloads')}</a>
+      <a href={path('blog', lang)}>{t('nav.blog')}</a>
+      <a href={path('contact', lang)}>{t('nav.contact')}</a>
+      <a href={path('quote', lang)}>{t('nav.quote')}</a>
+      <a href={path('whistleblower', lang)}>{t('nav.whistleblower')}</a>
+    </nav>
+    <div class="drawer__langs">
+      {LANGS.map((l) => (
+        <a href={alternates[l] ?? path('home', l)} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined}>
+          <Flag lang={l} label={t(`flag.${l}`)} /> {t(`lang.${l}`)}
+        </a>
+      ))}
+    </div>
+    <a href={`tel:${SITE.phone}`} class="btn btn--ghost num">{SITE.phoneDisplay}</a>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  // Encolhe ao rolar
+  const onScroll = () => header.classList.toggle('is-compact', window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Dropdowns / mega menu (clique, teclado, hover no desktop)
+  const items = [...header.querySelectorAll<HTMLElement>('[data-dropdown]')];
+  const setOpen = (item: HTMLElement, open: boolean) => {
+    const btn = item.querySelector<HTMLButtonElement>('.nav__toggle')!;
+    const panel = document.getElementById(btn.getAttribute('aria-controls')!)!;
+    btn.setAttribute('aria-expanded', String(open));
+    panel.hidden = !open;
+    item.classList.toggle('is-open', open);
+  };
+  const closeAll = (except?: HTMLElement) => items.forEach((i) => i !== except && setOpen(i, false));
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  items.forEach((item) => {
+    const btn = item.querySelector<HTMLButtonElement>('.nav__toggle')!;
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      closeAll(item);
+      setOpen(item, open);
+      if (open) item.querySelector<HTMLElement>('.mega a, .dropdown a')?.focus();
+    });
+    if (canHover) {
+      let timer: number | undefined;
+      item.addEventListener('mouseenter', () => { clearTimeout(timer); timer = window.setTimeout(() => { closeAll(item); setOpen(item, true); }, 120); });
+      item.addEventListener('mouseleave', () => { clearTimeout(timer); timer = window.setTimeout(() => setOpen(item, false), 200); });
+    }
+    item.addEventListener('focusout', (e) => {
+      if (!item.contains(e.relatedTarget as Node)) setOpen(item, false);
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const open = items.find((i) => i.classList.contains('is-open'));
+    if (open) { setOpen(open, false); open.querySelector<HTMLButtonElement>('.nav__toggle')?.focus(); }
+  });
+  document.addEventListener('click', (e) => {
+    if (!header.contains(e.target as Node)) closeAll();
+  });
+
+  // Drawer mobile
+  const drawer = header.querySelector<HTMLElement>('[data-drawer]')!;
+  const burger = header.querySelector<HTMLButtonElement>('[data-burger]')!;
+  const closeBtn = header.querySelector<HTMLButtonElement>('[data-drawer-close]')!;
+  const toggleDrawer = (open: boolean) => {
+    drawer.hidden = !open;
+    burger.setAttribute('aria-expanded', String(open));
+    document.documentElement.classList.toggle('no-scroll', open);
+    (open ? closeBtn : burger).focus();
+  };
+  burger.addEventListener('click', () => toggleDrawer(true));
+  closeBtn.addEventListener('click', () => toggleDrawer(false));
+  drawer.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') toggleDrawer(false);
+    if (e.key !== 'Tab') return;
+    const f = [...drawer.querySelectorAll<HTMLElement>('a, button, summary')].filter((el) => el.offsetParent !== null);
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+</script>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--color-line); }
+  .topbar { background: var(--steel-900); color: var(--steel-300); font-size: var(--fs-xs); transition: margin-top 0.2s var(--ease); }
+  .topbar__inner { display: flex; justify-content: space-between; align-items: center; min-height: 34px; gap: var(--space-4); }
+  .topbar .label { color: var(--steel-300); }
+  .topbar a { color: var(--steel-100); text-decoration: none; }
+  .topbar a:hover { color: var(--white); text-decoration: underline; }
+  .topbar__links { display: flex; gap: var(--space-5); align-items: center; }
+  .langs { display: flex; gap: var(--space-1); border-left: 1px solid var(--steel-700); padding-left: var(--space-4); }
+  .langs a { display: inline-flex; align-items: center; gap: 0.35em; padding: 0.2em 0.4em; font-family: var(--font-mono); letter-spacing: 0.05em; min-height: 24px; }
+  .langs a[aria-current] { color: var(--white); box-shadow: inset 0 -2px 0 var(--steel-300); }
+  @media (max-width: 899px) { .topbar__group, .topbar__links > a { display: none; } .topbar__inner { justify-content: flex-end; } }
+
+  .mainbar__inner { display: flex; align-items: center; gap: var(--space-5); height: var(--header-h); transition: height 0.2s var(--ease); }
+  .site-header.is-compact .mainbar__inner { height: 56px; }
+  .site-header.is-compact .topbar { margin-top: -34px; }
+  .brand { color: var(--ink); text-decoration: none; flex: none; }
+
+  .nav { margin-left: auto; display: none; }
+  @media (min-width: 1100px) { .nav { display: block; } }
+  .nav__list { display: flex; gap: var(--space-1); list-style: none; margin: 0; padding: 0; }
+  .nav__item { display: flex; align-items: center; position: relative; }
+  .nav__item--mega { position: static; }
+  .nav__link { display: block; padding: 0.5rem 0.65rem; color: var(--ink); text-decoration: none; font-size: var(--fs-sm); font-weight: 500; }
+  .nav__link:hover, .nav__link[aria-current='page'] { color: var(--color-primary); }
+  .nav__link[aria-current='page'] { box-shadow: inset 0 -2px 0 var(--color-primary); }
+  .nav__toggle { border: 0; background: none; padding: 0.4rem 0.3rem; margin-left: -0.4rem; cursor: pointer; color: var(--steel-600); min-height: 32px; }
+  .nav__toggle svg { width: 12px; height: 12px; transition: transform 0.15s; }
+  .nav__toggle[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+  .dropdown { position: absolute; top: 100%; left: 0; min-width: 240px; list-style: none; margin: 0; padding: var(--space-2) 0; background: var(--white); border: 1px solid var(--color-line); border-top: 2px solid var(--color-primary); box-shadow: 0 8px 24px rgba(20, 24, 28, 0.08); }
+  .dropdown a { display: block; padding: 0.5rem 1rem; color: var(--ink); text-decoration: none; font-size: var(--fs-sm); }
+  .dropdown a:hover, .dropdown a:focus-visible { background: var(--steel-100); }
+
+  .mega { position: absolute; left: 0; right: 0; top: 100%; background: var(--white); border-top: 1px solid var(--color-line); border-bottom: 1px solid var(--color-line-strong); box-shadow: 0 16px 32px rgba(20, 24, 28, 0.08); }
+  .mega__inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5) var(--space-6); padding-block: var(--space-6); }
+  .mega__col ul { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: grid; gap: 2px; }
+  .mega__col > .label { border-bottom: 1px solid var(--color-line); padding-bottom: var(--space-2); }
+  .mega__link { display: grid; grid-template-columns: 44px 1fr; gap: var(--space-3); align-items: center; padding: var(--space-2); margin-inline: calc(var(--space-2) * -1); text-decoration: none; color: var(--ink); border-radius: var(--radius-sm); }
+  .mega__link:hover, .mega__link:focus-visible { background: var(--steel-100); }
+  .mega__thumb { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--color-line-strong); background: var(--paper); font-family: var(--font-mono); font-size: 0.625rem; color: var(--steel-700); overflow: hidden; }
+  .mega__thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .mega__name { display: block; font-weight: 500; font-size: var(--fs-sm); line-height: 1.3; }
+  .mega__desc { display: block; font-size: var(--fs-xs); color: var(--color-muted); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  .mega__foot { grid-column: 1 / -1; display: flex; gap: var(--space-6); border-top: 1px solid var(--color-line); padding-top: var(--space-4); font-size: var(--fs-sm); }
+
+  .actions { display: flex; align-items: center; gap: var(--space-2); margin-left: auto; }
+  @media (min-width: 1100px) { .actions { margin-left: var(--space-3); } }
+  .quote-link { position: relative; display: inline-flex; align-items: center; gap: var(--space-2); min-height: 44px; padding: 0 0.8rem; border: 1px solid var(--color-line-strong); border-radius: var(--radius); text-decoration: none; color: var(--ink); font-size: var(--fs-sm); font-weight: 500; }
+  .quote-link:hover { border-color: var(--ink); color: var(--ink); }
+  .quote-link svg { width: 20px; height: 20px; }
+  .quote-link__text { display: none; }
+  @media (min-width: 1280px) { .quote-link__text { display: inline; } }
+  .quote-count { min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--color-primary); color: var(--white); font-size: 0.6875rem; display: inline-grid; place-items: center; }
+  .quote-count[hidden] { display: none; }
+  .burger { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--color-line-strong); background: none; border-radius: var(--radius); cursor: pointer; }
+  .burger svg { width: 22px; }
+  @media (min-width: 1100px) { .burger { display: none; } }
+
+  .drawer { position: fixed; inset: 0; z-index: 200; background: var(--white); overflow-y: auto; padding: var(--space-4) var(--gutter) var(--space-7); }
+  .drawer__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); }
+  .drawer__close { width: 44px; height: 44px; border: 1px solid var(--color-line-strong); background: none; border-radius: var(--radius); display: grid; place-items: center; }
+  .drawer__close svg { width: 20px; }
+  .drawer nav > a, .drawer summary { display: block; padding: 0.85rem 0; border-bottom: 1px solid var(--color-line); color: var(--ink); text-decoration: none; font-family: var(--font-display); font-size: 1.375rem; font-weight: 600; cursor: pointer; }
+  .drawer details[open] summary { border-bottom-color: transparent; }
+  .drawer details > a, .drawer__group a { display: block; padding: 0.55rem 0; color: var(--ink); text-decoration: none; }
+  .drawer__group { margin: var(--space-3) 0; }
+  .drawer__group .label { margin: 0 0 var(--space-1); }
+  .drawer__all { font-weight: 500; color: var(--color-primary) !important; }
+  .drawer details { border-bottom: 1px solid var(--color-line); padding-bottom: var(--space-3); }
+  .drawer__langs { display: flex; flex-wrap: wrap; gap: var(--space-4); margin: var(--space-5) 0; }
+  .drawer__langs a { display: inline-flex; gap: 0.4em; align-items: center; color: var(--ink); min-height: 44px; }
+  .drawer__langs a[aria-current] { font-weight: 600; }
+  :global(html.no-scroll) { overflow: hidden; }
+</style>

@@ -1,0 +1,120 @@
+---
+import type { Lang } from '../i18n/routes';
+import { path } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { HOME, categoryById, categoryUrl } from '../lib/content';
+import Img from './Img.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const slides = HOME.slides.map((s: any) => {
+  const href = s.cta.route === 'category' ? categoryUrl(categoryById(s.cta.param)!, lang) : path(s.cta.route, lang);
+  return { ...s, href };
+});
+---
+<section class="hero" aria-roledescription="carousel" aria-label={t('hero.region')} data-hero>
+  <div class="hero__viewport" data-viewport>
+    <div class="hero__track" aria-live="off" data-track>
+      {slides.map((s: any, i: number) => (
+        <div class="hero__slide" role="group" aria-roledescription={t('hero.slide')} aria-label={`${i + 1} ${t('hero.of')} ${slides.length}`}>
+          <div class="hero__media">
+            <Img src={s.image?.src} width={s.image?.width ?? 1600} height={s.image?.height ?? 900} alt="" eager={i === 0} sizes="100vw" dark />
+          </div>
+          <div class="container hero__content">
+            <p class="label hero__label">{tr(s.label, lang)}</p>
+            {i === 0 ? <h1 class="hero__title">{tr(s.title, lang)}</h1> : <h2 class="hero__title">{tr(s.title, lang)}</h2>}
+            <p class="hero__text">{tr(s.text, lang)}</p>
+            <a href={s.href} class="btn btn--primary">{tr(s.cta.label, lang)}</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="container hero__controls">
+    <div class="hero__dots" data-dots>
+      {slides.map((s: any, i: number) => (
+        <button type="button" class="hero__dot" aria-label={`${t('hero.goto')} ${i + 1}: ${tr(s.title, lang)}`} aria-current={i === 0 ? 'true' : undefined}>
+          <span class="num">{String(i + 1).padStart(2, '0')}</span>
+        </button>
+      ))}
+    </div>
+    <div class="hero__btns">
+      <button type="button" class="hero__btn" data-toggle aria-label={t('hero.pause')} data-label-pause={t('hero.pause')} data-label-play={t('hero.play')}>
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="i-pause"><path d="M5 3v10M11 3v10" stroke="currentColor" stroke-width="2" /></svg>
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="i-play"><path d="M5 3l8 5-8 5z" fill="currentColor" /></svg>
+      </button>
+      <button type="button" class="hero__btn" data-prev aria-label={t('hero.prev')}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" /></svg></button>
+      <button type="button" class="hero__btn" data-next aria-label={t('hero.next')}><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" /></svg></button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import EmblaCarousel from 'embla-carousel';
+  import Autoplay from 'embla-carousel-autoplay';
+
+  const root = document.querySelector<HTMLElement>('[data-hero]');
+  if (root) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const autoplay = Autoplay({ delay: 6500, stopOnInteraction: false, stopOnMouseEnter: true, stopOnFocusIn: true, playOnInit: !reduce });
+    const embla = EmblaCarousel(root.querySelector<HTMLElement>('[data-viewport]')!, { loop: true, duration: reduce ? 0 : 28 }, [autoplay]);
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dots] button')];
+    const toggle = root.querySelector<HTMLButtonElement>('[data-toggle]')!;
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const slides = embla.slideNodes();
+    let userPaused = reduce;
+
+    const sync = () => {
+      const i = embla.selectedScrollSnap();
+      dots.forEach((d, k) => (k === i ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+      slides.forEach((s, k) => {
+        s.toggleAttribute('inert', k !== i);
+        s.setAttribute('aria-hidden', String(k !== i));
+      });
+    };
+    const setPaused = (p: boolean) => {
+      userPaused = p;
+      p ? autoplay.stop() : autoplay.play();
+      root.classList.toggle('is-paused', p);
+      toggle.setAttribute('aria-label', p ? toggle.dataset.labelPlay! : toggle.dataset.labelPause!);
+      track.setAttribute('aria-live', p ? 'polite' : 'off');
+    };
+    setPaused(userPaused);
+    embla.on('select', sync);
+    sync();
+    dots.forEach((d, i) => d.addEventListener('click', () => embla.scrollTo(i)));
+    root.querySelector('[data-prev]')!.addEventListener('click', () => embla.scrollPrev());
+    root.querySelector('[data-next]')!.addEventListener('click', () => embla.scrollNext());
+    toggle.addEventListener('click', () => setPaused(!userPaused));
+    // Mouse saindo: o plugin retoma sozinho, a menos que o usuário tenha pausado.
+    root.addEventListener('mouseleave', () => { if (userPaused) autoplay.stop(); });
+  }
+</script>
+
+<style>
+  .hero { position: relative; background: var(--steel-900); color: var(--white); }
+  .hero__viewport { overflow: hidden; }
+  .hero__track { display: flex; touch-action: pan-y pinch-zoom; }
+  .hero__slide { position: relative; flex: 0 0 100%; min-width: 0; min-height: clamp(460px, 72vh, 760px); display: flex; align-items: flex-end; }
+  .hero__media { position: absolute; inset: 0; }
+  .hero__media :global(img), .hero__media :global(.ph) { width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto; }
+  .hero__media :global(.ph svg) { width: min(52%, 640px); max-width: none; margin-left: auto; margin-right: 6%; opacity: 0.9; }
+  .hero__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(14,17,20,.86) 0%, rgba(14,17,20,.55) 50%, rgba(14,17,20,.1) 100%); }
+  .hero__content { position: relative; z-index: 1; padding-bottom: calc(var(--space-8) + 56px); padding-top: var(--space-8); }
+  .hero__label { color: var(--steel-300); border-left: 2px solid var(--color-primary); padding-left: var(--space-3); margin-bottom: var(--space-4); }
+  .hero__title { font-size: var(--fs-3xl); max-width: 14ch; margin-bottom: var(--space-4); font-weight: 600; }
+  .hero__text { font-size: var(--fs-md); max-width: 44ch; color: var(--steel-200); margin-bottom: var(--space-5); }
+  .hero__controls { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding-bottom: var(--space-5); }
+  .hero__dots { display: flex; gap: var(--space-1); }
+  .hero__dot { background: none; border: 0; border-top: 2px solid rgba(255,255,255,.3); color: var(--steel-300); padding: var(--space-2) var(--space-3) 0 0; min-width: 44px; min-height: 44px; text-align: left; cursor: pointer; font-family: var(--font-mono); font-size: var(--fs-xs); }
+  .hero__dot[aria-current] { border-top-color: var(--white); color: var(--white); }
+  .hero__btns { display: flex; gap: var(--space-1); }
+  .hero__btn { width: 44px; height: 44px; display: grid; place-items: center; background: transparent; border: 1px solid rgba(255,255,255,.35); color: var(--white); border-radius: var(--radius); cursor: pointer; }
+  .hero__btn:hover { background: rgba(255,255,255,.1); }
+  .hero__btn svg { width: 16px; height: 16px; }
+  .hero .i-play { display: none; }
+  .hero.is-paused .i-play { display: block; }
+  .hero.is-paused .i-pause { display: none; }
+  .hero :focus-visible { outline-color: var(--white); }
+  @media (max-width: 599px) { .hero__dot { min-width: 36px; padding-right: var(--space-2); } }
+</style>

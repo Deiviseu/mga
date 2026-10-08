@@ -1,0 +1,23 @@
+---
+import type { Lang } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+interface Props { lang: Lang; items: { name: string; href: string }[] }
+const { lang, items } = Astro.props;
+const t = useT(lang);
+---
+<nav class="crumbs" aria-label={t('breadcrumb')}>
+  <ol role="list">
+    {items.map((it, i) => (
+      <li>
+        {i < items.length - 1 ? <a href={it.href}>{it.name}</a> : <span aria-current="page">{it.name}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<style>
+  .crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-muted); }
+  .crumbs li + li::before { content: '/'; margin-right: 0.5rem; color: var(--steel-300); }
+  .crumbs a { color: var(--steel-700); text-decoration: none; }
+  .crumbs a:hover { color: var(--color-primary); text-decoration: underline; }
+  .crumbs [aria-current] { color: var(--ink); }
+</style>
