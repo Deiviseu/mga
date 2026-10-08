@@ -1,5 +1,6 @@
 // Gera os redirects 301 a partir de content/redirects.json (+ legacySlugs dos produtos)
 // em dois formatos: public/_redirects (Netlify) e vercel.json (Vercel).
+// O vercel.json é validado pela Vercel: não aceita chaves extras (ex.: _comment).
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -28,12 +29,10 @@ writeFileSync(
 
 const vercel = {
   $schema: 'https://openapi.vercel.sh/vercel.json',
-  _comment: 'GERADO por scripts/build-redirects.mjs. Edite content/redirects.json e rode npm run build.',
   buildCommand: 'npm run build',
   outputDirectory: 'dist',
   cleanUrls: true,
   trailingSlash: false,
-  build: { env: { OPTIMIZE_REMOTE_IMAGES: '1' } },
   redirects: list.map((r) => ({ source: r.from, destination: r.to, permanent: true })),
   headers: [
     { source: '/_astro/(.*)', headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }] },

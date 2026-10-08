@@ -4,7 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
-  OPTIMIZE_REMOTE_IMAGES = "1"
+  OPTIMIZE_REMOTE_IMAGES = "0"  # mude para "1" quando as URLs das fotos estiverem confirmadas
 
 # Redirects 301 ficam em public/_redirects (gerado no build a partir de content/redirects.json)
 

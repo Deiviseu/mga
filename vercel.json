@@ -1,15 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "_comment": "GERADO por scripts/build-redirects.mjs. Edite content/redirects.json e rode npm run build.",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
-  "build": {
-    "env": {
-      "OPTIMIZE_REMOTE_IMAGES": "1"
-    }
-  },
   "redirects": [
     {
       "source": "/timeline",
