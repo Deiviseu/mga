@@ -1,6 +1,44 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import CertCarousel from '../components/CertCarousel.astro';
+import { path } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { CERTIFICATES, getPage, md } from '../lib/content';
+import { fullTitle } from '../lib/seo';
 import type { PageEntry } from '../lib/pages';
-const { page } = Astro.props as { page: PageEntry };
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('nav.company'), href: path('about', lang) }, { name: t('certs.title'), href: page.path }];
+const scope = getPage('fundamentos').sections.find((s: any) => s.id === 'escopo');
 ---
-<Base lang={page.lang} title={page.key} description={page.key} path={page.path} alternates={page.alternates}><p>stub</p></Base>
+<Base lang={lang} title={fullTitle(t('certs.title'), lang)} description={t('certs.description')} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs}>
+  <PageHead label={t('home.certLabel')} title={t('certs.title')} lead={t('certs.description')} />
+  <section class="container section">
+    <CertCarousel lang={lang} />
+  </section>
+  <section class="container section section--line certs-list">
+    <table class="spec-table">
+      <caption class="sr-only">{t('certs.title')}</caption>
+      <tbody>
+        {(CERTIFICATES as any).items.map((c: any) => (
+          <tr><th scope="row">{c.name}</th><td>{tr(c.scope, lang)}</td><td>{c.pdf ? <a href={c.pdf} target="_blank" rel="noopener">{t('certs.open')}</a> : <span class="label">{t('certs.pending')}</span>}</td></tr>
+        ))}
+      </tbody>
+    </table>
+    {scope && (
+      <div class="scope">
+        <h2 class="label">{tr(scope.heading, lang)}</h2>
+        <div class="prose" set:html={md(tr(scope.body, lang))} />
+      </div>
+    )}
+  </section>
+</Base>
+<style>
+  .certs-list { display: grid; gap: var(--space-7); }
+  @media (min-width: 1000px) { .certs-list { grid-template-columns: 8fr 4fr; } }
+  .scope { border-top: 1px solid var(--color-line-strong); padding-top: var(--space-3); }
+</style>

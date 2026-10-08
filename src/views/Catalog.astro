@@ -1,6 +1,230 @@
 ---
+// Catálogo (todas as famílias) e página de categoria. Os cards são renderizados
+// no servidor (indexáveis); busca, filtros e grade/lista rodam no cliente e
+// ficam refletidos na URL (?q=&fam=&cls=&mat=&con=&view=).
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { path, LANGS } from '../i18n/routes';
+import { useT, tr } from '../i18n/ui';
+import { products, categories, productsIn, categoryUrl, vocabLabel, VOCAB, GROUPS, type Product } from '../lib/content';
+import { fullTitle } from '../lib/seo';
 import type { PageEntry } from '../lib/pages';
-const { page } = Astro.props as { page: PageEntry };
+
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang, category } = page;
+const t = useT(lang);
+const list: Product[] = category ? productsIn(category.id) : products;
+
+const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const searchText = (p: Product) =>
+  norm([
+    ...LANGS.map((l) => tr(p.name, l)), p.code, p.code.replace(/\s/g, ''),
+    ...p.attributes.pressureClass.flatMap((c) => LANGS.map((l) => vocabLabel('pressureClass', c, l))),
+    ...p.attributes.material.map((m) => vocabLabel('material', m, lang)),
+    ...p.norms, tr(categories.find((c) => c.id === p.category)?.name, lang),
+  ].join(' '));
+
+// Só mostra opções de filtro que existem nos produtos listados
+const used = (k: 'pressureClass' | 'material' | 'connection') => Object.keys(VOCAB[k]).filter((id) => list.some((p) => p.attributes[k].includes(id)));
+const facets = [
+  ...(!category ? [{ key: 'fam', label: t('catalog.family'), options: categories.map((c) => ({ id: c.id, label: `${c.code} · ${tr(c.name, lang)}` })) }] : []),
+  { key: 'cls', label: t('catalog.pressureClass'), options: used('pressureClass').map((id) => ({ id, label: vocabLabel('pressureClass', id, lang) })) },
+  { key: 'mat', label: t('catalog.material'), options: used('material').map((id) => ({ id, label: vocabLabel('material', id, lang) })) },
+  { key: 'con', label: t('catalog.connection'), options: used('connection').map((id) => ({ id, label: vocabLabel('connection', id, lang) })) },
+].filter((f) => f.options.length > 0);
+
+const title = category ? tr(category.name, lang) : t('catalog.title');
+const description = category
+  ? `${tr(category.name, lang)} (${category.code}): ${tr(category.description, lang)}`
+  : t('catalog.description');
+const crumbs = [
+  { name: t('nav.home'), href: path('home', lang) },
+  { name: t('nav.products'), href: path('products', lang) },
+  ...(category ? [{ name: tr(category.name, lang), href: page.path }] : []),
+];
 ---
-<Base lang={page.lang} title={page.key} description={page.key} path={page.path} alternates={page.alternates}><p>stub</p></Base>
+<Base lang={lang} title={fullTitle(category ? `${title} ${category.code}` : title, lang)} description={description}
+  path={page.path} alternates={page.alternates} breadcrumbs={crumbs}>
+  <PageHead label={category ? `${category.code} · ${t(`group.${category.group}`).toUpperCase()}` : t('nav.products').toUpperCase()}
+    title={title} lead={category ? tr(category.description, lang) : t('catalog.description')} />
+
+  {!category && (
+    <nav class="cat-strip" aria-label={t('catalog.family')}>
+      <div class="container">
+        <ul role="list">
+          {GROUPS.flatMap((g) => categories.filter((c) => c.group === g)).map((c) => (
+            <li><a href={categoryUrl(c, lang)}><span class="label">{c.code}</span>{tr(c.name, lang)}</a></li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  )}
+
+  <div class="container section catalog" data-catalog>
+    <aside class="filters">
+      <div class="filters__box" data-filters-box>
+        <button type="button" class="filters__summary" aria-expanded="false" aria-controls="filters-form" data-filters-toggle>{t('catalog.showFilters')}</button>
+        <form class="filters__form" id="filters-form" data-filters role="search" onsubmit="return false">
+          <div class="field">
+            <label for="q">{t('catalog.search')}</label>
+            <input id="q" name="q" type="search" class="input" placeholder={t('catalog.searchPlaceholder')} autocomplete="off" />
+          </div>
+          {facets.map((f) => (
+            <fieldset class="facet">
+              <legend class="label">{f.label}</legend>
+              {f.options.map((o) => (
+                <label class="check"><input type="checkbox" name={f.key} value={o.id} /> <span>{o.label}</span></label>
+              ))}
+            </fieldset>
+          ))}
+          <button type="reset" class="btn btn--ghost" data-clear>{t('catalog.clear')}</button>
+        </form>
+      </div>
+    </aside>
+
+    <div class="results">
+      <div class="results__bar">
+        <p class="results__count num" aria-live="polite" data-count
+          data-one={t('catalog.result')} data-many={t('catalog.results')}>{list.length} {t('catalog.results')}</p>
+        <div class="viewtoggle" role="group" aria-label={t('catalog.view')}>
+          <button type="button" data-view="grid" aria-pressed="true">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 1h6v6H1zM9 1h6v6H9zM1 9h6v6H1zM9 9h6v6H9z" fill="currentColor" /></svg>{t('catalog.viewGrid')}
+          </button>
+          <button type="button" data-view="list" aria-pressed="false">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 2h14v2H1zM1 7h14v2H1zM1 12h14v2H1z" fill="currentColor" /></svg>{t('catalog.viewList')}
+          </button>
+        </div>
+      </div>
+      <ul class="grid" role="list" data-grid>
+        {list.map((p) => (
+          <li data-item data-fam={p.category} data-cls={p.attributes.pressureClass.join(' ')}
+            data-mat={p.attributes.material.join(' ')} data-con={p.attributes.connection.join(' ')} data-search={searchText(p)}>
+            <ProductCard product={p} lang={lang} headingLevel="h2" />
+          </li>
+        ))}
+      </ul>
+      <p class="empty" data-empty hidden>{t('catalog.noResults')}</p>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-catalog]')!;
+  const form = root.querySelector<HTMLFormElement>('[data-filters]')!;
+  const grid = root.querySelector<HTMLElement>('[data-grid]')!;
+  const items = [...grid.querySelectorAll<HTMLElement>('[data-item]')];
+  const count = root.querySelector<HTMLElement>('[data-count]')!;
+  const empty = root.querySelector<HTMLElement>('[data-empty]')!;
+  const viewBtns = [...root.querySelectorAll<HTMLButtonElement>('[data-view]')];
+  const box = root.querySelector<HTMLElement>('[data-filters-box]')!;
+  const toggle = root.querySelector<HTMLButtonElement>('[data-filters-toggle]')!;
+  const KEYS = ['fam', 'cls', 'mat', 'con'] as const;
+  const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+
+  toggle.addEventListener('click', () => {
+    const open = !box.classList.contains('is-open');
+    box.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  const state = () => {
+    const fd = new FormData(form);
+    return {
+      q: norm(String(fd.get('q') || '')),
+      sel: Object.fromEntries(KEYS.map((k) => [k, fd.getAll(k).map(String)])) as Record<(typeof KEYS)[number], string[]>,
+    };
+  };
+
+  const apply = (push = true) => {
+    const { q, sel } = state();
+    const terms = q.split(/\s+/).filter(Boolean);
+    let n = 0;
+    for (const el of items) {
+      const okText = terms.every((tm) => el.dataset.search!.includes(tm));
+      // OR dentro do mesmo filtro, AND entre filtros diferentes
+      const okFacets = KEYS.every((k) => !sel[k].length || sel[k].some((v) => (el.dataset[k] || '').split(' ').includes(v)));
+      const show = okText && okFacets;
+      el.hidden = !show;
+      if (show) n++;
+    }
+    count.textContent = `${n} ${n === 1 ? count.dataset.one : count.dataset.many}`;
+    empty.hidden = n > 0;
+    if (push) {
+      const url = new URL(location.href);
+      ['q', ...KEYS].forEach((k) => url.searchParams.delete(k));
+      if (q) url.searchParams.set('q', String(new FormData(form).get('q')));
+      KEYS.forEach((k) => sel[k].length && url.searchParams.set(k, sel[k].join(',')));
+      history.replaceState(null, '', url);
+    }
+  };
+
+  const setView = (v: string, push = true) => {
+    grid.classList.toggle('is-list', v === 'list');
+    viewBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === v)));
+    if (push) {
+      const url = new URL(location.href);
+      v === 'list' ? url.searchParams.set('view', 'list') : url.searchParams.delete('view');
+      history.replaceState(null, '', url);
+    }
+  };
+
+  // Estado inicial a partir da URL
+  const params = new URLSearchParams(location.search);
+  (form.elements.namedItem('q') as HTMLInputElement).value = params.get('q') || '';
+  KEYS.forEach((k) => {
+    const vals = (params.get(k) || '').split(',').filter(Boolean);
+    form.querySelectorAll<HTMLInputElement>(`input[name="${k}"]`).forEach((i) => (i.checked = vals.includes(i.value)));
+  });
+  setView(params.get('view') === 'list' ? 'list' : 'grid', false);
+  apply(false);
+
+  let timer: number | undefined;
+  form.addEventListener('input', () => { clearTimeout(timer); timer = window.setTimeout(() => apply(), 80); });
+  form.addEventListener('reset', () => setTimeout(() => apply(), 0));
+  viewBtns.forEach((b) => b.addEventListener('click', () => setView(b.dataset.view!)));
+</script>
+
+<style>
+  .cat-strip { border-bottom: 1px solid var(--color-line); background: var(--white); }
+  .cat-strip ul { list-style: none; margin: 0; padding: var(--space-3) 0; display: flex; gap: var(--space-2); overflow-x: auto; scrollbar-width: thin; }
+  .cat-strip a { display: inline-flex; gap: var(--space-2); align-items: baseline; white-space: nowrap; padding: 0.45rem 0.75rem; border: 1px solid var(--color-line); border-radius: var(--radius-sm); color: var(--ink); text-decoration: none; font-size: var(--fs-sm); }
+  .cat-strip a:hover { border-color: var(--ink); }
+  .cat-strip .label { color: var(--color-primary); }
+
+  .catalog { display: grid; gap: var(--space-6); padding-top: var(--space-6); }
+  @media (min-width: 900px) { .catalog { grid-template-columns: 260px 1fr; align-items: start; } }
+  .filters__box { border: 1px solid var(--color-line); background: var(--white); }
+  @media (min-width: 900px) { .filters { position: sticky; top: calc(56px + var(--space-4)); max-height: calc(100vh - 80px); overflow: auto; } .filters__box { border: 0; background: none; } .filters__summary { display: none; } }
+  .filters__summary { display: block; width: 100%; text-align: left; background: none; border: 0; padding: var(--space-3) var(--space-4); cursor: pointer; font-weight: 500; min-height: 44px; }
+  .filters__summary::after { content: ' +'; }
+  .filters__summary[aria-expanded='true']::after { content: ' −'; }
+  @media (max-width: 899px) { .filters__box:not(.is-open) .filters__form { display: none; } }
+  .filters__form { display: grid; gap: var(--space-5); padding: var(--space-4); }
+  @media (min-width: 900px) { .filters__form { padding: 0; } }
+  .facet { border: 0; border-top: 1px solid var(--color-line-strong); margin: 0; padding: var(--space-3) 0 0; display: grid; gap: 2px; }
+  .facet legend { padding: 0 0 var(--space-2); float: left; width: 100%; }
+  .check { display: flex; gap: var(--space-2); align-items: center; font-size: var(--fs-sm); min-height: 32px; cursor: pointer; }
+  .check input { width: 16px; height: 16px; accent-color: var(--color-primary); flex: none; }
+
+  .results__bar { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding-bottom: var(--space-3); margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-line-strong); }
+  .results__count { margin: 0; font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--steel-700); }
+  .viewtoggle { display: inline-flex; border: 1px solid var(--color-line-strong); border-radius: var(--radius); overflow: hidden; }
+  .viewtoggle button { display: inline-flex; align-items: center; gap: var(--space-2); background: var(--white); border: 0; padding: 0 0.8rem; min-height: 40px; cursor: pointer; font-size: var(--fs-sm); color: var(--steel-700); }
+  .viewtoggle button + button { border-left: 1px solid var(--color-line-strong); }
+  .viewtoggle button[aria-pressed='true'] { background: var(--ink); color: var(--white); }
+  .viewtoggle svg { width: 14px; height: 14px; }
+
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .grid [hidden] { display: none; }
+  .grid.is-list { grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--color-line); }
+  .grid.is-list :global(.pcard) { flex-direction: row; align-items: center; border-width: 0 0 1px; border-radius: 0; background: transparent; }
+  .grid.is-list :global(.pcard__media) { width: 120px; flex: none; border: 1px solid var(--color-line); background: var(--white); }
+  .grid.is-list :global(.pcard__body) { grid-template-columns: 1fr; padding: var(--space-3) var(--space-4); }
+  @media (min-width: 700px) {
+    .grid.is-list :global(.pcard__body) { grid-template-columns: 180px 1fr auto; align-items: center; gap: var(--space-4); }
+    .grid.is-list :global(.pcard__body .label) { order: 0; }
+  }
+  .empty { padding: var(--space-6); border: 1px dashed var(--color-line-strong); text-align: center; color: var(--steel-700); }
+</style>

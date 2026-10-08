@@ -1,6 +1,109 @@
 ---
+// Canal de Denúncia separado do contato, com opção de envio anônimo.
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { path } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { formData } from '../lib/content';
+import { fullTitle } from '../lib/seo';
 import type { PageEntry } from '../lib/pages';
-const { page } = Astro.props as { page: PageEntry };
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const endpoint = import.meta.env.PUBLIC_WHISTLEBLOWER_ENDPOINT || import.meta.env.PUBLIC_FORM_ENDPOINT || '';
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('whistle.title'), href: page.path }];
+const types = ['ethics', 'harassment', 'fraud', 'safety', 'other'] as const;
 ---
-<Base lang={page.lang} title={page.key} description={page.key} path={page.path} alternates={page.alternates}><p>stub</p></Base>
+<Base lang={lang} title={fullTitle(t('whistle.title'), lang)} description={t('whistle.description')} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs}>
+  <PageHead label="COMPLIANCE" title={t('whistle.title')} lead={t('whistle.lead')} />
+  <div class="container section wb">
+    <form class="wb__form" data-wb-form data-endpoint={endpoint} data-protocol-label={t('whistle.protocol')} {...formData(t)}>
+      <label class="anon">
+        <input type="checkbox" name="anonymous" value="yes" data-anon />
+        <span><strong>{t('whistle.anonymous')}</strong><br /><small>{t('whistle.anonymousHint')}</small></span>
+      </label>
+      <div class="wb__grid" data-identity>
+        <div class="field">
+          <label for="wb-name">{t('form.name')}</label>
+          <input id="wb-name" name="name" class="input" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="wb-email">{t('form.email')}</label>
+          <input id="wb-email" name="email" type="email" class="input" autocomplete="email" aria-describedby="wb-email-err" />
+          <p class="error" id="wb-email-err" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="wb__grid">
+        <div class="field">
+          <label for="wb-type">{t('whistle.type')} <span class="req" aria-hidden="true">*</span></label>
+          <select id="wb-type" name="type" class="select" required aria-describedby="wb-type-err">
+            <option value=""></option>
+            {types.map((k) => <option value={k}>{t(`whistle.type.${k}`)}</option>)}
+          </select>
+          <p class="error" id="wb-type-err" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="wb-when">{t('whistle.when')}</label>
+          <input id="wb-when" name="when" type="date" class="input" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="wb-where">{t('whistle.where')}</label>
+        <input id="wb-where" name="where" class="input" />
+      </div>
+      <div class="field">
+        <label for="wb-report">{t('whistle.report')} <span class="req" aria-hidden="true">*</span></label>
+        <textarea id="wb-report" name="report" class="textarea" required rows="8" aria-describedby="wb-report-err"></textarea>
+        <p class="error" id="wb-report-err" aria-live="polite"></p>
+      </div>
+      <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+      <div class="foot">
+        <button type="submit" class="btn btn--primary">{t('form.submit')}</button>
+        <p class="form-status" data-form-status role="status" tabindex="-1"></p>
+      </div>
+    </form>
+    <aside class="wb__side">
+      <p class="label">COMPLIANCE · LGPD</p>
+      <p>{t('whistle.side')}</p>
+      <p><a href={path('privacy', lang)}>{t('nav.privacy')}</a></p>
+    </aside>
+  </div>
+</Base>
+<script>
+  import { setupForm } from '../scripts/forms';
+  const form = document.querySelector<HTMLFormElement>('[data-wb-form]')!;
+  const anon = form.querySelector<HTMLInputElement>('[data-anon]')!;
+  const identity = form.querySelector<HTMLElement>('[data-identity]')!;
+  const sync = () => {
+    identity.hidden = anon.checked;
+    identity.querySelectorAll('input').forEach((i) => { i.disabled = anon.checked; if (anon.checked) i.value = ''; });
+  };
+  anon.addEventListener('change', sync);
+  sync();
+  let protocol = '';
+  setupForm(form, {
+    endpoint: form.dataset.endpoint || '',
+    extra: () => {
+      protocol = `MGA-${new Date().getFullYear()}-${crypto.getRandomValues(new Uint32Array(1))[0].toString(36).toUpperCase()}`;
+      return { channel: 'whistleblower', protocol, anonymous: anon.checked };
+    },
+    onSuccess: () => `${form.dataset.protocolLabel} ${protocol}`,
+  });
+</script>
+<style>
+  .wb { display: grid; gap: var(--space-7); }
+  @media (min-width: 1000px) { .wb { grid-template-columns: 7fr 4fr; gap: var(--space-8); } }
+  .wb__form { display: grid; gap: var(--space-5); }
+  .wb__grid { display: grid; gap: var(--space-4); }
+  .wb__grid[hidden] { display: none; }
+  @media (min-width: 700px) { .wb__grid { grid-template-columns: 1fr 1fr; } }
+  .anon { display: grid; grid-template-columns: 20px 1fr; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--color-line-strong); background: var(--white); cursor: pointer; }
+  .anon input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--color-primary); }
+  .anon small { color: var(--color-muted); }
+  .req { color: var(--bad); }
+  .hp { position: absolute; left: -9999px; }
+  .foot { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+  .wb__side { border-top: 1px solid var(--color-line-strong); padding-top: var(--space-4); font-size: var(--fs-sm); color: var(--steel-700); }
+</style>

@@ -161,3 +161,18 @@ export function md(src: string): string {
 }
 
 export { LANGS };
+
+/** Mensagens de formulário como data-* (consumidas por src/scripts/forms.ts). */
+export function formData(t: (k: any) => string) {
+  return {
+    'data-err-required': t('form.err.required'),
+    'data-err-email': t('form.err.email'),
+    'data-err-phone': t('form.err.phone'),
+    'data-err-consent': t('form.err.consent'),
+    'data-err-summary': t('form.err.summary'),
+    'data-sending': t('form.sending'),
+    'data-success': t('form.success'),
+    'data-error': t('form.error'),
+    'data-not-configured': t('form.notConfigured'),
+  };
+}

@@ -1,6 +1,49 @@
 ---
 import Base from '../layouts/Base.astro';
-import type { PageEntry } from '../lib/pages';
-const { page } = Astro.props as { page: PageEntry };
+import PageHead from '../components/PageHead.astro';
+import { path } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { publishedPosts, type PageEntry } from '../lib/pages';
+import { fullTitle } from '../lib/seo';
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const posts = await publishedPosts();
+const mine = posts.filter((p) => p.data.lang === lang);
+const others = lang === 'pt' ? [] : posts.filter((p) => p.data.lang === 'pt');
+const list = mine.length ? mine : others;
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('blog.title'), href: page.path }];
+const fmt = new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : lang, { dateStyle: 'long' });
 ---
-<Base lang={page.lang} title={page.key} description={page.key} path={page.path} alternates={page.alternates}><p>stub</p></Base>
+<Base lang={lang} title={fullTitle(t('blog.title'), lang)} description={t('blog.description')} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs}>
+  <PageHead label={`${t('blog.cat.tecnico')} · ${t('blog.cat.meio-ambiente')}`.toUpperCase()} title={t('blog.title')} lead={t('blog.description')} />
+  <div class="container section">
+    {!mine.length && others.length > 0 && <p class="note">{t('blog.onlyPt')}</p>}
+    {list.length === 0 ? <p>{t('blog.empty')}</p> : (
+      <ul class="posts" role="list">
+        {list.map((p) => (
+          <li class="post">
+            <p class="label">
+              {t(`blog.cat.${p.data.category}`)} · <time datetime={p.data.date.toISOString()}>{fmt.format(p.data.date)}</time>
+              {p.data.draft && <span class="todo-flag">{t('blog.draft')}</span>}
+            </p>
+            <h2><a href={path('post', p.data.lang, p.id)} hreflang={p.data.lang}>{p.data.title}</a></h2>
+            <p>{p.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</Base>
+<style>
+  .posts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-line-strong); }
+  .post { padding: var(--space-5) 0; border-bottom: 1px solid var(--color-line); display: grid; gap: var(--space-2); max-width: 820px; }
+  .post h2 { font-size: var(--fs-xl); margin: 0; }
+  .post h2 a { color: var(--ink); text-decoration: none; }
+  .post h2 a:hover { color: var(--color-primary); text-decoration: underline; }
+  .post p:last-child { color: var(--steel-700); margin: 0; }
+  .todo-flag { margin-left: var(--space-2); }
+  .note { color: var(--color-muted); }
+</style>

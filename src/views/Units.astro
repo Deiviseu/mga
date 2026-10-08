@@ -1,6 +1,51 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import UnitCard from '../components/UnitCard.astro';
+import { path } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { units } from '../lib/content';
+import { fullTitle, localBusinessLd } from '../lib/seo';
 import type { PageEntry } from '../lib/pages';
-const { page } = Astro.props as { page: PageEntry };
+interface Props { page: PageEntry }
+const { page } = Astro.props;
+const { lang } = page;
+const t = useT(lang);
+const crumbs = [{ name: t('nav.home'), href: path('home', lang) }, { name: t('nav.company'), href: path('about', lang) }, { name: t('units.title'), href: page.path }];
+const first = units[0];
+const osm = (lat: number, lng: number) => `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.012},${lat - 0.007},${lng + 0.012},${lat + 0.007}&layer=mapnik&marker=${lat},${lng}`;
 ---
-<Base lang={page.lang} title={page.key} description={page.key} path={page.path} alternates={page.alternates}><p>stub</p></Base>
+<Base lang={lang} title={fullTitle(t('units.title'), lang)} description={t('units.description')} path={page.path}
+  alternates={page.alternates} breadcrumbs={crumbs} jsonLd={localBusinessLd(lang)}>
+  <PageHead label="RS · SP · CE" title={t('units.title')} lead={t('units.description')} />
+  <div class="container section units">
+    <div class="units__list">
+      {units.map((u, i) => <UnitCard unit={u} lang={lang} index={i} selectable />)}
+    </div>
+    <div class="units__map">
+      <iframe data-map title={t('units.map')} src={osm(first.geo.lat, first.geo.lng)} loading="lazy" referrerpolicy="no-referrer"></iframe>
+      <p class="label" data-approx hidden={!first.geo.approx}>{t('units.approx')}</p>
+    </div>
+  </div>
+</Base>
+<script>
+  const map = document.querySelector<HTMLIFrameElement>('[data-map]')!;
+  const approx = document.querySelector<HTMLElement>('[data-approx]')!;
+  const btns = [...document.querySelectorAll<HTMLButtonElement>('[data-show-unit]')];
+  const show = (btn: HTMLButtonElement) => {
+    const card = btn.closest<HTMLElement>('[data-unit]')!;
+    const lat = Number(card.dataset.lat), lng = Number(card.dataset.lng);
+    map.src = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.012},${lat - 0.007},${lng + 0.012},${lat + 0.007}&layer=mapnik&marker=${lat},${lng}`;
+    btns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    approx.hidden = false;
+    if (window.matchMedia('(max-width: 999px)').matches) map.scrollIntoView({ block: 'center' });
+  };
+  btns.forEach((b) => b.addEventListener('click', () => show(b)));
+  btns[0]?.setAttribute('aria-pressed', 'true');
+</script>
+<style>
+  .units { display: grid; gap: var(--space-6); }
+  @media (min-width: 1000px) { .units { grid-template-columns: 5fr 7fr; gap: var(--space-8); align-items: start; } .units__map { position: sticky; top: calc(56px + var(--space-5)); } }
+  .units__map iframe { width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--color-line-strong); background: var(--steel-100); display: block; }
+  .units__map .label { margin-top: var(--space-2); }
+</style>

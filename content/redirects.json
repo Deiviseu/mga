@@ -15,6 +15,6 @@
     { "from": "/canal-denuncia", "to": "/canal-de-denuncia", "confirm": true },
     { "from": "/termos-gdpr", "to": "/politica-de-privacidade", "confirm": true },
     { "from": "/politica-privacidade", "to": "/politica-de-privacidade", "confirm": true },
-    { "from": "/produtos/politicas-mga.pdf", "to": "https://www.mga.com.br/politicas-mga.pdf" }
+    { "from": "/produtos/politicas-mga.pdf", "to": "/politicas-mga.pdf" }
   ]
 }

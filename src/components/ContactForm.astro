@@ -1,0 +1,158 @@
+---
+// Formulário de contato/orçamento. Sem campo de endereço completo.
+// Itens (produto, bitola, quantidade) são preenchidos pela lista de orçamento
+// e pelo parâmetro ?produto= vindo das páginas de produto.
+import { path, type Lang } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+import { formData } from '../lib/content';
+interface Props { lang: Lang; mode?: 'contact' | 'quote' }
+const { lang, mode = 'contact' } = Astro.props;
+const t = useT(lang);
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+---
+<form class="cform" data-contact-form data-mode={mode} data-endpoint={endpoint} {...formData(t)}>
+  <div class="cform__grid">
+    <div class="field">
+      <label for="cf-name">{t('form.name')} <span class="req" aria-hidden="true">*</span></label>
+      <input id="cf-name" name="name" class="input" autocomplete="name" required aria-describedby="cf-name-err" />
+      <p class="error" id="cf-name-err" aria-live="polite"></p>
+    </div>
+    <div class="field">
+      <label for="cf-company">{t('form.company')} <span class="hint">({t('form.optional')})</span></label>
+      <input id="cf-company" name="company" class="input" autocomplete="organization" />
+    </div>
+    <div class="field">
+      <label for="cf-email">{t('form.email')} <span class="req" aria-hidden="true">*</span></label>
+      <input id="cf-email" name="email" type="email" class="input" autocomplete="email" required aria-describedby="cf-email-err" />
+      <p class="error" id="cf-email-err" aria-live="polite"></p>
+    </div>
+    <div class="field">
+      <label for="cf-phone">{t('form.phone')} <span class="req" aria-hidden="true">*</span></label>
+      <input id="cf-phone" name="phone" type="tel" class="input" autocomplete="tel" required inputmode="tel" placeholder="(54) 99999-9999" aria-describedby="cf-phone-err" />
+      <p class="error" id="cf-phone-err" aria-live="polite"></p>
+    </div>
+    <div class="field">
+      <label for="cf-city">{t('form.cityState')} <span class="hint">({t('form.optional')})</span></label>
+      <input id="cf-city" name="cityState" class="input" autocomplete="address-level2" />
+    </div>
+    <div class="field">
+      <label for="cf-subject">{t('form.subject')}</label>
+      <select id="cf-subject" name="subject" class="select">
+        <option value="sales" selected={mode === 'quote'}>{t('form.subject.sales')}</option>
+        <option value="tech">{t('form.subject.tech')}</option>
+        <option value="custom">{t('form.subject.custom')}</option>
+        <option value="other">{t('form.subject.other')}</option>
+      </select>
+    </div>
+  </div>
+
+  <fieldset class="items" data-items-box hidden={mode === 'quote'}>
+    <legend class="label">{t('form.product')} · {t('form.size')} · {t('form.qty')}</legend>
+    <div class="items__rows" data-items></div>
+    <button type="button" class="btn btn--ghost" data-add-item>+ {t('form.addLine')}</button>
+  </fieldset>
+  <template data-item-tpl>
+    <div class="items__row">
+      <div class="field"><label>{t('form.product')}</label><input name="item_product" class="input" /></div>
+      <div class="field"><label>{t('form.size')}</label><input name="item_size" class="input" /></div>
+      <div class="field"><label>{t('form.qty')}</label><input name="item_qty" type="number" min="1" class="input num" inputmode="numeric" /></div>
+      <button type="button" class="items__del" data-del-item aria-label={t('quote.remove')}>×</button>
+    </div>
+  </template>
+
+  <div class="field">
+    <label for="cf-msg">{t('form.message')} {mode === 'contact' ? <span class="req" aria-hidden="true">*</span> : <span class="hint">({t('form.optional')})</span>}</label>
+    <textarea id="cf-msg" name="message" class="textarea" required={mode === 'contact'} aria-describedby="cf-msg-err"></textarea>
+    <p class="error" id="cf-msg-err" aria-live="polite"></p>
+  </div>
+
+  <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off" /></label></div>
+
+  <div class="field">
+    <label class="consent">
+      <input type="checkbox" name="consent" value="yes" required aria-describedby="cf-consent-err" />
+      <span>{t('form.consent')} <a href={path('privacy', lang)} target="_blank">{t('nav.privacy')}</a> <span class="req" aria-hidden="true">*</span></span>
+    </label>
+    <p class="error" id="cf-consent-err" aria-live="polite"></p>
+  </div>
+
+  <div class="cform__foot">
+    <button type="submit" class="btn btn--primary">{mode === 'quote' ? t('quote.send') : t('form.submit')}</button>
+    <p class="form-status" data-form-status role="status" tabindex="-1"></p>
+  </div>
+</form>
+
+<script>
+  import { setupForm } from '../scripts/forms';
+  import { getQuote, onQuoteChange, clearQuote } from '../scripts/quote';
+
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    const rows = form.querySelector<HTMLElement>('[data-items]')!;
+    const tpl = form.querySelector<HTMLTemplateElement>('[data-item-tpl]')!;
+    const mode = form.dataset.mode;
+    let uid = 0;
+    const addRow = (v: { product?: string; size?: string; qty?: number } = {}) => {
+      const node = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+      const n = ++uid;
+      node.querySelectorAll<HTMLInputElement>('input').forEach((input) => {
+        const id = `${input.name}-${n}`;
+        input.id = id;
+        input.previousElementSibling?.setAttribute('for', id);
+      });
+      (node.querySelector('[name=item_product]') as HTMLInputElement).value = v.product ?? '';
+      (node.querySelector('[name=item_size]') as HTMLInputElement).value = v.size ?? '';
+      (node.querySelector('[name=item_qty]') as HTMLInputElement).value = v.qty ? String(v.qty) : '';
+      node.querySelector('[data-del-item]')!.addEventListener('click', () => node.remove());
+      rows.appendChild(node);
+    };
+    const fillFromQuote = () => {
+      rows.innerHTML = '';
+      getQuote().forEach((i) => addRow({ product: `${i.code} – ${i.name}`, size: i.size, qty: i.qty }));
+    };
+
+    if (mode === 'quote') {
+      fillFromQuote();
+      onQuoteChange(fillFromQuote);
+    } else {
+      fillFromQuote();
+      const p = new URLSearchParams(location.search).get('produto');
+      if (p) addRow({ product: p, qty: 1 });
+      if (!rows.children.length) addRow();
+    }
+    form.querySelector('[data-add-item]')!.addEventListener('click', () => {
+      addRow();
+      rows.lastElementChild?.querySelector<HTMLInputElement>('input')?.focus();
+    });
+
+    setupForm(form, {
+      endpoint: form.dataset.endpoint || '',
+      extra: () => ({ type: mode }),
+      onSuccess: () => { if (mode === 'quote') clearQuote(); },
+    });
+  });
+</script>
+
+<style>
+  .cform { display: grid; gap: var(--space-5); }
+  .cform__grid { display: grid; gap: var(--space-4); }
+  @media (min-width: 700px) { .cform__grid { grid-template-columns: 1fr 1fr; } }
+  .req { color: var(--bad); }
+  .items { border: 1px solid var(--color-line); margin: 0; padding: var(--space-4); display: grid; gap: var(--space-3); background: var(--white); }
+  .items[hidden] { display: none; }
+  .items legend { padding: 0 var(--space-2); }
+  .items__rows { display: grid; gap: var(--space-3); }
+  .items__rows :global(.items__row) { display: grid; grid-template-columns: 1fr 1fr 44px; gap: var(--space-2); align-items: end; }
+  .items__rows :global(.items__row .field:first-child) { grid-column: 1 / -1; }
+  @media (min-width: 700px) { .items__rows :global(.items__row) { grid-template-columns: 3fr 1fr 1fr 44px; } .items__rows :global(.items__row .field:first-child) { grid-column: auto; } }
+  .items__rows :global(.items__del) { width: 44px; height: 44px; border: 1px solid var(--color-line-strong); background: var(--white); border-radius: var(--radius-sm); cursor: pointer; font-size: 1.25rem; }
+  .items > .btn { justify-self: start; }
+  .consent { display: grid; grid-template-columns: 20px 1fr; gap: var(--space-3); font-size: var(--fs-sm); font-weight: 400 !important; align-items: start; }
+  .consent input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--color-primary); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .cform__foot { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+  :global(.form-status) { margin: 0; font-size: var(--fs-sm); }
+  :global(.form-status:empty) { display: none; }
+  :global(.form-status.is-ok) { color: var(--ok); background: var(--ok-bg); padding: var(--space-2) var(--space-3); }
+  :global(.form-status.is-error) { color: var(--bad); background: var(--bad-bg); padding: var(--space-2) var(--space-3); }
+  :global(.form-status.is-warn) { color: var(--warn); background: var(--warn-bg); padding: var(--space-2) var(--space-3); }
+</style>
