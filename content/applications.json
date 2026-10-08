@@ -1,0 +1,471 @@
+{
+ "_comment": "Tabela de compatibilidade fluido × material. sample=true enquanto não for substituída pela tabela oficial da MGA (a página exibe um aviso). Ratings: A recomendado, B consultar/condicional, C não recomendado, - sem dados. Ordem conforme materials.",
+ "sample": true,
+ "materials": [
+  {
+   "id": "wcb",
+   "name": {
+    "pt": "Aço carbono (WCB)",
+    "en": "Carbon steel (WCB)",
+    "es": "Acero al carbono (WCB)"
+   }
+  },
+  {
+   "id": "cf8",
+   "name": {
+    "pt": "Inox 304 (CF8)",
+    "en": "Stainless 304 (CF8)",
+    "es": "Inox 304 (CF8)"
+   }
+  },
+  {
+   "id": "cf8m",
+   "name": {
+    "pt": "Inox 316 (CF8M)",
+    "en": "Stainless 316 (CF8M)",
+    "es": "Inox 316 (CF8M)"
+   }
+  },
+  {
+   "id": "ptfe",
+   "name": {
+    "pt": "Sede PTFE",
+    "en": "PTFE seat",
+    "es": "Asiento PTFE"
+   }
+  }
+ ],
+ "ratings": {
+  "A": {
+   "label": {
+    "pt": "Recomendado",
+    "en": "Recommended",
+    "es": "Recomendado"
+   }
+  },
+  "B": {
+   "label": {
+    "pt": "Condicional: consulte a engenharia",
+    "en": "Conditional: consult engineering",
+    "es": "Condicional: consulte a ingeniería"
+   }
+  },
+  "C": {
+   "label": {
+    "pt": "Não recomendado",
+    "en": "Not recommended",
+    "es": "No recomendado"
+   }
+  },
+  "-": {
+   "label": {
+    "pt": "Sem dados",
+    "en": "No data",
+    "es": "Sin datos"
+   }
+  }
+ },
+ "fluids": [
+  {
+   "id": "agua",
+   "name": {
+    "pt": "Água",
+    "en": "Water",
+    "es": "Agua"
+   },
+   "ratings": [
+    "B",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "agua-do-mar",
+   "name": {
+    "pt": "Água do mar",
+    "en": "Seawater",
+    "es": "Agua de mar"
+   },
+   "ratings": [
+    "C",
+    "C",
+    "B",
+    "A"
+   ]
+  },
+  {
+   "id": "agua-clorada",
+   "name": {
+    "pt": "Água clorada",
+    "en": "Chlorinated water",
+    "es": "Agua clorada"
+   },
+   "ratings": [
+    "C",
+    "C",
+    "B",
+    "A"
+   ],
+   "note": "Nome estava cortado (\"Água clorada (0…\") por vírgula no CSV. Confirmar a concentração original."
+  },
+  {
+   "id": "ar-comprimido",
+   "name": {
+    "pt": "Ar comprimido",
+    "en": "Compressed air",
+    "es": "Aire comprimido"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "amonio",
+   "name": {
+    "pt": "Amônio",
+    "en": "Ammonium",
+    "es": "Amonio"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ],
+   "note": "Era duplicado. Confirmar se o correto é \"Amônia\"."
+  },
+  {
+   "id": "acido-acetico",
+   "name": {
+    "pt": "Ácido acético",
+    "en": "Acetic acid",
+    "es": "Ácido acético"
+   },
+   "ratings": [
+    "C",
+    "B",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "acido-cloridrico",
+   "name": {
+    "pt": "Ácido clorídrico",
+    "en": "Hydrochloric acid",
+    "es": "Ácido clorhídrico"
+   },
+   "ratings": [
+    "C",
+    "C",
+    "C",
+    "A"
+   ]
+  },
+  {
+   "id": "acido-fosforico",
+   "name": {
+    "pt": "Ácido fosfórico",
+    "en": "Phosphoric acid",
+    "es": "Ácido fosfórico"
+   },
+   "ratings": [
+    "C",
+    "B",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "acido-nitrico",
+   "name": {
+    "pt": "Ácido nítrico",
+    "en": "Nitric acid",
+    "es": "Ácido nítrico"
+   },
+   "ratings": [
+    "C",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "acetona",
+   "name": {
+    "pt": "Acetona",
+    "en": "Acetone",
+    "es": "Acetona"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "alcool-etilico",
+   "name": {
+    "pt": "Álcool etílico",
+    "en": "Ethyl alcohol",
+    "es": "Alcohol etílico"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "benzeno",
+   "name": {
+    "pt": "Benzeno",
+    "en": "Benzene",
+    "es": "Benceno"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "cloro-gas",
+   "name": {
+    "pt": "Cloro gás (seco)",
+    "en": "Chlorine gas (dry)",
+    "es": "Cloro gas (seco)"
+   },
+   "ratings": [
+    "B",
+    "B",
+    "B",
+    "A"
+   ],
+   "note": "Era duplicado."
+  },
+  {
+   "id": "diesel",
+   "name": {
+    "pt": "Óleo diesel",
+    "en": "Diesel oil",
+    "es": "Gasóleo"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "formaldeido",
+   "name": {
+    "pt": "Formaldeído",
+    "en": "Formaldehyde",
+    "es": "Formaldehído"
+   },
+   "ratings": [
+    "B",
+    "A",
+    "A",
+    "A"
+   ],
+   "note": "Era duplicado."
+  },
+  {
+   "id": "freon",
+   "name": {
+    "pt": "Freon",
+    "en": "Freon",
+    "es": "Freón"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ],
+   "note": "Era duplicado."
+  },
+  {
+   "id": "gasolina",
+   "name": {
+    "pt": "Gasolina",
+    "en": "Gasoline",
+    "es": "Gasolina"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "glp",
+   "name": {
+    "pt": "GLP",
+    "en": "LPG",
+    "es": "GLP"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "glicerina",
+   "name": {
+    "pt": "Glicerina",
+    "en": "Glycerin",
+    "es": "Glicerina"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "hidroxido-de-sodio-20",
+   "name": {
+    "pt": "Hidróxido de sódio 20%",
+    "en": "Sodium hydroxide 20%",
+    "es": "Hidróxido de sodio 20%"
+   },
+   "ratings": [
+    "B",
+    "A",
+    "A",
+    "A"
+   ],
+   "note": "Era duplicado."
+  },
+  {
+   "id": "hidroxido-de-sodio-50",
+   "name": {
+    "pt": "Hidróxido de sódio 50%",
+    "en": "Sodium hydroxide 50%",
+    "es": "Hidróxido de sodio 50%"
+   },
+   "ratings": [
+    "B",
+    "B",
+    "A",
+    "A"
+   ],
+   "note": "Era duplicado."
+  },
+  {
+   "id": "mercurio",
+   "name": {
+    "pt": "Mercúrio",
+    "en": "Mercury",
+    "es": "Mercurio"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ],
+   "note": "Era duplicado."
+  },
+  {
+   "id": "nitrogenio-liquido",
+   "name": {
+    "pt": "Nitrogênio líquido",
+    "en": "Liquid nitrogen",
+    "es": "Nitrógeno líquido"
+   },
+   "ratings": [
+    "C",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "oleo-hidraulico",
+   "name": {
+    "pt": "Óleo hidráulico",
+    "en": "Hydraulic oil",
+    "es": "Aceite hidráulico"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "oxigenio",
+   "name": {
+    "pt": "Oxigênio",
+    "en": "Oxygen",
+    "es": "Oxígeno"
+   },
+   "ratings": [
+    "B",
+    "B",
+    "B",
+    "B"
+   ]
+  },
+  {
+   "id": "peroxido-de-hidrogenio",
+   "name": {
+    "pt": "Peróxido de hidrogênio",
+    "en": "Hydrogen peroxide",
+    "es": "Peróxido de hidrógeno"
+   },
+   "ratings": [
+    "C",
+    "B",
+    "A",
+    "A"
+   ]
+  },
+  {
+   "id": "tricloroetano",
+   "name": {
+    "pt": "Tricloroetano 1,1,1",
+    "en": "1,1,1-Trichloroethane",
+    "es": "Tricloroetano 1,1,1"
+   },
+   "ratings": [
+    "B",
+    "A",
+    "A",
+    "A"
+   ],
+   "note": "Nome estava cortado (\"Tricloroetano 1…\") por vírgula no CSV."
+  },
+  {
+   "id": "vapor-saturado",
+   "name": {
+    "pt": "Vapor saturado",
+    "en": "Saturated steam",
+    "es": "Vapor saturado"
+   },
+   "ratings": [
+    "A",
+    "A",
+    "A",
+    "B"
+   ]
+  }
+ ]
+}

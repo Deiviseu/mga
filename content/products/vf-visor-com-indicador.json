@@ -1,0 +1,173 @@
+{
+  "id": "vf-visor-com-indicador",
+  "code": "VF-I",
+  "category": "vf",
+  "seed": true,
+  "slug": {
+    "pt": "visor-de-fluxo-com-indicador",
+    "en": "flow-sight-glass-with-flow-indicator",
+    "es": "visor-de-flujo-con-indicador"
+  },
+  "name": {
+    "pt": "Visor de Fluxo com Indicador",
+    "en": "Flow Sight Glass with Flow Indicator",
+    "es": "Visor de Flujo con Indicador"
+  },
+  "summary": {
+    "pt": "Visor de Fluxo com Indicador da linha VF-I. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Flow Sight Glass with Flow Indicator, VF-I series. Illustrative data: check the official datasheet.",
+    "es": "Visor de Flujo con Indicador de la línea VF-I. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/vf-visor-com-indicador",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c150"
+    ],
+    "material": [
+      "cf8m",
+      "wcb"
+    ],
+    "connection": [
+      "npt",
+      "rf"
+    ],
+    "sizes": [
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\"",
+      "2.1/2\"",
+      "3\"",
+      "4\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "ASME B16.5"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "2.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": [
+    "vf-visor-de-fluxo"
+  ]
+}

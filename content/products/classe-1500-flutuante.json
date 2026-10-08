@@ -1,0 +1,189 @@
+{
+  "id": "classe-1500-flutuante",
+  "code": "VEB 1500",
+  "category": "veb",
+  "seed": true,
+  "slug": {
+    "pt": "valvula-esfera-bipartida-classe-1500-flutuante",
+    "en": "two-piece-floating-ball-valve-class-1500",
+    "es": "valvula-esfera-bipartida-clase-1500-flotante"
+  },
+  "name": {
+    "pt": "Válvula Esfera Bipartida Classe 1500 Flutuante",
+    "en": "Two-Piece Floating Ball Valve Class 1500",
+    "es": "Válvula Esfera Bipartida Clase 1500 Flotante"
+  },
+  "summary": {
+    "pt": "Válvula Esfera Bipartida Classe 1500 Flutuante da linha VEB 1500. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Two-Piece Floating Ball Valve Class 1500, VEB 1500 series. Illustrative data: check the official datasheet.",
+    "es": "Válvula Esfera Bipartida Clase 1500 Flotante de la línea VEB 1500. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/classe-1500-flutuante",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c1500"
+    ],
+    "material": [
+      "a105",
+      "f316"
+    ],
+    "connection": [
+      "npt",
+      "sw"
+    ],
+    "sizes": [
+      "1/4\"",
+      "3/8\"",
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Passagem",
+        "en": "Bore",
+        "es": "Paso"
+      },
+      "value": {
+        "pt": "Reduzida",
+        "en": "Reduced bore",
+        "es": "Paso reducido"
+      }
+    },
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "ASME B16.34",
+    "ASME B16.11",
+    "API 598",
+    "API 607"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "1/4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": [
+    "veb-150-flangeada",
+    "veb-300-flangeada",
+    "veb-800-rosca"
+  ]
+}

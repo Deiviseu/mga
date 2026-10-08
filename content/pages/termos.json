@@ -1,0 +1,12 @@
+{
+  "_comment": "Modelo-base. Precisa de revisão jurídica.",
+  "title": { "pt": "Termos de uso", "en": "Terms of use", "es": "Términos de uso" },
+  "seoDescription": { "pt": "Condições de uso do site da MGA Válvulas, de seus catálogos, datasheets e modelos 3D.", "en": "Terms for using MGA's website, catalogs, datasheets and 3D models.", "es": "Condiciones de uso del sitio de MGA Válvulas, sus catálogos, hojas técnicas y modelos 3D." },
+  "lead": { "pt": "Ao usar este site você concorda com as condições abaixo.", "en": "By using this website you agree to the conditions below.", "es": "Al usar este sitio usted acepta las condiciones a continuación." },
+  "sections": [
+    { "heading": { "pt": "Informações técnicas", "en": "Technical information", "es": "Información técnica" },
+      "body": { "pt": "Dados técnicos, desenhos e modelos 3D são fornecidos como referência para projeto. A especificação final deve ser confirmada no datasheet vigente ou com a engenharia da MGA.", "en": "Technical data, drawings and 3D models are provided as design references. Final specifications must be confirmed against the current datasheet or with MGA engineering.", "es": "Los datos técnicos, planos y modelos 3D se proporcionan como referencia de proyecto. La especificación final debe confirmarse en la hoja técnica vigente o con la ingeniería de MGA." } },
+    { "heading": { "pt": "Propriedade intelectual", "en": "Intellectual property", "es": "Propiedad intelectual" },
+      "body": { "pt": "Marcas, fotos, textos e arquivos pertencem à MGA ou ao Grupo KITZ. O uso em projetos de clientes é permitido; a redistribuição comercial não.", "en": "Trademarks, photos, texts and files belong to MGA or the KITZ Group. Use in customer projects is allowed; commercial redistribution is not.", "es": "Marcas, fotos, textos y archivos pertenecen a MGA o al Grupo KITZ. Se permite el uso en proyectos de clientes; la redistribución comercial no." } }
+  ]
+}

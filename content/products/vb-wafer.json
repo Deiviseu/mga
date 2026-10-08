@@ -1,0 +1,170 @@
+{
+  "id": "vb-wafer",
+  "code": "VB",
+  "category": "vb",
+  "seed": true,
+  "slug": {
+    "pt": "valvula-borboleta-wafer",
+    "en": "wafer-butterfly-valve",
+    "es": "valvula-mariposa-wafer"
+  },
+  "name": {
+    "pt": "Válvula Borboleta Wafer",
+    "en": "Wafer Butterfly Valve",
+    "es": "Válvula Mariposa Wafer"
+  },
+  "summary": {
+    "pt": "Válvula Borboleta Wafer da linha VB. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Wafer Butterfly Valve, VB series. Illustrative data: check the official datasheet.",
+    "es": "Válvula Mariposa Wafer de la línea VB. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/vb-wafer",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c150"
+    ],
+    "material": [
+      "ferro",
+      "cf8m"
+    ],
+    "connection": [
+      "wafer"
+    ],
+    "sizes": [
+      "2\"",
+      "2.1/2\"",
+      "3\"",
+      "4\"",
+      "6\"",
+      "8\"",
+      "10\"",
+      "12\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "API 609",
+    "ISO 5211"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "3\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "6\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "10\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "12\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": []
+}

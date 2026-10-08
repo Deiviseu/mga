@@ -1,0 +1,20 @@
+{
+  "_comment": "Redirects 301 das URLs antigas. Gera public/_redirects (Netlify) e vercel.json no prebuild (scripts/build-redirects.mjs). As entradas de produto/categoria são complementadas automaticamente a partir de 'legacySlugs' quando existir. Prefixos dos slugs antigos marcados com 'confirm' precisam ser conferidos no Search Console.",
+  "rules": [
+    { "from": "/timeline", "to": "/linha-do-tempo" },
+    { "from": "/produtos/clase-1500-flotante", "to": "/produtos/valvula-esfera-bipartida-classe-1500-flutuante" },
+    { "from": "/produtos/visores-de-flujo", "to": "/produtos/categoria/visores-de-fluxo" },
+    { "from": "/produtos/cryogenics", "to": "/produtos/categoria/valvulas-criogenicas" },
+    { "from": "/informacion-ambiental", "to": "/downloads?cat=institucional", "confirm": true },
+    { "from": "/boletin-ambiental", "to": "/downloads?cat=institucional", "confirm": true },
+    { "from": "/downloads/informacion-ambiental", "to": "/downloads?cat=institucional", "confirm": true },
+    { "from": "/downloads/boletin-ambiental", "to": "/downloads?cat=institucional", "confirm": true },
+    { "from": "/produtos/matrizes", "to": "/produtos/categoria/matrizes", "confirm": true },
+    { "from": "/produtos/pecas-em-ptfe", "to": "/produtos/categoria/pecas-em-ptfe", "confirm": true },
+    { "from": "/produtos/vf-visor-de-fluxo", "to": "/produtos/visor-de-fluxo-vf", "confirm": true },
+    { "from": "/canal-denuncia", "to": "/canal-de-denuncia", "confirm": true },
+    { "from": "/termos-gdpr", "to": "/politica-de-privacidade", "confirm": true },
+    { "from": "/politica-privacidade", "to": "/politica-de-privacidade", "confirm": true },
+    { "from": "/produtos/politicas-mga.pdf", "to": "https://www.mga.com.br/politicas-mga.pdf" }
+  ]
+}

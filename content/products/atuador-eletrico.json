@@ -1,0 +1,44 @@
+{
+  "id": "atuador-eletrico",
+  "code": "ATU-E",
+  "category": "atuadores",
+  "seed": true,
+  "slug": {
+    "pt": "atuador-eletrico",
+    "en": "electric-actuator",
+    "es": "actuador-electrico"
+  },
+  "name": {
+    "pt": "Atuador Elétrico",
+    "en": "Electric Actuator",
+    "es": "Actuador Eléctrico"
+  },
+  "summary": {
+    "pt": "Atuador Elétrico da linha ATU-E. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Electric Actuator, ATU-E series. Illustrative data: check the official datasheet.",
+    "es": "Actuador Eléctrico de la línea ATU-E. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/atuador-eletrico",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [],
+    "material": [],
+    "connection": [],
+    "sizes": []
+  },
+  "specs": [],
+  "norms": [
+    "ISO 5211"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [],
+  "related": [
+    "atuador-pneumatico"
+  ]
+}

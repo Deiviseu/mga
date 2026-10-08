@@ -1,0 +1,46 @@
+---
+// Rota única: todas as páginas (3 idiomas, slugs traduzidos) vêm de allPages().
+import { allPages, type PageEntry } from '../lib/pages';
+import Home from '../views/Home.astro';
+import ContentPage from '../views/ContentPage.astro';
+import Certificates from '../views/Certificates.astro';
+import Timeline from '../views/Timeline.astro';
+import Units from '../views/Units.astro';
+import Catalog from '../views/Catalog.astro';
+import Product from '../views/Product.astro';
+import Applications from '../views/Applications.astro';
+import Downloads from '../views/Downloads.astro';
+import Blog from '../views/Blog.astro';
+import Post from '../views/Post.astro';
+import Contact from '../views/Contact.astro';
+import Quote from '../views/Quote.astro';
+import Whistleblower from '../views/Whistleblower.astro';
+
+export async function getStaticPaths() {
+  const pages = await allPages();
+  return pages.map((page) => ({
+    params: { path: page.path === '/' ? undefined : page.path.slice(1) },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props as { page: PageEntry };
+const contentPages: Record<string, string> = {
+  about: 'sobre', principles: 'fundamentos', environment: 'ambiente', social: 'responsabilidade-social',
+  privacy: 'privacidade', terms: 'termos',
+};
+---
+{page.key === 'home' && <Home page={page} />}
+{contentPages[page.key] && <ContentPage page={page} contentId={contentPages[page.key]} />}
+{page.key === 'certificates' && <Certificates page={page} />}
+{page.key === 'timeline' && <Timeline page={page} />}
+{page.key === 'units' && <Units page={page} />}
+{(page.key === 'products' || page.key === 'category') && <Catalog page={page} />}
+{page.key === 'product' && <Product page={page} />}
+{page.key === 'applications' && <Applications page={page} />}
+{page.key === 'downloads' && <Downloads page={page} />}
+{page.key === 'blog' && <Blog page={page} />}
+{page.key === 'post' && <Post page={page} />}
+{page.key === 'contact' && <Contact page={page} />}
+{page.key === 'quote' && <Quote page={page} />}
+{page.key === 'whistleblower' && <Whistleblower page={page} />}

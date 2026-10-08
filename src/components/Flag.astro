@@ -1,0 +1,23 @@
+---
+import type { Lang } from '../i18n/routes';
+interface Props { lang: Lang; label: string }
+const { lang, label } = Astro.props;
+---
+<svg class="flag" viewBox="0 0 21 14" width="18" height="12" role="img" aria-label={label}>
+  <title>{label}</title>
+  {lang === 'pt' && (<>
+    <rect width="21" height="14" fill="#009c3b" />
+    <path d="M10.5 1.6 19 7l-8.5 5.4L2 7z" fill="#ffdf00" />
+    <circle cx="10.5" cy="7" r="3" fill="#002776" />
+  </>)}
+  {lang === 'en' && (<>
+    <rect width="21" height="14" fill="#fff" />
+    {[0, 2, 4, 6, 8, 10, 12].map((y) => <rect y={y} width="21" height="1.08" fill="#b22234" />)}
+    <rect width="9" height="7.5" fill="#3c3b6e" />
+  </>)}
+  {lang === 'es' && (<>
+    <rect width="21" height="14" fill="#aa151b" />
+    <rect y="3.5" width="21" height="7" fill="#f1bf00" />
+  </>)}
+</svg>
+<style>.flag { display: inline-block; flex: none; border: 1px solid rgba(255,255,255,.25); }</style>

@@ -1,0 +1,29 @@
+{
+  "_comment": "Vocabulário controlado usado pelos filtros do catálogo. Produtos referenciam estes IDs.",
+  "pressureClass": {
+    "c150": { "pt": "Classe 150", "en": "Class 150", "es": "Clase 150" },
+    "c300": { "pt": "Classe 300", "en": "Class 300", "es": "Clase 300" },
+    "c600": { "pt": "Classe 600", "en": "Class 600", "es": "Clase 600" },
+    "c800": { "pt": "Classe 800", "en": "Class 800", "es": "Clase 800" },
+    "c1500": { "pt": "Classe 1500", "en": "Class 1500", "es": "Clase 1500" }
+  },
+  "material": {
+    "cf8m": { "pt": "Inox CF8M (316)", "en": "Stainless CF8M (316)", "es": "Inox CF8M (316)" },
+    "cf8": { "pt": "Inox CF8 (304)", "en": "Stainless CF8 (304)", "es": "Inox CF8 (304)" },
+    "cf3m": { "pt": "Inox CF3M (316L)", "en": "Stainless CF3M (316L)", "es": "Inox CF3M (316L)" },
+    "wcb": { "pt": "Aço carbono WCB", "en": "Carbon steel WCB", "es": "Acero al carbono WCB" },
+    "a105": { "pt": "Aço forjado A105", "en": "Forged steel A105", "es": "Acero forjado A105" },
+    "f316": { "pt": "Inox forjado F316", "en": "Forged stainless F316", "es": "Inox forjado F316" },
+    "ferro": { "pt": "Ferro fundido nodular", "en": "Ductile iron", "es": "Hierro dúctil" },
+    "ptfe": { "pt": "PTFE", "en": "PTFE", "es": "PTFE" }
+  },
+  "connection": {
+    "npt": { "pt": "Rosca NPT", "en": "NPT thread", "es": "Rosca NPT" },
+    "bsp": { "pt": "Rosca BSP", "en": "BSP thread", "es": "Rosca BSP" },
+    "sw": { "pt": "Solda de encaixe (SW)", "en": "Socket weld (SW)", "es": "Soldar a enchufe (SW)" },
+    "bw": { "pt": "Solda de topo (BW)", "en": "Butt weld (BW)", "es": "Soldar a tope (BW)" },
+    "rf": { "pt": "Flange RF", "en": "RF flange", "es": "Brida RF" },
+    "wafer": { "pt": "Wafer", "en": "Wafer", "es": "Wafer" },
+    "clamp": { "pt": "Clamp", "en": "Clamp", "es": "Clamp" }
+  }
+}

@@ -1,0 +1,6 @@
+---
+import Base from '../layouts/Base.astro';
+import type { PageEntry } from '../lib/pages';
+const { page } = Astro.props as { page: PageEntry };
+---
+<Base lang={page.lang} title={page.key} description={page.key} path={page.path} alternates={page.alternates}><p>stub</p></Base>

@@ -1,0 +1,12 @@
+{
+  "_comment": "Selos do carrossel. 'pdf' abre o certificado. URLs marcadas TODO devem ser preenchidas com o arquivo em mga.com.br/storage/...",
+  "items": [
+    { "id": "iso9001", "name": "ISO 9001", "scope": { "pt": "Sistema de gestão da qualidade", "en": "Quality management system", "es": "Sistema de gestión de la calidad" }, "issuer": "TODO", "pdf": null, "logo": null },
+    { "id": "iso14001", "name": "ISO 14001", "scope": { "pt": "Sistema de gestão ambiental", "en": "Environmental management system", "es": "Sistema de gestión ambiental" }, "issuer": "TODO", "pdf": null, "logo": null },
+    { "id": "api6d", "name": "API 6D", "scope": { "pt": "Válvulas para dutos", "en": "Pipeline valves", "es": "Válvulas para ductos" }, "issuer": "American Petroleum Institute", "pdf": null, "logo": null, "todo": "Confirmar se a MGA possui" },
+    { "id": "api607", "name": "API 607", "scope": { "pt": "Teste de fogo (fire safe)", "en": "Fire testing (fire safe)", "es": "Prueba de fuego (fire safe)" }, "issuer": "TODO", "pdf": null, "logo": null, "todo": "Confirmar se a MGA possui" },
+    { "id": "ped", "name": "PED 2014/68/EU", "scope": { "pt": "Equipamentos sob pressão (União Europeia)", "en": "Pressure equipment (European Union)", "es": "Equipos a presión (Unión Europea)" }, "issuer": "TODO", "pdf": null, "logo": null, "todo": "Confirmar se a MGA possui" },
+    { "id": "inmetro", "name": "INMETRO", "scope": { "pt": "Conformidade de produtos", "en": "Product conformity", "es": "Conformidad de productos" }, "issuer": "INMETRO", "pdf": null, "logo": null, "todo": "Confirmar se a MGA possui" },
+    { "id": "ta-luft", "name": "TA-Luft / ISO 15848", "scope": { "pt": "Emissões fugitivas", "en": "Fugitive emissions", "es": "Emisiones fugitivas" }, "issuer": "TODO", "pdf": null, "logo": null, "todo": "Confirmar se a MGA possui" }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "_comment": "Slides do hero. image null = fundo técnico neutro até a MGA enviar fotos (ver TODO-EMPRESA.md). Cada slide aponta para uma rota interna (routeKey + params).",
+  "slides": [
+    { "id": "criogenicas", "image": null, "label": { "pt": "CRIOGENIA · ATÉ −196 °C · BS 6364", "en": "CRYOGENICS · DOWN TO −196 °C · BS 6364", "es": "CRIOGENIA · HASTA −196 °C · BS 6364" },
+      "title": { "pt": "Válvulas para gases liquefeitos", "en": "Valves for liquefied gases", "es": "Válvulas para gases licuados" },
+      "text": { "pt": "Castelo estendido e vedação testada a frio para nitrogênio, oxigênio e GNL.", "en": "Extended bonnet and cold-tested sealing for nitrogen, oxygen and LNG.", "es": "Bonete extendido y sellado probado en frío para nitrógeno, oxígeno y GNL." },
+      "cta": { "label": { "pt": "Ver linha criogênica", "en": "See cryogenic line", "es": "Ver línea criogénica" }, "route": "category", "param": "criogenicas" } },
+    { "id": "microfusao", "image": null, "label": { "pt": "MICROFUSÃO · CF8M · WCB · LIGAS ESPECIAIS", "en": "INVESTMENT CASTING · CF8M · WCB · SPECIAL ALLOYS", "es": "MICROFUSIÓN · CF8M · WCB · ALEACIONES ESPECIALES" },
+      "title": { "pt": "Fundição de precisão própria", "en": "In-house precision casting", "es": "Fundición de precisión propia" },
+      "text": { "pt": "Do molde em cera à peça usinada, com rastreabilidade de corrida.", "en": "From wax pattern to machined part, with full heat traceability.", "es": "Del molde de cera a la pieza mecanizada, con trazabilidad de colada." },
+      "cta": { "label": { "pt": "Conhecer a microfusão", "en": "Explore investment casting", "es": "Conocer la microfusión" }, "route": "category", "param": "microfusao" } },
+    { "id": "sulflon", "image": null, "label": { "pt": "SULFLON · PTFE PURO E CARREGADO", "en": "SULFLON · VIRGIN AND FILLED PTFE", "es": "SULFLON · PTFE PURO Y CARGADO" },
+      "title": { "pt": "Peças técnicas em PTFE", "en": "Engineered PTFE parts", "es": "Piezas técnicas de PTFE" },
+      "text": { "pt": "Sedes, gaxetas e componentes usinados para meios agressivos.", "en": "Seats, packings and machined components for aggressive media.", "es": "Asientos, empaquetaduras y componentes mecanizados para medios agresivos." },
+      "cta": { "label": { "pt": "Ver peças em PTFE", "en": "See PTFE parts", "es": "Ver piezas de PTFE" }, "route": "category", "param": "ptfe" } },
+    { "id": "customcast", "image": null, "label": { "pt": "CUSTOMCAST · PROTÓTIPO EM IMPRESSÃO 3D", "en": "CUSTOMCAST · 3D-PRINTED PROTOTYPES", "es": "CUSTOMCAST · PROTOTIPO EN IMPRESIÓN 3D" },
+      "title": { "pt": "Sua peça, do arquivo ao metal", "en": "Your part, from file to metal", "es": "Su pieza, del archivo al metal" },
+      "text": { "pt": "Modelos impressos em 3D eliminam o ferramental no lote piloto.", "en": "3D-printed patterns remove tooling from the pilot batch.", "es": "Modelos impresos en 3D eliminan el herramental en el lote piloto." },
+      "cta": { "label": { "pt": "Enviar desenho", "en": "Send a drawing", "es": "Enviar plano" }, "route": "contact" } },
+    { "id": "35-anos", "image": { "src": "https://www.mga.com.br/assets/site/empresa.jpg", "width": 1600, "height": 1000 }, "label": { "pt": "1991–2026 · VERANÓPOLIS/RS · GRUPO KITZ", "en": "1991–2026 · VERANÓPOLIS, BRAZIL · KITZ GROUP", "es": "1991–2026 · VERANÓPOLIS/RS · GRUPO KITZ" },
+      "title": { "pt": "35 anos fabricando válvulas", "en": "35 years making valves", "es": "35 años fabricando válvulas" },
+      "text": { "pt": "Mais de 11 milhões de válvulas entregues para a indústria.", "en": "More than 11 million valves delivered to industry.", "es": "Más de 11 millones de válvulas entregadas a la industria." },
+      "cta": { "label": { "pt": "Nossa história", "en": "Our history", "es": "Nuestra historia" }, "route": "timeline" } }
+  ],
+  "featuredCategories": ["vet", "veb", "criogenicas", "vf", "ptfe", "microfusao"]
+}

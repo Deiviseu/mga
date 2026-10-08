@@ -1,0 +1,41 @@
+{
+  "_comment": "Dados gerais da empresa. Campos com \"TODO\" precisam de confirmação da MGA (ver TODO-EMPRESA.md).",
+  "name": "MGA Válvulas",
+  "legalName": "Metalúrgica Golden Art's Ltda.",
+  "brand": "Golden Art's",
+  "group": "Grupo KITZ",
+  "foundingYear": 1991,
+  "url": "https://www.mga.com.br",
+  "logo": "https://www.mga.com.br/assets/site/logo_mga.png",
+  "defaultOgImage": "https://www.mga.com.br/assets/site/empresa.jpg",
+  "phone": "+555434418900",
+  "phoneDisplay": "(54) 3441-8900",
+  "email": "vendas@mga.com.br",
+  "emailTodo": "TODO: confirmar e-mail comercial principal",
+  "whatsapp": {
+    "number": "TODO",
+    "_comment": "Número no formato internacional só com dígitos, ex.: 5554999999999. Enquanto for TODO o botão flutuante não é exibido.",
+    "message": {
+      "pt": "Olá! Vim pelo site da MGA e gostaria de falar com o comercial.",
+      "en": "Hello! I found MGA's website and would like to talk to sales.",
+      "es": "¡Hola! Llegué por el sitio de MGA y me gustaría hablar con el área comercial."
+    }
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/mgavalvulas/",
+    "linkedin": "TODO",
+    "youtube": "TODO",
+    "facebook": "TODO"
+  },
+  "stats": [
+    { "value": 35, "prefix": "", "suffix": "", "label": { "pt": "anos de mercado", "en": "years in the market", "es": "años en el mercado" } },
+    { "value": 500, "prefix": "+", "suffix": "", "label": { "pt": "colaboradores", "en": "employees", "es": "colaboradores" } },
+    { "value": 11, "prefix": "+", "suffix": { "pt": " mi", "en": " M", "es": " M" }, "label": { "pt": "válvulas produzidas", "en": "valves produced", "es": "válvulas producidas" } },
+    { "value": 7, "prefix": "+", "suffix": "", "label": { "pt": "certificações", "en": "certifications", "es": "certificaciones" } }
+  ],
+  "summary": {
+    "pt": "Fabricante brasileira de válvulas industriais desde 1991, em Veranópolis/RS. Empresa do Grupo KITZ.",
+    "en": "Brazilian industrial valve manufacturer since 1991, based in Veranópolis, RS. A KITZ Group company.",
+    "es": "Fabricante brasileño de válvulas industriales desde 1991, en Veranópolis/RS. Empresa del Grupo KITZ."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "_comment": "Missão reescrita com gramática correta mantendo o sentido original. Validar com a MGA.",
+  "title": { "pt": "Fundamentos", "en": "Principles", "es": "Fundamentos" },
+  "seoDescription": { "pt": "Missão, visão, valores, política da qualidade e escopo de certificação da MGA Válvulas.", "en": "MGA's mission, vision, values, quality policy and certification scope.", "es": "Misión, visión, valores, política de calidad y alcance de certificación de MGA Válvulas." },
+  "lead": { "pt": "O que orienta o trabalho de cada colaborador da MGA, da fundição ao atendimento.", "en": "What guides every MGA employee's work, from the foundry to customer service.", "es": "Lo que orienta el trabajo de cada colaborador de MGA, de la fundición a la atención al cliente." },
+  "sections": [
+    { "id": "missao", "heading": { "pt": "Missão", "en": "Mission", "es": "Misión" },
+      "body": { "pt": "Fabricar e comercializar válvulas industriais e componentes com qualidade e segurança, satisfazendo clientes e funcionários de forma lucrativa e contribuindo para o desenvolvimento da comunidade.", "en": "To manufacture and sell industrial valves and components with quality and safety, satisfying customers and employees profitably and contributing to the development of the community.", "es": "Fabricar y comercializar válvulas industriales y componentes con calidad y seguridad, satisfaciendo a clientes y funcionarios de forma rentable y contribuyendo al desarrollo de la comunidad." } },
+    { "id": "visao", "heading": { "pt": "Visão", "en": "Vision", "es": "Visión" },
+      "body": { "pt": "Ser referência na América do Sul em válvulas industriais e peças microfundidas, reconhecida pela confiabilidade técnica e pelo atendimento.", "en": "To be a South American benchmark in industrial valves and investment castings, recognized for technical reliability and service.", "es": "Ser referencia en Sudamérica en válvulas industriales y piezas microfundidas, reconocida por la confiabilidad técnica y la atención." } },
+    { "id": "valores", "heading": { "pt": "Valores", "en": "Values", "es": "Valores" },
+      "body": { "pt": "- Segurança das pessoas em primeiro lugar\n- Ética e transparência\n- Qualidade em cada etapa do processo\n- Respeito ao meio ambiente\n- Melhoria contínua", "en": "- People's safety first\n- Ethics and transparency\n- Quality at every step of the process\n- Respect for the environment\n- Continuous improvement", "es": "- La seguridad de las personas en primer lugar\n- Ética y transparencia\n- Calidad en cada etapa del proceso\n- Respeto al medio ambiente\n- Mejora continua" } },
+    { "id": "politica", "heading": { "pt": "Política integrada", "en": "Integrated policy", "es": "Política integrada" },
+      "body": { "pt": "Atender aos requisitos dos clientes, às normas aplicáveis e às suas revisões subsequentes, prevenir a poluição e melhorar continuamente a eficácia do sistema de gestão.", "en": "To meet customer requirements, applicable standards and their subsequent revisions, prevent pollution and continually improve the effectiveness of the management system.", "es": "Atender los requisitos de los clientes, las normas aplicables y sus revisiones subsiguientes, prevenir la contaminación y mejorar continuamente la eficacia del sistema de gestión." } },
+    { "id": "escopo", "heading": { "pt": "Escopo", "en": "Scope", "es": "Alcance" },
+      "body": { "pt": "Projeto, fabricação e comercialização de válvulas industriais, peças microfundidas e peças em PTFE.", "en": "Design, manufacture and sale of industrial valves, Investment Castings and PTFE parts.", "es": "Diseño, fabricación y comercialización de válvulas industriales, piezas microfundidas y piezas de PTFE." } }
+  ]
+}

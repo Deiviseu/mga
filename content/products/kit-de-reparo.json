@@ -1,0 +1,57 @@
+{
+  "id": "kit-de-reparo",
+  "code": "ACC-KR",
+  "category": "acessorios",
+  "seed": true,
+  "slug": {
+    "pt": "kit-de-reparo-para-valvulas-esfera",
+    "en": "ball-valve-repair-kit",
+    "es": "kit-de-reparacion-para-valvulas-esfera"
+  },
+  "name": {
+    "pt": "Kit de Reparo para Válvulas Esfera",
+    "en": "Ball Valve Repair Kit",
+    "es": "Kit de Reparación para Válvulas Esfera"
+  },
+  "summary": {
+    "pt": "Kit de Reparo para Válvulas Esfera da linha ACC-KR. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Ball Valve Repair Kit, ACC-KR series. Illustrative data: check the official datasheet.",
+    "es": "Kit de Reparación para Válvulas Esfera de la línea ACC-KR. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/kit-de-reparo",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [],
+    "material": [
+      "ptfe"
+    ],
+    "connection": [],
+    "sizes": [
+      "1/4\"",
+      "3/8\"",
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\"",
+      "2.1/2\"",
+      "3\"",
+      "4\""
+    ]
+  },
+  "specs": [],
+  "norms": [],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [],
+  "related": [
+    "alavanca-com-trava",
+    "extensao-de-haste"
+  ]
+}

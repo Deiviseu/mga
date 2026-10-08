@@ -1,0 +1,264 @@
+{
+  "id": "vet-300",
+  "code": "VET 300",
+  "category": "vet",
+  "seed": true,
+  "slug": {
+    "pt": "valvula-esfera-tripartida-classe-300",
+    "en": "three-piece-ball-valve-class-300",
+    "es": "valvula-esfera-tripartida-clase-300"
+  },
+  "name": {
+    "pt": "Válvula Esfera Tripartida Classe 300",
+    "en": "Three-Piece Ball Valve Class 300",
+    "es": "Válvula Esfera Tripartida Clase 300"
+  },
+  "summary": {
+    "pt": "Válvula Esfera Tripartida Classe 300 da linha VET 300. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Three-Piece Ball Valve Class 300, VET 300 series. Illustrative data: check the official datasheet.",
+    "es": "Válvula Esfera Tripartida Clase 300 de la línea VET 300. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/vet-300",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c300"
+    ],
+    "material": [
+      "cf8m",
+      "cf3m",
+      "wcb"
+    ],
+    "connection": [
+      "npt",
+      "sw",
+      "bw"
+    ],
+    "sizes": [
+      "1/4\"",
+      "3/8\"",
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\"",
+      "2.1/2\"",
+      "3\"",
+      "4\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Passagem",
+        "en": "Bore",
+        "es": "Paso"
+      },
+      "value": {
+        "pt": "Plena",
+        "en": "Full bore",
+        "es": "Paso total"
+      }
+    },
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "ASME B16.34",
+    "ASME B16.11",
+    "ASME B16.25",
+    "API 598"
+  ],
+  "dimensions": {
+    "illustrative": true,
+    "unit": "mm",
+    "columns": [
+      "DN",
+      "Ø passagem",
+      "L (SW/BW)",
+      "H",
+      "W",
+      "kg"
+    ],
+    "rows": [
+      [
+        "1/2\"",
+        "15",
+        "76",
+        "62",
+        "140",
+        "0,9"
+      ],
+      [
+        "3/4\"",
+        "20",
+        "85",
+        "66",
+        "140",
+        "1,2"
+      ],
+      [
+        "1\"",
+        "25",
+        "102",
+        "78",
+        "165",
+        "1,9"
+      ],
+      [
+        "1.1/2\"",
+        "38",
+        "127",
+        "96",
+        "200",
+        "3,8"
+      ],
+      [
+        "2\"",
+        "50",
+        "152",
+        "108",
+        "230",
+        "5,6"
+      ]
+    ]
+  },
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "1/4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "2.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "4\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": [
+    "vet-800",
+    "vet-iso-5211",
+    "vet-sanitaria"
+  ]
+}

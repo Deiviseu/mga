@@ -1,0 +1,45 @@
+{
+  "id": "alavanca-com-trava",
+  "code": "ACC-AL",
+  "category": "acessorios",
+  "seed": true,
+  "slug": {
+    "pt": "alavanca-com-trava",
+    "en": "locking-lever-handle",
+    "es": "palanca-con-traba"
+  },
+  "name": {
+    "pt": "Alavanca com Trava",
+    "en": "Locking Lever Handle",
+    "es": "Palanca con Traba"
+  },
+  "summary": {
+    "pt": "Alavanca com Trava da linha ACC-AL. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Locking Lever Handle, ACC-AL series. Illustrative data: check the official datasheet.",
+    "es": "Palanca con Traba de la línea ACC-AL. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/alavanca-com-trava",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [],
+    "material": [
+      "cf8"
+    ],
+    "connection": [],
+    "sizes": []
+  },
+  "specs": [],
+  "norms": [],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [],
+  "related": [
+    "extensao-de-haste",
+    "kit-de-reparo"
+  ]
+}

@@ -1,0 +1,108 @@
+---
+// Banner LGPD: Aceitar / Recusar / Personalizar. Google Analytics e Meta Pixel
+// só são injetados depois do consentimento da categoria correspondente.
+import { path, type Lang } from '../i18n/routes';
+import { useT } from '../i18n/ui';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useT(lang);
+const gaId = import.meta.env.PUBLIC_GA_ID ?? '';
+const fbId = import.meta.env.PUBLIC_FB_PIXEL_ID ?? '';
+---
+<section class="cc" data-cc data-ga={gaId} data-fb={fbId} hidden aria-labelledby="cc-title" role="region">
+  <div class="cc__box">
+    <h2 id="cc-title" class="label">{t('cookies.title')}</h2>
+    <p>{t('cookies.text')} <a href={path('privacy', lang)}>{t('cookies.policy')}</a></p>
+    <form class="cc__prefs" data-cc-prefs hidden>
+      <label class="cc__opt"><input type="checkbox" checked disabled /> <span><strong>{t('cookies.essential')}</strong><br /><small>{t('cookies.essentialText')}</small></span></label>
+      <label class="cc__opt"><input type="checkbox" name="analytics" /> <span><strong>{t('cookies.analytics')}</strong><br /><small>{t('cookies.analyticsText')}</small></span></label>
+      <label class="cc__opt"><input type="checkbox" name="marketing" /> <span><strong>{t('cookies.marketing')}</strong><br /><small>{t('cookies.marketingText')}</small></span></label>
+    </form>
+    <div class="cc__actions">
+      <button type="button" class="btn btn--primary" data-cc-accept>{t('cookies.accept')}</button>
+      <button type="button" class="btn btn--ghost" data-cc-reject>{t('cookies.reject')}</button>
+      <button type="button" class="btn btn--ghost" data-cc-custom aria-expanded="false">{t('cookies.customize')}</button>
+      <button type="button" class="btn btn--primary" data-cc-save hidden>{t('cookies.save')}</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  type Consent = { analytics: boolean; marketing: boolean; ts: number };
+  const KEY = 'mga-consent-v1';
+  const root = document.querySelector<HTMLElement>('[data-cc]')!;
+  const prefs = root.querySelector<HTMLFormElement>('[data-cc-prefs]')!;
+  const btnCustom = root.querySelector<HTMLButtonElement>('[data-cc-custom]')!;
+  const btnSave = root.querySelector<HTMLButtonElement>('[data-cc-save]')!;
+
+  const read = (): Consent | null => {
+    try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch { return null; }
+  };
+  const loadScript = (src: string) => { const s = document.createElement('script'); s.async = true; s.src = src; document.head.appendChild(s); };
+  let loaded = { analytics: false, marketing: false };
+
+  const apply = (c: Consent) => {
+    const w = window as any;
+    if (c.analytics && root.dataset.ga && !loaded.analytics) {
+      loaded.analytics = true;
+      w.dataLayer = w.dataLayer || [];
+      w.gtag = function () { w.dataLayer.push(arguments); };
+      w.gtag('js', new Date());
+      w.gtag('config', root.dataset.ga, { anonymize_ip: true });
+      loadScript(`https://www.googletagmanager.com/gtag/js?id=${root.dataset.ga}`);
+    }
+    if (c.marketing && root.dataset.fb && !loaded.marketing) {
+      loaded.marketing = true;
+      const n: any = (w.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); });
+      if (!w._fbq) w._fbq = n;
+      n.push = n; n.loaded = true; n.version = '2.0'; n.queue = [];
+      loadScript('https://connect.facebook.net/en_US/fbevents.js');
+      w.fbq('init', root.dataset.fb);
+      w.fbq('track', 'PageView');
+    }
+  };
+  const save = (c: Omit<Consent, 'ts'>) => {
+    const full = { ...c, ts: Date.now() };
+    try { localStorage.setItem(KEY, JSON.stringify(full)); } catch {}
+    root.hidden = true;
+    apply(full);
+    // Revogar consentimento de scripts já carregados exige recarregar a página.
+    if ((!c.analytics && loaded.analytics) || (!c.marketing && loaded.marketing)) location.reload();
+  };
+  const open = () => {
+    const c = read();
+    (prefs.elements.namedItem('analytics') as HTMLInputElement).checked = !!c?.analytics;
+    (prefs.elements.namedItem('marketing') as HTMLInputElement).checked = !!c?.marketing;
+    root.hidden = false;
+    root.querySelector<HTMLButtonElement>('[data-cc-accept]')!.focus();
+  };
+
+  const existing = read();
+  if (existing) apply(existing); else root.hidden = false;
+
+  root.querySelector('[data-cc-accept]')!.addEventListener('click', () => save({ analytics: true, marketing: true }));
+  root.querySelector('[data-cc-reject]')!.addEventListener('click', () => save({ analytics: false, marketing: false }));
+  btnCustom.addEventListener('click', () => {
+    const show = prefs.hidden;
+    prefs.hidden = !show; btnSave.hidden = !show;
+    btnCustom.setAttribute('aria-expanded', String(show));
+  });
+  btnSave.addEventListener('click', () => save({
+    analytics: (prefs.elements.namedItem('analytics') as HTMLInputElement).checked,
+    marketing: (prefs.elements.namedItem('marketing') as HTMLInputElement).checked,
+  }));
+  document.querySelectorAll('[data-cookie-open]').forEach((b) => b.addEventListener('click', open));
+</script>
+
+<style>
+  .cc { position: fixed; left: var(--space-4); right: var(--space-4); bottom: var(--space-4); z-index: 150; display: flex; justify-content: flex-start; pointer-events: none; }
+  .cc[hidden] { display: none; }
+  .cc__box { pointer-events: auto; max-width: 520px; background: var(--white); border: 1px solid var(--color-line-strong); border-top: 3px solid var(--color-primary); padding: var(--space-5); box-shadow: 0 12px 32px rgba(20,24,28,.14); font-size: var(--fs-sm); }
+  .cc h2 { margin: 0 0 var(--space-2); }
+  .cc p { margin: 0 0 var(--space-4); }
+  .cc__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .cc__prefs { display: grid; gap: var(--space-3); margin-bottom: var(--space-4); border-top: 1px solid var(--color-line); padding-top: var(--space-4); }
+  .cc__opt { display: grid; grid-template-columns: 20px 1fr; gap: var(--space-3); align-items: start; }
+  .cc__opt input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--color-primary); }
+  .cc__opt small { color: var(--color-muted); }
+</style>

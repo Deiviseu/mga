@@ -1,0 +1,40 @@
+{
+  "id": "matrizes-de-forjamento",
+  "code": "MTZ",
+  "category": "matrizes",
+  "seed": true,
+  "slug": {
+    "pt": "matrizes-de-forjamento-e-moldes-de-cera",
+    "en": "forging-dies-and-wax-injection-molds",
+    "es": "matrices-de-forja-y-moldes-de-cera"
+  },
+  "name": {
+    "pt": "Matrizes de Forjamento e Moldes de Cera",
+    "en": "Forging Dies and Wax Injection Molds",
+    "es": "Matrices de Forja y Moldes de Cera"
+  },
+  "summary": {
+    "pt": "Matrizes de Forjamento e Moldes de Cera da linha MTZ. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Forging Dies and Wax Injection Molds, MTZ series. Illustrative data: check the official datasheet.",
+    "es": "Matrices de Forja y Moldes de Cera de la línea MTZ. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/matrizes-de-forjamento",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [],
+    "material": [],
+    "connection": [],
+    "sizes": []
+  },
+  "specs": [],
+  "norms": [],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [],
+  "related": []
+}

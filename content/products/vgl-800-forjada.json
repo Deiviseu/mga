@@ -1,0 +1,153 @@
+{
+  "id": "vgl-800-forjada",
+  "code": "VGL 800",
+  "category": "vgl",
+  "seed": true,
+  "slug": {
+    "pt": "valvula-globo-forjada-classe-800",
+    "en": "forged-globe-valve-class-800",
+    "es": "valvula-globo-forjada-clase-800"
+  },
+  "name": {
+    "pt": "Válvula Globo Forjada Classe 800",
+    "en": "Forged Globe Valve Class 800",
+    "es": "Válvula Globo Forjada Clase 800"
+  },
+  "summary": {
+    "pt": "Válvula Globo Forjada Classe 800 da linha VGL 800. Dados ilustrativos: confirmar no datasheet oficial.",
+    "en": "Forged Globe Valve Class 800, VGL 800 series. Illustrative data: check the official datasheet.",
+    "es": "Válvula Globo Forjada Clase 800 de la línea VGL 800. Datos ilustrativos: confirmar en la hoja técnica oficial."
+  },
+  "description": {
+    "pt": "TODO: importar a descrição oficial de mga.com.br/produtos/vgl-800-forjada",
+    "en": "TODO: import official description",
+    "es": "TODO: importar descripción oficial"
+  },
+  "attributes": {
+    "pressureClass": [
+      "c800"
+    ],
+    "material": [
+      "a105",
+      "f316"
+    ],
+    "connection": [
+      "npt",
+      "sw"
+    ],
+    "sizes": [
+      "1/2\"",
+      "3/4\"",
+      "1\"",
+      "1.1/4\"",
+      "1.1/2\"",
+      "2\""
+    ]
+  },
+  "specs": [
+    {
+      "label": {
+        "pt": "Acionamento",
+        "en": "Operation",
+        "es": "Accionamiento"
+      },
+      "value": {
+        "pt": "Alavanca, redutor ou atuador",
+        "en": "Lever, gear operator or actuator",
+        "es": "Palanca, reductor o actuador"
+      }
+    },
+    {
+      "label": {
+        "pt": "Teste",
+        "en": "Testing",
+        "es": "Prueba"
+      },
+      "value": {
+        "pt": "100% testada conforme API 598",
+        "en": "100% tested per API 598",
+        "es": "100% probada según API 598"
+      }
+    }
+  ],
+  "norms": [
+    "API 602",
+    "ASME B16.34",
+    "API 598"
+  ],
+  "dimensions": null,
+  "images": [],
+  "datasheet": null,
+  "manual": null,
+  "models3d": [
+    {
+      "size": "1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "1.1/2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    },
+    {
+      "size": "2\"",
+      "files": [
+        {
+          "format": "STEP",
+          "url": null
+        },
+        {
+          "format": "IGES",
+          "url": null
+        },
+        {
+          "format": "PDF 2D",
+          "url": null
+        }
+      ]
+    }
+  ],
+  "related": []
+}
